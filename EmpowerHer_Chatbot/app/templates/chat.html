@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EmpowerHer Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fce8f2; padding: 20px; }
+        #chat-box { width: 100%; height: 500px; border: 1px solid #ccc; padding: 10px; overflow-y: scroll; background: white; }
+        #msg { width: 80%; padding: 10px; }
+        #send { padding: 10px; background: #e91e63; color: white; border: none; }
+        .meta { color: #444; font-size: 12px; margin: 2px 0 10px 0; }
+        .meta span { margin-right: 12px; }
+    </style>
+</head>
+<body>
+
+<h2>EmpowerHer – Menstrual Support Chatbot</h2>
+
+<div id="chat-box"></div>
+
+<input id="msg" type="text" placeholder="Type your message...">
+<button id="send">Send</button>
+
+<script>
+document.getElementById("send").onclick = async function() {
+    const msg = document.getElementById("msg").value;
+    if (!msg) return;
+
+    const box = document.getElementById("chat-box");
+    box.innerHTML += `<p><b>You:</b> ${msg}</p>`;
+
+    const res = await fetch("http://127.0.0.1:5000/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ message: msg })
+    });
+
+    const data = await res.json();
+    const emotions = Array.isArray(data.emotions) && data.emotions.length ? data.emotions.join(", ") : "none";
+    const intent = data.intent || "unknown";
+    const topic = data.topic || "unknown";
+
+    box.innerHTML += `<p><b>Bot:</b> ${data.reply}</p>`;
+    box.innerHTML += `<div class="meta"><span><b>Emotions:</b> ${emotions}</span><span><b>Intent:</b> ${intent}</span><span><b>Topic:</b> ${topic}</span></div>`;
+    box.scrollTop = box.scrollHeight;
+
+    document.getElementById("msg").value = "";
+};
+</script>
+
+</body>
+</html>

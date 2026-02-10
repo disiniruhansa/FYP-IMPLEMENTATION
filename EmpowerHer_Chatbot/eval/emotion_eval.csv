@@ -1,0 +1,149 @@
+text,true_label
+"My period is late and I'm really scared something is wrong.",fear
+"I feel nervous because my period might start in class.",nervousness
+"I keep worrying about stains and people noticing.",nervousness
+"I feel like crying today and I don't know why.",sadness
+"I feel so sad and alone about my body changes.",sadness
+"I'm angry at everyone and I don't know why.",anger
+"I get irritated over small things before my period.",annoyance
+"I'm disappointed because I thought my cramps would be less this month.",disappointment
+"I'm confused because my cycle is not regular at all.",confusion
+"I'm embarrassed to buy pads at the shop.",embarrassment
+"I feel disgusted by the smell of blood and I feel bad about it.",disgust
+"I'm relieved my period finally came.",relief
+"I just realized my stress might be affecting my cycle.",realization
+"I'm grateful my friend helped me when I got my period.",gratitude
+"I'm happy my cramps are not bad today.",joy
+"I'm excited because I learned how to track my cycle.",excitement
+"I feel hopeful that things will get better.",optimism
+"I feel proud that I handled my period at school confidently.",pride
+"I love that my sister supports me during my period.",love
+"I feel remorse for snapping at my mom because I'm moody.",remorse
+"I feel grief because I miss my grandma and everything feels heavy.",grief
+"I'm surprised my period came early this month.",surprise
+"I feel curious why I get headaches before my period.",curiosity
+"I really want to understand what's happening to my body.",desire
+"I appreciate the advice, it makes me feel calmer.",approval
+"I feel cared for when someone listens to me.",caring
+"I admire women who talk openly about periods.",admiration
+"I laughed because my friend made a funny joke to cheer me up.",amusement
+"I'm shocked by how intense my cramps are today.",surprise
+"My mood is neutral today, nothing special.",neutral
+"I feel fine, just asking a general question about periods.",neutral
+"I'm scared because my bleeding seems heavier than usual.",fear
+"I'm nervous to talk to a doctor about my period.",nervousness
+"I feel sad because my period pain stops me from going out.",sadness
+"I'm angry that people make fun of periods.",anger
+"I'm annoyed because I feel bloated and uncomfortable.",annoyance
+"I'm disappointed that my period is late again.",disappointment
+"I'm confused about what is normal discharge.",confusion
+"I'm embarrassed because I leaked at school once.",embarrassment
+"I feel disgusted when someone says periods are dirty.",disgust
+"I'm relieved that the pain reduced after resting.",relief
+"I just realized I forgot to drink water and that might worsen cramps.",realization
+"I'm grateful for my teacher who allowed me to rest.",gratitude
+"I'm happy that my period tracker app helps me.",joy
+"I'm excited to try gentle stretching for cramps.",excitement
+"I'm optimistic that I can manage school and my period.",optimism
+"I'm proud that I carried pads and was prepared.",pride
+"I love how my best friend checks on me.",love
+"I feel remorse for saying something mean while PMS-ing.",remorse
+"I feel sad and tired during my period.",sadness
+"I'm scared because I feel dizzy during my period.",fear
+"I'm confused why I have cramps even without bleeding.",confusion
+"I'm nervous because my cycle is longer than my friends'.",nervousness
+"I'm angry and frustrated because the pain keeps coming back.",anger
+"I feel anxious that my period will start during tuition class.",nervousness
+"I'm worried I might stain my uniform at school.",nervousness
+"I'm scared to ask questions because people might judge me.",fear
+"I feel embarrassed when someone talks loudly about periods.",embarrassment
+"I'm disappointed because the cramps ruined my plans again.",disappointment
+"I'm confused because my period is lighter than usual.",confusion
+"I'm relieved that I found pads in my bag.",relief
+"I'm grateful my mom explained what PMS is.",gratitude
+"I'm proud I stayed calm and handled a small leak.",pride
+"I'm happy I had no cramps today.",joy
+"I'm excited to learn more about menstrual hygiene.",excitement
+"I feel hopeful my cycle will become regular soon.",optimism
+"I feel cared for when my friend checks if I need anything.",caring
+"I love that my aunt gives me kind advice.",love
+"I feel remorse that I ignored my friend because I was moody.",remorse
+"I feel angry when someone says girls are overreacting.",anger
+"I'm annoyed by the back pain I get before my period.",annoyance
+"I'm disgusted by the mean comments people make about periods.",disgust
+"I'm curious why I feel sleepy before my period.",curiosity
+"I want to understand why my cramps are sometimes worse.",desire
+"I'm surprised my period ended faster than usual.",surprise
+"I admire teachers who allow girls to take breaks kindly.",admiration
+"I laughed when my friend tried to distract me with jokes.",amusement
+"I appreciate that you explained this simply.",approval
+"My mood is neutral; I just want information.",neutral
+"I'm scared because the pain feels stronger than last time.",fear
+"I'm nervous to buy pads because the cashier might be rude.",nervousness
+"I feel sad because I feel alone dealing with this.",sadness
+"I'm angry that I can't concentrate because of cramps.",anger
+"I'm annoyed that my skin breaks out before my period.",annoyance
+"I'm disappointed that my period came on a special day.",disappointment
+"I'm confused whether spotting is normal for me.",confusion
+"I'm embarrassed to tell my dad I need pads.",embarrassment
+"I'm relieved that the spotting stopped.",relief
+"I just realized my sleep schedule affects my mood a lot.",realization
+"I'm grateful my friend shared a pad with me.",gratitude
+"I'm happy that warm water helped a bit.",joy
+"I'm excited to try a period tracking app.",excitement
+"I'm optimistic I can manage this better next month.",optimism
+"I'm proud that I asked a question instead of staying silent.",pride
+"I love when my sister makes me tea and comforts me.",love
+"I feel remorse for being rude to my teacher today.",remorse
+"I'm surprised I didn't get cramps this cycle.",surprise
+"I'm curious why I get cravings before my period.",curiosity
+"I really want to know what causes irregular cycles in teens.",desire
+"I feel cared for when someone says it's okay to rest.",caring
+"I admire girls who are confident about their bodies.",admiration
+"I laughed because my friend said something silly to cheer me up.",amusement
+"I appreciate your kind response; it helps me breathe.",approval
+"I feel neutral today; I'm just checking what's normal.",neutral
+"I'm scared because my period is very heavy today.",fear
+"I'm nervous because I have PE class during my period.",nervousness
+"I feel sad because I missed an outing due to cramps.",sadness
+"I'm angry that people tease girls for period stains.",anger
+"I'm annoyed that I feel tired and irritated all day.",annoyance
+"I'm disappointed that painkillers didn't help much last time.",disappointment
+"I'm confused about why discharge changes during the month.",confusion
+"I'm embarrassed because I had to ask for a pad at school.",embarrassment
+"I feel disgusted when someone calls periods 'unclean'.",disgust
+"I'm relieved that my cramps eased after resting.",relief
+"I just realized stress before exams makes my period late.",realization
+"I'm grateful my school nurse spoke kindly to me.",gratitude
+"I'm happy that I managed my day even with cramps.",joy
+"I'm excited to try light stretching and breathing.",excitement
+"I'm hopeful that talking about this will make it easier.",optimism
+"I'm proud that I stayed prepared with extra pads.",pride
+"I love how supportive my best friend is during PMS.",love
+"I feel remorse because I shouted at my brother.",remorse
+"I feel grief because I miss someone and it hurts more now.",grief
+"I'm surprised I got cramps before bleeding started.",surprise
+"I feel curious why some months are more painful.",curiosity
+"I really want to understand what PMS means clearly.",desire
+"I appreciate that you didn't judge me.",approval
+"I feel cared for when someone listens without laughing.",caring
+"I admire women who educate others about menstrual health.",admiration
+"I laughed because a meme made me feel better.",amusement
+"My mood feels neutral; I just need tips for hygiene.",neutral
+"I'm scared to tell anyone because I'm embarrassed.",fear
+"I'm nervous because I think I might leak during assembly.",nervousness
+"I feel sad because I feel like my body is against me.",sadness
+"I'm angry that cramps stop me from studying properly.",anger
+"I'm annoyed because everything feels irritating today.",annoyance
+"I'm disappointed because my period ruined my sleep.",disappointment
+"I'm confused if it is normal to have cramps without much blood.",confusion
+"I'm embarrassed to ask my mom questions about discharge.",embarrassment
+"I'm relieved that I found a private place to change my pad.",relief
+"I just realized drinking water helps me feel better.",realization
+"I'm grateful someone reassured me that I'm normal.",gratitude
+"I'm happy I learned how often to change pads.",joy
+"I'm excited to feel more confident about periods.",excitement
+"I'm optimistic that next month will be easier.",optimism
+"I'm proud I spoke up when I needed help.",pride
+"I love when my family supports me quietly and kindly.",love
+"I feel remorse because I blamed someone unfairly while PMS-ing.",remorse

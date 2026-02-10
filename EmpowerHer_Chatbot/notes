@@ -1,0 +1,16 @@
+python -m services.chat_service
+
+
+
+cd FRONTEND
+npm install
+npm run build - build React frontend for Flask to serve
+npm run dev
+then run backend in another terminal: python -m app.app
+
+python -m eval.evaluate_emotion_classifier - accuracy
+python -m eval.evaluate_response_generation - responseGen accuracy
+python -m eval.compare_emotion_vs_noemotion - comparison
+python -m eval.compare_kb_vs_nokb - kb vs no kb comparison
+
+

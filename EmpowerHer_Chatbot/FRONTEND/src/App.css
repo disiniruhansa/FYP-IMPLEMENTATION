@@ -38,7 +38,7 @@ body {
   place-items: center;
   padding: 20px;
   background:
-    linear-gradient(180deg, rgba(255, 241, 247, 0.65), rgba(255, 241, 247, 0.35)),
+    linear-gradient(180deg, rgba(255, 241, 247, 0.10), rgba(255, 241, 247, 0.10)),
     url("/images/cover.jpg") center/cover no-repeat;
 }
 

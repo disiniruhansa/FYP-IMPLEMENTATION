@@ -1,0 +1,52 @@
+﻿classDiagram
+  class ChatService {
+    +bool use_emotions
+    +bool use_kb
+    +EmotionClassifier emotion_model
+    +KnowledgeBaseRetriever kb
+    +generate_reply(user_message: str) ChatResult
+  }
+
+  class ChatResult {
+    +str reply
+    +List[str] emotions
+    +Any raw_emotions
+    +str topic
+    +str intent
+    +List[str] kb_sources
+  }
+
+  class EmotionClassifier {
+    +predict_emotions(text: str, top_k: int) List[dict]
+  }
+
+  class KnowledgeBaseRetriever {
+    +Path docs_dir
+    +int chunk_size
+    +float min_score
+    +str backend
+    +str embed_model_name
+    +List[str] chunks
+    +List[str] sources
+    +search(query: str, top_k: int) List[KBHit]
+  }
+
+  class KBHit {
+    +str chunk
+    +str source
+    +float score
+  }
+
+  class TfidfVectorizer
+  class cosine_similarity
+  class AutoTokenizer
+  class AutoModel
+
+  ChatService --> EmotionClassifier
+  ChatService --> KnowledgeBaseRetriever
+  ChatService --> ChatResult
+  KnowledgeBaseRetriever --> KBHit
+  KnowledgeBaseRetriever ..> TfidfVectorizer : tfidf
+  KnowledgeBaseRetriever ..> cosine_similarity : tfidf
+  KnowledgeBaseRetriever ..> AutoTokenizer : embedding
+  KnowledgeBaseRetriever ..> AutoModel : embedding

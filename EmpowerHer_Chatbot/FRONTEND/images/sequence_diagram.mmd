@@ -1,0 +1,33 @@
+﻿sequenceDiagram
+  participant U as User
+  participant FE as Frontend (React)
+  participant BE as Flask API
+  participant CS as ChatService
+  participant EC as EmotionClassifier
+  participant KB as KnowledgeBaseRetriever
+  participant DOCS as kb/docs/*.txt
+
+  U->>FE: Type message
+  FE->>BE: POST /chat {message}
+  BE->>CS: generate_reply(message)
+
+  opt Emotions enabled
+    CS->>EC: predict_emotions(text, top_k=3)
+    EC-->>CS: raw_emotions + labels
+  end
+
+  CS->>CS: detect_intent(text)
+  CS->>CS: detect_topic(text)
+
+  alt intent == info_question or symptom and KB enabled
+    CS->>KB: search(text, top_k=2)
+    KB->>DOCS: load/index if needed
+    KB-->>CS: kb_hits + sources
+  else no KB or not info/symptom
+    CS-->>CS: skip KB
+  end
+
+  CS->>CS: compose reply + safety constraints
+  CS-->>BE: ChatResult
+  BE-->>FE: JSON {reply, emotions, raw_emotions, topic, intent, kb_sources}
+  FE-->>U: Display reply

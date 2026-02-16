@@ -1,0 +1,32 @@
+﻿flowchart TD
+  A([Start]) --> B[User types message in UI]
+  B --> C[Frontend sends POST /chat]
+  C --> D[Flask receives request]
+  D --> E[ChatService.generate_reply]
+
+  E --> F{Message empty?}
+  F -- Yes --> G[Return default prompt]
+  F -- No --> H{Emotions enabled?}
+  H -- Yes --> I[EmotionClassifier predicts emotions]
+  H -- No --> J[Skip emotions]
+
+  I --> K[Detect intent + topic]
+  J --> K
+
+  K --> L{Use KB and intent is info/symptom?}
+  L -- Yes --> M[KB Retriever search]
+  M --> N[Format KB answer]
+  N --> O{KB answer exists?}
+  O -- Yes --> P[Compose KB-based reply]
+  O -- No --> Q[Compose fallback question]
+
+  L -- No --> R[Compose support/calming reply]
+
+  P --> S[Apply safety constraints]
+  Q --> S
+  R --> S
+  G --> S
+
+  S --> T[Return JSON response]
+  T --> U[Frontend displays reply]
+  U --> V([End])

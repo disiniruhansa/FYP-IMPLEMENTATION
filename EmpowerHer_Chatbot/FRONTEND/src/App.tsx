@@ -60,6 +60,7 @@ type ChatResponse = {
 
 export default function App() {
   const [booting, setBooting] = useState(true);
+  const [showLanding, setShowLanding] = useState(true);
   const [messages, setMessages] = useState<ChatMessage[]>([
     initialBotMessage,
   ]);
@@ -158,6 +159,52 @@ export default function App() {
             <span />
           </div>
         </div>
+      </div>
+    );
+  }
+
+  if (showLanding) {
+    return (
+      <div className="landing">
+        <header className="landingNav">
+          <div className="brand">
+            <div className="logo">
+              <img src="/images/Logo.png" alt="EmpowerHer logo" />
+            </div>
+            <div>
+              <h1>EmpowerHer</h1>
+              <p>Gentle support for periods, moods, and questions.</p>
+            </div>
+          </div>
+
+          <nav className="landingLinks">
+            <button className="navLink">About</button>
+            <button className="navLink">Resources</button>
+            <button className="navLink">Safety</button>
+          </nav>
+        </header>
+
+        <main className="landingHero">
+          <div className="heroCard">
+            <span className="heroTag">Private. Calm. Helpful.</span>
+            <h2>EmpowerHer is your safe space for period support.</h2>
+            <p>
+              Ask questions, track how you feel, and get grounded tips with a
+              gentle chatbot designed for teens.
+            </p>
+            <div className="heroActions">
+              <button
+                className="primaryBtn"
+                onClick={() => setShowLanding(false)}
+              >
+                Start Chatting
+              </button>
+              <button className="ghostBtn">Learn More</button>
+            </div>
+          </div>
+
+          <div className="heroGlow" aria-hidden="true" />
+        </main>
       </div>
     );
   }

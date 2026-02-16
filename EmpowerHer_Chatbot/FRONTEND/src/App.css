@@ -1,6 +1,6 @@
 :root {
-  --bg1: #fff1f7;
-  --bg2: #ffe4ef;
+  --bg1: #dfaec3;
+  --bg2: #dfaec3;
   --card: rgba(255, 255, 255, 0.78);
   --border: rgba(236, 72, 153, 0.25);
   --text: #1f2937;
@@ -10,6 +10,8 @@
   --berry: #a61e4d;
   --peach: #ffd7e8;
   --shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+  --cream: #fff6f1;
+  --dark: #1b0f14;
 }
 
 html,
@@ -38,6 +40,150 @@ body {
   min-height: 100vh;
   height: 100vh;
   overflow: hidden;
+}
+
+.landing {
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background:
+    linear-gradient(120deg, rgba(19, 10, 16, 0.65), rgba(19, 10, 16, 0.25)),
+    url("/images/landpic.jpg") center/cover no-repeat;
+}
+
+.landingNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 28px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent);
+}
+
+.landingNav .brand h1 {
+  margin: 0;
+  font-size: 20px;
+  color: white;
+}
+
+.landingNav .brand p {
+  margin: 3px 0 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12px;
+}
+
+.landingLinks {
+  display: flex;
+  gap: 16px;
+}
+
+.navLink {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 6px;
+}
+
+.landingHero {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  position: relative;
+  padding: 24px;
+}
+
+.heroCard {
+  width: min(720px, 92vw);
+  padding: 32px;
+  border-radius: 28px;
+  background: rgba(15, 10, 14, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.heroCard h2 {
+  margin: 10px 0 12px;
+  font-size: 38px;
+  line-height: 1.1;
+}
+
+.heroCard p {
+  margin: 0;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.6;
+}
+
+.heroTag {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.heroActions {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primaryBtn {
+  border: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff8abf, #ff5a97);
+  color: #1b0f14;
+  box-shadow: 0 14px 28px rgba(255, 90, 151, 0.35);
+}
+
+.ghostBtn {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: transparent;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.heroGlow {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 138, 191, 0.35), transparent 70%);
+  filter: blur(10px);
+  bottom: -120px;
+  right: 8%;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .landingNav {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .heroCard {
+    padding: 26px 20px;
+  }
+
+  .heroCard h2 {
+    font-size: 28px;
+  }
 }
 
 .bootScreen {

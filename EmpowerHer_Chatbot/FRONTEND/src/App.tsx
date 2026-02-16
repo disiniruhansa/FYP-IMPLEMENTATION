@@ -223,6 +223,9 @@ export default function App() {
         </div>
 
         <div className="topActions">
+          <button className="ghost" onClick={() => setShowLanding(true)}>
+            Back to Home
+          </button>
           <button className="ghost" onClick={() => setMessages([initialBotMessage])}>
             Clear Chat
           </button>

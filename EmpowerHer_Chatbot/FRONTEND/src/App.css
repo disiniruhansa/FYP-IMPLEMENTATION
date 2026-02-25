@@ -51,6 +51,7 @@ body {
   background:
     linear-gradient(120deg, rgba(19, 10, 16, 0.65), rgba(19, 10, 16, 0.25)),
     url("/images/landpic.jpg") center/cover no-repeat;
+  overflow-y: auto;
 }
 
 .landingNav {
@@ -171,6 +172,70 @@ body {
   pointer-events: none;
 }
 
+.learnMore {
+  padding: 40px 20px 70px;
+  display: flex;
+  justify-content: center;
+}
+
+.learnMoreCard {
+  width: min(980px, 92vw);
+  background: rgba(15, 10, 14, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 26px;
+  padding: 30px;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+  line-height: 1.7;
+}
+
+.learnMoreCard h2 {
+  margin-top: 0;
+  font-size: 30px;
+}
+
+.learnMoreCard h3 {
+  margin: 24px 0 10px;
+  font-size: 20px;
+}
+
+.learnMoreCard h4 {
+  margin: 16px 0 6px;
+  font-size: 16px;
+}
+
+.learnMoreCard p,
+.learnMoreCard li {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 15px;
+}
+
+.learnMoreCard ul,
+.learnMoreCard ol {
+  margin: 10px 0 16px 18px;
+  padding: 0;
+}
+
+.learnMoreBlock {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 12px;
+}
+
+.learnMoreGrid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.learnMoreCta {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
 @media (max-width: 720px) {
   .landingNav {
     flex-direction: column;
@@ -183,6 +248,14 @@ body {
 
   .heroCard h2 {
     font-size: 28px;
+  }
+
+  .learnMoreCard {
+    padding: 22px;
+  }
+
+  .learnMoreCard h2 {
+    font-size: 24px;
   }
 }
 

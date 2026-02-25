@@ -6,6 +6,7 @@ import random
 import re
 
 from models.emotion_classifier import EmotionClassifier
+from models.response_generator import EmpatheticResponder
 from services.kb_retriever import KnowledgeBaseRetriever, clean_kb_text
 
 
@@ -68,6 +69,23 @@ def choose_emotion_line(bucket: str) -> str:
 def detect_intent(msg: str) -> str:
     m = msg.lower().strip()
 
+    if m in ["any other", "any others", "anything else", "other methods", "other techniques"]:
+        return "calming"
+
+    if any(p in m for p in [
+        "i love", "i am happy", "i'm happy", "i feel better", "feels better",
+        "that helps", "this helps", "i appreciate", "i am grateful", "i'm grateful",
+        "thank you", "thanks"
+    ]):
+        return "affirmation"
+
+    if any(p in m for p in [
+        "late period", "missed period", "missed my period", "no period",
+        "didnt get my period", "didn't get my period", "did not get my period",
+        "not got my period", "period is late", "period late", "period delay"
+    ]):
+        return "info_question"
+
     if any(p in m for p in [
         "calm down", "help me calm", "panic", "panicking", "anxiety attack",
         "can't breathe", "cant breathe", "overthinking"
@@ -95,7 +113,47 @@ def detect_intent(msg: str) -> str:
 def detect_topic(msg: str) -> str:
     m = msg.lower()
 
-    if any(w in m for w in ["late", "missed period", "no period", "delayed"]):
+    if any(w in m for w in ["family", "mom", "mother", "dad", "father", "parent", "sister", "brother"]):
+        return "family_support"
+
+    if any(w in m for w in [
+        "when should i see a doctor", "see a doctor", "see a nurse", "clinic",
+        "when to see a doctor", "when should i go", "need a doctor"
+    ]):
+        return "doctor_when"
+
+    if any(w in m for w in ["cup", "menstrual cup"]):
+        return "menstrual_cup"
+    if any(w in m for w in ["tampon"]):
+        return "tampon"
+    if any(w in m for w in ["pad", "pads"]):
+        return "pads"
+    if any(w in m for w in ["smell", "odor", "odour", "fishy"]):
+        return "odor_smell"
+    if any(w in m for w in ["coffee", "caffeine"]):
+        return "caffeine"
+    if any(w in m for w in ["exercise", "workout", "gym", "sports", "swim", "swimming", "pe class"]):
+        return "exercise"
+    if any(w in m for w in ["normal cycle length", "cycle length for teens", "cycle length", "irregular", "calendar", "app", "track my cycle", "track my period"]):
+        return "cycle_tracking"
+    if any(w in m for w in ["bloating", "food", "diet", "eat", "drink", "water", "dehydration", "dehydrated"]):
+        return "food_diet"
+    if any(w in m for w in ["nausea", "vomit", "diarrhea", "diarrhoea"]):
+        return "stomach"
+    if any(w in m for w in ["breast", "sore", "soreness", "tender"]):
+        return "breast_soreness"
+    if any(w in m for w in ["dizzy", "dizziness", "faint", "fainting", "shaky", "lightheaded"]):
+        return "dizziness"
+    if any(w in m for w in ["sleep", "night", "bed"]):
+        return "sleep"
+    if any(w in m for w in ["leak", "leaking", "stain", "stained", "bleed through", "soak through"]):
+        return "leaking"
+
+    if any(w in m for w in [
+        "late", "missed period", "missed my period", "no period", "delayed",
+        "didnt get my period", "didn't get my period", "did not get my period",
+        "not got my period", "period is late", "period late", "period delay"
+    ]):
         return "late_period"
     if any(w in m for w in ["cramp", "cramps", "pain", "hurt", "aching", "back pain"]):
         return "pain_cramps"
@@ -105,10 +163,8 @@ def detect_topic(msg: str) -> str:
         return "spotting"
     if any(w in m for w in ["mood", "irritable", "pms", "sad", "angry"]):
         return "mood_swings"
-    if any(w in m for w in ["pad", "tampon", "cup", "hygiene", "wash", "clean"]):
+    if any(w in m for w in ["hygiene", "wash", "clean", "shower", "bath"]):
         return "hygiene"
-    if any(w in m for w in ["ice cream", "icecream", "coffee", "caffeine", "spicy", "eat", "drink", "diet", "food"]):
-        return "food_diet"
 
     return "unknown"
 
@@ -139,6 +195,9 @@ MEDICINE_WORDS = [
     "panadol",
     "paracetamol",
     "mefenamic",
+    "medicine",
+    "medication",
+    "drug",
     "mg",
     "dose",
     "dosage",
@@ -184,6 +243,149 @@ def apply_safety_constraints(user_text: str, bot_reply: str) -> str:
     return r
 
 
+def trim_to_sentences(text: str, max_sentences: int = 4) -> str:
+    if not text:
+        return text
+    parts = re.split(r"(?<=[.!?])\s+", text.strip())
+    if len(parts) <= max_sentences:
+        return text.strip()
+    return " ".join(parts[:max_sentences]).strip()
+
+
+GENERIC_BANNED_PHRASES = [
+    "as an ai",
+    "i am an ai",
+    "i am a bot",
+    "as a chatbot",
+    "language model",
+    "empowerher",
+]
+
+
+def cleanup_reply(text: str, max_sentences: int = 4) -> str:
+    if not text:
+        return text
+    r = text.strip()
+    low = r.lower()
+    for p in GENERIC_BANNED_PHRASES:
+        if p in low:
+            r = re.sub(r"(?i).*" + re.escape(p) + r".*?(\.|$)", "", r).strip()
+            low = r.lower()
+    # Remove any remaining quotes that look like "EmpowerHer says ..."
+    r = re.sub(r'(?i)^"?\s*empowerher\s+(says|said)\s*[:,]?\s*"?', "", r).strip()
+    r = re.sub(r"\s+\n", "\n", r).strip()
+    r = trim_to_sentences(r, max_sentences=max_sentences)
+    r = re.sub(r"^[\W_]+$", "", r).strip()
+    return r.strip()
+
+
+TOPIC_TEMPLATES = {
+    "late_period": (
+        "It can feel worrying when your period is late, and you are not alone in that. "
+        "Stress, changes in routine, weight changes, and hormones can all shift timing. "
+        "How long has it been late, and are you having pain, heavy bleeding, dizziness, or fever?"
+    ),
+    "pain_cramps": (
+        "Cramps can be really painful, and it makes sense that you feel upset. "
+        "Gentle heat, rest, and drinking water can sometimes help a little. "
+        "If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor."
+    ),
+    "heavy_bleeding": (
+        "Heavy bleeding can feel scary, and it is okay to ask for help. "
+        "If you are soaking pads very quickly, passing large clots, or feel dizzy or weak, please talk to a trusted adult or go to a clinic."
+    ),
+    "spotting": (
+        "Light spotting can happen for different reasons and can be normal for some girls. "
+        "If the bleeding becomes heavy, lasts many days, or comes with strong pain or fever, please reach out to a trusted adult or a clinic."
+    ),
+    "mood_swings": (
+        "Mood changes before a period are common, and your feelings are valid. "
+        "It may help to rest, write your feelings down, or talk to someone you trust. "
+        "If these mood changes feel too strong or last a long time, a doctor or counsellor can help."
+    ),
+    "hygiene": (
+        "It is good to keep the area clean and dry using gentle, unscented products. "
+        "Change pads or tampons regularly, and wash hands before and after. "
+        "If you have itching, pain, or a strong smell that does not go away, please ask a trusted adult or a clinic for help."
+    ),
+    "food_diet": (
+        "Food and drink can sometimes affect how you feel during your period. "
+        "Water, warm drinks, and balanced meals can help you feel steadier. "
+        "If you want, tell me what you have been eating and how your body feels."
+    ),
+    "menstrual_cup": (
+        "Menstrual cups can be safe when cleaned well. "
+        "Wash your hands, rinse with clean water, and follow the cup instructions for cleaning. "
+        "If you have pain or irritation, take a break and talk to a trusted adult or a clinic."
+    ),
+    "tampon": (
+        "It is okay to use a tampon if you feel ready, and many girls do. "
+        "Change it regularly and follow the instructions in the box. "
+        "If you feel pain, remove it and ask a trusted adult or a clinic for help."
+    ),
+    "pads": (
+        "It helps to change pads regularly so you stay clean and comfortable. "
+        "If you are bleeding heavily, you may need to change more often. "
+        "If you are soaking pads very quickly or feel dizzy, please tell a trusted adult."
+    ),
+    "odor_smell": (
+        "A mild smell can be normal, but a strong or fishy smell can feel worrying. "
+        "Try gentle hygiene and change pads or tampons regularly. "
+        "If the smell is strong, continues, or comes with itching or pain, please talk to a trusted adult or a clinic."
+    ),
+    "caffeine": (
+        "Some people find caffeine can make cramps or anxiety feel stronger. "
+        "If you notice more pain after coffee or soda, try cutting back and see how your body feels. "
+        "Warm water or herbal tea can be a gentler choice."
+    ),
+    "exercise": (
+        "Light exercise can be okay during your period if you feel up to it. "
+        "Gentle stretching, walking, or slow movement can sometimes ease cramps. "
+        "If pain is strong or you feel dizzy, rest and tell a trusted adult."
+    ),
+    "cycle_tracking": (
+        "Tracking your cycle can help you feel more in control. "
+        "You can mark the first day of your period each month on a calendar or app. "
+        "If your cycles are very irregular or you are worried, a doctor or nurse can help."
+    ),
+    "stomach": (
+        "Some girls feel nausea or changes in their stomach during periods, and it can be uncomfortable. "
+        "Small meals, warm drinks, and rest can sometimes help. "
+        "If you have severe vomiting, diarrhea, or feel very unwell, please talk to a trusted adult or a clinic."
+    ),
+    "breast_soreness": (
+        "Breast soreness before a period can be common and usually settles after bleeding starts. "
+        "A supportive bra and gentle rest can help. "
+        "If the pain is sharp, one-sided, or very strong, please talk to a trusted adult or a clinic."
+    ),
+    "dizziness": (
+        "Feeling dizzy can be scary. "
+        "Try to sit or lie down, drink water, and eat something light if you can. "
+        "If you faint, have very heavy bleeding, or feel very weak, please tell a trusted adult and seek medical help."
+    ),
+    "sleep": (
+        "Sleep can be harder during cramps. "
+        "Gentle heat, a comfortable position, and slow breathing can help you relax. "
+        "If pain keeps waking you up often, please talk to a trusted adult or a doctor."
+    ),
+    "leaking": (
+        "Leaking is stressful, and you are not alone in that. "
+        "You can use a longer pad at night, change before bed, and keep a spare pad with you. "
+        "If bleeding is very heavy or you soak through quickly, please tell a trusted adult."
+    ),
+    "doctor_when": (
+        "It can be hard to know when to see a doctor, and it is okay to ask. "
+        "Please seek help if you have very strong pain, fainting, fever, very heavy bleeding, or pain that stops you from normal activities. "
+        "If you are unsure, a nurse or doctor can help you decide what is safest."
+    ),
+    "family_support": (
+        "It is really meaningful to feel supported by your family. "
+        "You deserve that kind of care and kindness. "
+        "If you want to share more about how you are feeling, I am here to listen."
+    ),
+}
+
+
 def format_kb_answer(hits) -> str:
     if not hits:
         return ""
@@ -218,10 +420,13 @@ class ChatService:
         use_emotions: bool = True,
         use_kb: bool = True,
         kb_backend: str = "embedding",
+        use_llm: bool = True,
     ):
         self.use_emotions = use_emotions
         self.use_kb = use_kb
         self.emotion_model = EmotionClassifier() if use_emotions else None
+        self.use_llm = use_llm
+        self.responder = EmpatheticResponder() if use_llm else None
         self.kb = KnowledgeBaseRetriever(
             docs_dir="kb/docs",
             chunk_size=450,
@@ -257,6 +462,7 @@ class ChatService:
         # 2) Intent + topic
         intent = detect_intent(text)
         topic = detect_topic(text)
+        has_topic_template = topic in TOPIC_TEMPLATES
 
         # 3) KB retrieval (same for both versions)
         kb_hits = []
@@ -287,6 +493,25 @@ class ChatService:
                 "If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic."
             )
 
+        elif self.use_llm and self.responder is not None and intent in ["support", "affirmation"]:
+            llm_reply = self.responder.generate(text, labels or None)
+            llm_reply = cleanup_reply(llm_reply, max_sentences=4)
+            reply = llm_reply or (
+                f"{prefix}"
+                "You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about."
+            )
+
+        elif has_topic_template:
+            reply = f"{prefix}{TOPIC_TEMPLATES[topic]}"
+
+        elif self.use_llm and self.responder is not None and topic == "unknown":
+            llm_reply = self.responder.generate(text, labels or None)
+            llm_reply = cleanup_reply(llm_reply, max_sentences=4)
+            reply = llm_reply or (
+                f"{prefix}"
+                "You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about."
+            )
+
         elif intent in ["info_question", "symptom"]:
                 reply = (
                     f"{prefix}"
@@ -306,6 +531,9 @@ class ChatService:
                 )
 
         reply = apply_safety_constraints(text, reply)
+        reply = cleanup_reply(reply, max_sentences=4)
+        if not reply:
+            reply = "I am here with you. If you want, tell me a little more about what you are feeling."
 
         return ChatResult(
             reply=reply.strip(),

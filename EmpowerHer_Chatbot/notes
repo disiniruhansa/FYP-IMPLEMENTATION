@@ -16,6 +16,6 @@ python -m eval.compare_kb_vs_nokb - kb vs no kb comparison
 
 python -m eval.llm_judge - flan-t5-large
 python -m eval.llm_judge_t5 - google/flan-t5-base
-
+python -m eval.llm_judge_mt0 - mt0-base
 
 

@@ -222,7 +222,7 @@ export default function App() {
         {showLearnMore && (
           <section className="learnMore" ref={learnMoreRef}>
             <div className="learnMoreCard">
-              <h2>Learn More About EmpowerHer 💗</h2>
+              <h2>Learn More About EmpowerHer </h2>
               <p>
                 EmpowerHer is an emotionally sensitive menstrual health chatbot created to
                 support adolescents who want a private, judgment-free way to learn about
@@ -295,21 +295,21 @@ export default function App() {
               <h3>Safety and Privacy Commitment</h3>
               <div className="learnMoreGrid">
                 <div>
-                  <h4>✅ No diagnosis or treatment</h4>
+                  <h4>No diagnosis or treatment</h4>
                   <p>
                     EmpowerHer does not diagnose medical conditions, prescribe treatment, or
                     recommend medication. It provides general educational support only.
                   </p>
                 </div>
                 <div>
-                  <h4>✅ Supportive and non-judgmental tone</h4>
+                  <h4>Supportive and non-judgmental tone</h4>
                   <p>
                     The chatbot avoids shaming language and is designed to be respectful and
                     culturally sensitive.
                   </p>
                 </div>
                 <div>
-                  <h4>✅ Privacy-aware design</h4>
+                  <h4>Privacy-aware design</h4>
                   <p>
                     EmpowerHer is built to avoid collecting personal identifying details. You
                     should also avoid sharing personal information like your full name,

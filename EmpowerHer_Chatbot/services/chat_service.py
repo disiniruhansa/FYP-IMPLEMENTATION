@@ -1,7 +1,7 @@
 # services/chat_service.py
 
 from dataclasses import dataclass
-from typing import List, Any
+from typing import List, Any, Optional
 import random
 import re
 
@@ -18,6 +18,185 @@ class ChatResult:
     topic: str
     intent: str
     kb_sources: List[str]
+
+
+def _history_text(item: Any) -> str:
+    if isinstance(item, dict):
+        return str(item.get("text", "")).strip()
+    return ""
+
+
+def _history_role(item: Any) -> str:
+    if isinstance(item, dict):
+        return str(item.get("role", "")).strip().lower()
+    return ""
+
+
+def _history_topic(item: Any) -> str:
+    if isinstance(item, dict):
+        meta = item.get("meta")
+        if isinstance(meta, dict):
+            return str(meta.get("topic", "")).strip().lower()
+    return ""
+
+
+def get_recent_context(history: Optional[List[Any]] = None) -> tuple[str, str]:
+    recent = history or []
+    last_topic = ""
+    last_user_text = ""
+
+    for item in reversed(recent):
+        role = _history_role(item)
+        if not last_topic and role == "bot":
+            last_topic = _history_topic(item)
+        if not last_user_text and role == "user":
+            last_user_text = _history_text(item)
+        if last_topic and last_user_text:
+            break
+
+    return last_topic, last_user_text
+
+
+FOLLOW_UP_HINTS = {
+    "late_period": [
+        "late period", "missed period", "period late", "late", "delay", "delayed period",
+    ],
+    "pain_cramps": [
+        "cramps", "cramp pain", "pain relief", "reduce cramps", "period pain",
+    ],
+    "food_diet": [
+        "food", "foods", "diet", "drink", "drinks", "eat", "eating", "ice cream", "coffee",
+    ],
+    "mood_swings": [
+        "mood", "sad", "angry", "irritable", "before my period",
+    ],
+    "hygiene": [
+        "hygiene", "wash", "clean", "pad change", "bath", "shower",
+    ],
+    "bathing_swimming": [
+        "swim", "swimming", "bath", "bathing", "shower", "pool",
+    ],
+    "first_period": [
+        "first period", "menarche", "started my period", "got my first period",
+    ],
+    "normal_discharge": [
+        "discharge", "white discharge", "clear discharge", "yellow discharge",
+    ],
+}
+
+
+FOLLOW_UP_SIGNAL_PATTERNS = [
+    r"\b\d+\s*(day|days|week|weeks|month|months)\b",
+    r"\band\b",
+    r"\bbut\b",
+    r"\balso\b",
+    r"\bjust\b",
+    r"\bstill\b",
+    r"\bonly\b",
+    r"\bfever\b",
+    r"\bdizzy\b",
+    r"\bfaint(ing|ed)?\b",
+    r"\bbleeding\b",
+    r"\bheavy\b",
+]
+
+
+def _looks_like_follow_up_fragment(text: str) -> bool:
+    low = (text or "").strip().lower()
+    if not low:
+        return False
+    if "?" in low:
+        return False
+    if any(low.startswith(prefix) for prefix in ["what ", "why ", "how ", "can ", "is ", "should ", "when "]):
+        return False
+    if len(low.split()) <= 5:
+        return True
+    return any(re.search(pattern, low) for pattern in FOLLOW_UP_SIGNAL_PATTERNS)
+
+
+def enrich_follow_up_message(user_message: str, history: Optional[List[Any]] = None) -> str:
+    text = (user_message or "").strip()
+    if not text:
+        return text
+
+    last_topic, last_user_text = get_recent_context(history)
+
+    if not last_topic:
+        return text
+
+    hints = FOLLOW_UP_HINTS.get(last_topic, [])
+    if any(h in text.lower() for h in hints):
+        return text
+
+    if not _looks_like_follow_up_fragment(text):
+        return text
+
+    if last_user_text:
+        return f"{text} (follow-up to: {last_user_text}; topic: {last_topic})"
+    return f"{text} (follow-up topic: {last_topic})"
+
+
+def is_follow_up_message(user_message: str, history: Optional[List[Any]] = None) -> bool:
+    text = (user_message or "").strip()
+    if not text:
+        return False
+    last_topic, _ = get_recent_context(history)
+    if not last_topic:
+        return False
+    hints = FOLLOW_UP_HINTS.get(last_topic, [])
+    if any(h in text.lower() for h in hints):
+        return False
+    return _looks_like_follow_up_fragment(text)
+
+
+def extract_duration_phrase(text: str) -> str:
+    match = re.search(r"\b\d+\s*(day|days|week|weeks|month|months)\b", (text or "").lower())
+    return match.group(0) if match else ""
+
+
+def build_follow_up_reply(current_text: str, previous_topic: str, kb_answer: str = "") -> str:
+    low = (current_text or "").lower()
+    duration = extract_duration_phrase(current_text)
+    dangerous = has_dangerous_symptoms(current_text)
+
+    if previous_topic == "late_period":
+        has_concerning_detail = dangerous or any(p in low for p in ["dizzy", "dizziness", "very unwell", "weak"])
+        if has_concerning_detail:
+            detail = (
+                f" Being late for {duration} with these symptoms needs medical advice."
+                if duration else
+                ""
+            )
+            return (
+                f"A late period with symptoms like fever, fainting, severe pain, dizziness, or very heavy bleeding is not something to ignore.{detail} "
+                "Please tell a trusted adult and get medical advice from a clinic or doctor as soon as possible."
+            )
+        if duration:
+            return (
+                f"A delay of {duration} can sometimes happen because of stress, sleep changes, illness, travel, or normal hormone shifts. "
+                "Please keep watching for pain, heavy bleeding, dizziness, or fever, and tell me if any of those are happening."
+            )
+
+    if previous_topic == "pain_cramps":
+        if dangerous or any(p in low for p in ["cannot stand", "can't stand", "cant stand", "can't sleep", "cant sleep", "school"]):
+            return (
+                "If cramps are so strong that you cannot sleep, stand, or do normal activities, please tell a trusted adult and get medical advice. "
+                "Severe pain should not be ignored."
+            )
+        if any(p in low for p in ["heat", "warm", "water", "rest", "stretch", "walk", "natural"]):
+            return (
+                "Gentle heat, rest, drinking water, light stretching, and slow walking can help some girls with cramps. "
+                "If the pain keeps getting worse or lasts many days, please talk to a trusted adult or a doctor."
+            )
+
+    if previous_topic in ["odor_smell", "normal_discharge"]:
+        if dangerous or any(p in low for p in ["itch", "itching", "burn", "burning", "green", "yellow", "fishy"]):
+            return (
+                "A strong smell or unusual discharge with itching, burning, pain, fever, or a green or yellow color should be checked. "
+                "Please tell a trusted adult or visit a clinic."
+            )
+
+    return build_kb_reply(kb_answer) if kb_answer else ""
 
 
 # -------------------------------
@@ -122,6 +301,19 @@ def detect_topic(msg: str) -> str:
     ]):
         return "doctor_when"
 
+    if any(w in m for w in [
+        "first period", "my first period", "got my first period", "start my period",
+        "started my period", "menarche", "when will my first period come",
+    ]):
+        return "first_period"
+
+    if any(w in m for w in [
+        "swim", "swimming", "pool", "bath during my period", "bathing during my period",
+        "shower during my period", "bathe during my period", "take a bath", "taking a bath",
+        "take a shower", "taking a shower",
+    ]):
+        return "bathing_swimming"
+
     if any(w in m for w in ["cup", "menstrual cup"]):
         return "menstrual_cup"
     if any(w in m for w in ["tampon"]):
@@ -132,11 +324,14 @@ def detect_topic(msg: str) -> str:
         return "odor_smell"
     if any(w in m for w in ["coffee", "caffeine"]):
         return "caffeine"
-    if any(w in m for w in ["exercise", "workout", "gym", "sports", "swim", "swimming", "pe class"]):
+    if any(w in m for w in ["exercise", "workout", "gym", "sports", "pe class"]):
         return "exercise"
     if any(w in m for w in ["normal cycle length", "cycle length for teens", "cycle length", "irregular", "calendar", "app", "track my cycle", "track my period"]):
         return "cycle_tracking"
-    if any(w in m for w in ["bloating", "food", "diet", "eat", "drink", "water", "dehydration", "dehydrated"]):
+    if any(w in m for w in [
+        "bloating", "food", "diet", "eat", "drink", "water", "dehydration",
+        "dehydrated", "ice cream", "ice-cream", "chocolate", "snack", "snacks"
+    ]):
         return "food_diet"
     if any(w in m for w in ["nausea", "vomit", "diarrhea", "diarrhoea"]):
         return "stomach"
@@ -161,6 +356,11 @@ def detect_topic(msg: str) -> str:
         return "heavy_bleeding"
     if any(w in m for w in ["spotting", "brown", "light bleeding"]):
         return "spotting"
+    if any(w in m for w in [
+        "discharge", "white discharge", "clear discharge", "yellow discharge",
+        "green discharge", "vaginal discharge",
+    ]):
+        return "normal_discharge"
     if any(w in m for w in ["mood", "irritable", "pms", "sad", "angry"]):
         return "mood_swings"
     if any(w in m for w in ["hygiene", "wash", "clean", "shower", "bath"]):
@@ -205,10 +405,11 @@ MEDICINE_WORDS = [
 ]
 
 DIAGNOSIS_PHRASES = [
-    "you have",
     "this is pcos",
     "this is endometriosis",
     "you are diagnosed",
+    "you definitely have",
+    "it sounds like you have",
 ]
 
 
@@ -233,7 +434,9 @@ def apply_safety_constraints(user_text: str, bot_reply: str) -> str:
         ).strip()
 
     # Escalate dangerous symptoms
-    if any(s in u for s in DANGEROUS_SYMPTOMS):
+    if any(s in u for s in DANGEROUS_SYMPTOMS) and not (
+        "trusted adult" in r.lower() and ("clinic" in r.lower() or "doctor" in r.lower())
+    ):
         r = (
             r
             + "\n\n"
@@ -241,6 +444,11 @@ def apply_safety_constraints(user_text: str, bot_reply: str) -> str:
         ).strip()
 
     return r
+
+
+def has_dangerous_symptoms(text: str) -> bool:
+    low = (text or "").lower()
+    return any(s in low for s in DANGEROUS_SYMPTOMS)
 
 
 def trim_to_sentences(text: str, max_sentences: int = 4) -> str:
@@ -313,6 +521,16 @@ TOPIC_TEMPLATES = {
         "Water, warm drinks, and balanced meals can help you feel steadier. "
         "If you want, tell me what you have been eating and how your body feels."
     ),
+    "bathing_swimming": (
+        "Yes, bathing during your period is safe and can help you feel clean and comfortable. "
+        "Some girls also swim during their period using suitable menstrual products, while others prefer not to during heavy flow. "
+        "If you feel pain, dizziness, or strong discomfort, please stop and tell a trusted adult."
+    ),
+    "first_period": (
+        "The first period often starts between ages 9 and 15, and it is common to feel unsure about it. "
+        "Signs before a first period can include white discharge, breast development, body hair growth, and mood changes. "
+        "Keeping pads ready and talking to a trusted adult can help you feel more prepared."
+    ),
     "menstrual_cup": (
         "Menstrual cups can be safe when cleaned well. "
         "Wash your hands, rinse with clean water, and follow the cup instructions for cleaning. "
@@ -332,6 +550,11 @@ TOPIC_TEMPLATES = {
         "A mild smell can be normal, but a strong or fishy smell can feel worrying. "
         "Try gentle hygiene and change pads or tampons regularly. "
         "If the smell is strong, continues, or comes with itching or pain, please talk to a trusted adult or a clinic."
+    ),
+    "normal_discharge": (
+        "Clear or white discharge with little or no smell can be normal and helps keep the vagina clean and healthy. "
+        "Please seek help if the discharge is green or yellow, smells strong, or comes with itching, burning, or pain. "
+        "Gentle washing with water and avoiding harsh soaps can help protect the area."
     ),
     "caffeine": (
         "Some people find caffeine can make cramps or anxiety feel stronger. "
@@ -386,6 +609,25 @@ TOPIC_TEMPLATES = {
 }
 
 
+def build_specific_topic_reply(user_text: str, topic: str) -> str:
+    text = (user_text or "").lower()
+
+    if topic == "food_diet":
+        if "ice cream" in text or "ice-cream" in text:
+            return (
+                "Yes, eating ice cream during your period is usually okay. "
+                "Cold foods do not stop your period, but some girls feel they make cramps feel worse. "
+                "If you notice that happens to you, have a smaller amount or choose something warmer instead."
+            )
+        if "coffee" in text or "caffeine" in text:
+            return (
+                "Coffee is not forbidden during your period, but caffeine can make cramps, anxiety, or bloating feel worse for some people. "
+                "If you notice that, try cutting back and drinking more water instead."
+            )
+
+    return TOPIC_TEMPLATES.get(topic, "")
+
+
 def format_kb_answer(hits) -> str:
     if not hits:
         return ""
@@ -424,6 +666,26 @@ def build_rag_context(hits) -> str:
     return "\n\n".join(context_parts).strip()
 
 
+def should_answer_from_kb(intent: str, topic: str, hits) -> bool:
+    if not hits:
+        return False
+    top_score = float(hits[0].score)
+    if intent in ["info_question", "symptom"]:
+        return top_score >= 0.22
+    if topic == "unknown":
+        return top_score >= 0.45
+    return False
+
+
+def build_kb_reply(answer: str) -> str:
+    if not answer:
+        return ""
+    return (
+        f"{answer}\n\n"
+        "If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic."
+    )
+
+
 # -------------------------------
 # MAIN ChatService
 # -------------------------------
@@ -449,8 +711,11 @@ class ChatService:
             backend=kb_backend,
         ) if use_kb else None
 
-    def generate_reply(self, user_message: str) -> ChatResult:
-        text = (user_message or "").strip()
+    def generate_reply(self, user_message: str, history: Optional[List[Any]] = None) -> ChatResult:
+        original_text = (user_message or "").strip()
+        follow_up = is_follow_up_message(original_text, history=history)
+        previous_topic, _ = get_recent_context(history)
+        text = enrich_follow_up_message(original_text, history=history)
 
         if not text:
             return ChatResult(
@@ -477,6 +742,10 @@ class ChatService:
         # 2) Intent + topic
         intent = detect_intent(text)
         topic = detect_topic(text)
+        if follow_up and previous_topic:
+            topic = previous_topic
+            if intent == "support":
+                intent = "info_question"
         has_topic_template = topic in TOPIC_TEMPLATES
 
         # 3) KB retrieval (same for both versions)
@@ -485,14 +754,16 @@ class ChatService:
         kb_answer = ""
         rag_context = ""
 
-        if self.use_kb and self.kb is not None and intent in ["info_question", "symptom"]:
-            kb_hits = self.kb.search(text, top_k=2)
+        if self.use_kb and self.kb is not None:
+            kb_hits = self.kb.search(text, top_k=3)
             kb_sources = [h.source for h in kb_hits]
             kb_answer = format_kb_answer(kb_hits)
             rag_context = build_rag_context(kb_hits)
 
-        # helper prefix (only add if emotion is on)
-        prefix = (emotion_line + "\n\n") if emotion_line else ""
+        # Only add emotional prefacing for supportive or symptom-heavy cases.
+        use_prefix = bool(emotion_line) and intent in ["support", "affirmation", "symptom", "calming"]
+        prefix = (emotion_line + "\n\n") if use_prefix else ""
+        follow_up_reply = build_follow_up_reply(original_text, previous_topic, kb_answer)
 
         # 4) Compose reply
         if intent == "calming":
@@ -503,25 +774,14 @@ class ChatService:
                 "If you want, tell me what is making you feel worried right now — I am listening."
             )
 
-        elif self.use_rag and rag_context and self.use_llm and self.responder is not None:
-            llm_reply = self.responder.generate(
-                text,
-                labels or None,
-                retrieved_context=rag_context,
-            )
-            llm_reply = cleanup_reply(llm_reply, max_sentences=4)
-            reply = llm_reply or (
-                f"{prefix}"
-                f"{kb_answer}\n\n"
-                "If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic."
-            )
+        elif follow_up and previous_topic and follow_up_reply:
+            reply = f"{prefix}{follow_up_reply}"
 
-        elif kb_answer:
-            reply = (
-                f"{prefix}"
-                f"{kb_answer}\n\n"
-                "If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic."
-            )
+        elif has_topic_template:
+            reply = f"{prefix}{build_specific_topic_reply(text, topic)}"
+
+        elif kb_answer and should_answer_from_kb(intent, topic, kb_hits):
+            reply = f"{prefix}{build_kb_reply(kb_answer)}"
 
         elif self.use_llm and self.responder is not None and intent in ["support", "affirmation"]:
             llm_reply = self.responder.generate(text, labels or None)
@@ -530,9 +790,6 @@ class ChatService:
                 f"{prefix}"
                 "You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about."
             )
-
-        elif has_topic_template:
-            reply = f"{prefix}{TOPIC_TEMPLATES[topic]}"
 
         elif self.use_llm and self.responder is not None and topic == "unknown":
             llm_reply = self.responder.generate(text, labels or None)
@@ -560,8 +817,9 @@ class ChatService:
                     "I can listen and help. Tell me what is happening in your body or what you want to know."
                 )
 
-        reply = apply_safety_constraints(text, reply)
-        reply = cleanup_reply(reply, max_sentences=4)
+        reply = apply_safety_constraints(original_text, reply)
+        max_sentences = 6 if has_dangerous_symptoms(original_text) else 4
+        reply = cleanup_reply(reply, max_sentences=max_sentences)
         if not reply:
             reply = "I am here with you. If you want, tell me a little more about what you are feeling."
 

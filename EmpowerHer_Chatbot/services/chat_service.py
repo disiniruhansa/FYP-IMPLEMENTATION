@@ -434,11 +434,13 @@ class ChatService:
         use_kb: bool = True,
         kb_backend: str = "embedding",
         use_llm: bool = True,
+        use_rag: bool = True,
     ):
         self.use_emotions = use_emotions
         self.use_kb = use_kb
         self.emotion_model = EmotionClassifier() if use_emotions else None
         self.use_llm = use_llm
+        self.use_rag = use_rag
         self.responder = EmpatheticResponder() if use_llm else None
         self.kb = KnowledgeBaseRetriever(
             docs_dir="kb/docs",
@@ -501,7 +503,7 @@ class ChatService:
                 "If you want, tell me what is making you feel worried right now — I am listening."
             )
 
-        elif rag_context and self.use_llm and self.responder is not None:
+        elif self.use_rag and rag_context and self.use_llm and self.responder is not None:
             llm_reply = self.responder.generate(
                 text,
                 labels or None,

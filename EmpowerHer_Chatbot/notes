@@ -18,4 +18,4 @@ python -m eval.compare_rag_vs_nonrag - rag vs non-rag comparison
 python -m eval.llm_judge - flan-t5-large
 python -m eval.llm_judge_t5 - google/flan-t5-base
 python -m eval.llm_judge_mt0 - mt0-base
-
+python -m eval.llm_judge_llama - TinyLlama judge

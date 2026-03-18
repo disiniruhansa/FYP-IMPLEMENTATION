@@ -50,7 +50,7 @@ body {
   color: white;
   background:
     linear-gradient(120deg, rgba(19, 10, 16, 0.65), rgba(19, 10, 16, 0.25)),
-    url("/images/landpic.jpg") center/cover no-repeat;
+    url("/images/landpic.avif") center/cover no-repeat;
   overflow-y: auto;
 }
 

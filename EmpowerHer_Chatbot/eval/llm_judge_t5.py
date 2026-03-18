@@ -1,5 +1,5 @@
 """
-LLM judge for chatbot responses using google/t5-v1_1-base.
+LLM judge for chatbot responses using google/flan-t5-base.
 
 Usage (from repo root):
   python -m eval.llm_judge_t5

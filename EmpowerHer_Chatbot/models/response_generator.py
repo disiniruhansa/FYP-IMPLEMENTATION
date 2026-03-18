@@ -158,10 +158,10 @@ EmpowerHer:
         output_ids = self.model.generate(
             **inputs,
             max_new_tokens=max_new_tokens,
-            temperature=0.7,        # more stable, less random
-            top_p=0.95,
-            do_sample=True,
+            do_sample=False,
+            num_beams=4,
             repetition_penalty=1.15,
+            no_repeat_ngram_size=3,
             pad_token_id=pad_id,
         )
 

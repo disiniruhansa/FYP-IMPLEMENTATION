@@ -109,7 +109,10 @@ export default function App() {
       const res = await fetch("/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: msg }),
+        body: JSON.stringify({
+          message: msg,
+          history: messages.slice(-6),
+        }),
       });
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);

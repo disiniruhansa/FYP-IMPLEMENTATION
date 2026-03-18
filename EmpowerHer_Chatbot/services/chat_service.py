@@ -411,6 +411,19 @@ def format_kb_answer(hits) -> str:
     return answer
 
 
+def build_rag_context(hits) -> str:
+    if not hits:
+        return ""
+
+    context_parts = []
+    for idx, hit in enumerate(hits[:3], start=1):
+        chunk = clean_kb_text(hit.chunk, max_sentences=4)
+        if chunk:
+            context_parts.append(f"[Source {idx}: {hit.source}]\n{chunk}")
+
+    return "\n\n".join(context_parts).strip()
+
+
 # -------------------------------
 # MAIN ChatService
 # -------------------------------
@@ -468,11 +481,13 @@ class ChatService:
         kb_hits = []
         kb_sources = []
         kb_answer = ""
+        rag_context = ""
 
         if self.use_kb and self.kb is not None and intent in ["info_question", "symptom"]:
             kb_hits = self.kb.search(text, top_k=2)
             kb_sources = [h.source for h in kb_hits]
             kb_answer = format_kb_answer(kb_hits)
+            rag_context = build_rag_context(kb_hits)
 
         # helper prefix (only add if emotion is on)
         prefix = (emotion_line + "\n\n") if emotion_line else ""
@@ -484,6 +499,19 @@ class ChatService:
                 f"{prefix}"
                 f"{calming}\n\n"
                 "If you want, tell me what is making you feel worried right now — I am listening."
+            )
+
+        elif rag_context and self.use_llm and self.responder is not None:
+            llm_reply = self.responder.generate(
+                text,
+                labels or None,
+                retrieved_context=rag_context,
+            )
+            llm_reply = cleanup_reply(llm_reply, max_sentences=4)
+            reply = llm_reply or (
+                f"{prefix}"
+                f"{kb_answer}\n\n"
+                "If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic."
             )
 
         elif kb_answer:

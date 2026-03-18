@@ -30,12 +30,30 @@ class EmpatheticResponder:
 
     # ------------------------------------------------------------------
 
-    def _build_prompt(self, user_message: str, emotions: Optional[List[str]] = None) -> str:
+    def _build_prompt(
+        self,
+        user_message: str,
+        emotions: Optional[List[str]] = None,
+        retrieved_context: Optional[str] = None,
+    ) -> str:
         """
         Build an instruction-style prompt + examples so Flan-T5
         behaves like a warm menstrual-health helper, not a brochure.
         """
         emo_text = ", ".join(emotions) if emotions else "unknown"
+
+        context_block = ""
+        if retrieved_context and retrieved_context.strip():
+            context_block = f"""
+KNOWLEDGE BASE CONTEXT
+- Use the context below only if it is relevant to the user's message.
+- Prefer these facts over guessing.
+- If the context does not answer the question, say that simply and give safe general guidance.
+- Do not quote the context or mention a knowledge base.
+
+Context:
+{retrieved_context.strip()}
+"""
 
         prompt = f"""
 You are *EmpowerHer*, a kind, emotionally supportive menstrual-health helper for teenage girls.
@@ -48,6 +66,7 @@ IMPORTANT STYLE RULES
 - Focus only on her feelings, her body, and gentle guidance.
 - No medical diagnosis or medicine names. Use only general, safe advice.
 - Use 2-4 short, simple sentences in easy English.
+{context_block}
 
 EXAMPLE 1
 User message: "I'm scared because my period is late."
@@ -114,6 +133,7 @@ EmpowerHer:
         self,
         user_message: str,
         emotions: Optional[List[str]] = None,
+        retrieved_context: Optional[str] = None,
         max_new_tokens: int = 120,
     ) -> str:
         """
@@ -122,7 +142,7 @@ EmpowerHer:
         if not user_message or not user_message.strip():
             return "I'm here to listen whenever you'd like to share how you're feeling."
 
-        prompt = self._build_prompt(user_message, emotions)
+        prompt = self._build_prompt(user_message, emotions, retrieved_context)
 
         inputs = self.tokenizer(
             prompt,

@@ -10,7 +10,13 @@ then run backend in another terminal: python -m app.app
 
 python -m eval.evaluate_emotion_classifier - accuracy
 python -m eval.evaluate_response_generation - responseGen accuracy
+
 python -m eval.compare_emotion_vs_noemotion - comparison
 python -m eval.compare_kb_vs_nokb - kb vs no kb comparison
+python -m eval.compare_rag_vs_nonrag - rag vs non-rag comparison
 
-
+python -m eval.llm_judge - flan-t5-large
+python -m eval.llm_judge_t5 - google/flan-t5-base
+python -m eval.llm_judge_mt0 - mt0-base
+python -m eval.llm_judge_llama - TinyLlama judge
+python -m eval.llm_judge_mistral - Mistral judge

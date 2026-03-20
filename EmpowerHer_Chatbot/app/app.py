@@ -40,8 +40,9 @@ def static_proxy(path: str):
 def chat():
     data = request.json
     message = data.get("message", "")
+    history = data.get("history", [])
 
-    result = chatbot.generate_reply(message)
+    result = chatbot.generate_reply(message, history=history)
 
     return jsonify({
         "reply": result.reply,

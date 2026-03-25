@@ -741,8 +741,11 @@ class ChatService:
 
         # 2) Intent + topic
         intent = detect_intent(text)
-        topic = detect_topic(text)
-        if follow_up and previous_topic:
+        detected_topic = detect_topic(text)
+        topic = detected_topic
+        # Only inherit the previous topic when the new message is genuinely vague.
+        # If we can detect a concrete new topic, keep it instead of forcing follow-up context.
+        if follow_up and previous_topic and detected_topic in ["unknown", previous_topic]:
             topic = previous_topic
             if intent == "support":
                 intent = "info_question"

@@ -1,0 +1,12 @@
+.git
+.gitignore
+.env
+venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.log
+node_modules
+FRONTEND/node_modules
+FRONTEND/dist

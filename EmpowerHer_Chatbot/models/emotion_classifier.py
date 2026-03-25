@@ -13,11 +13,11 @@ class EmotionClassifier:
         print("[EmotionClassifier] Loading model... This may take a moment the first time.")
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
-        # text-classification pipeline does multi-label prediction for this model
+        # `top_k=None` preserves the old "all scores" behavior without the deprecation warning.
         self.pipeline = TextClassificationPipeline(
             model=self.model,
             tokenizer=self.tokenizer,
-            return_all_scores=True
+            top_k=None
         )
         print("[EmotionClassifier] Model loaded successfully.")
 

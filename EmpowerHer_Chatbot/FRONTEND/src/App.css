@@ -30,11 +30,16 @@ body {
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   color: var(--ink);
   background: var(--bg);
+  overflow-x: hidden;
 }
 
 button,
 textarea {
   font: inherit;
+}
+
+img {
+  max-width: 100%;
 }
 
 .bootScreen {
@@ -925,6 +930,8 @@ textarea:focus {
 
   .heroSection {
     min-height: 420px;
+    padding: 56px 18px;
+    background-position: 68% center;
   }
 
   .sectionHeading h2,
@@ -944,6 +951,168 @@ textarea:focus {
 
   .sendBtn {
     min-height: 48px;
+    width: 100%;
+  }
+
+  .siteBrand {
+    font-size: 22px;
+  }
+
+  .siteLinks {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .topActions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .topActions .ghost {
+    flex: 1 1 180px;
+  }
+
+  .featureCard,
+  .miniCard,
+  .signupCard,
+  .benefitPanel,
+  .medicalCard {
+    min-height: auto;
+  }
+
+  .featureCard h3,
+  .miniCard h3 {
+    min-height: auto;
+  }
+
+  .featureCard p,
+  .miniCard p {
+    max-width: none;
+  }
+
+  .heroSubtext {
+    margin-top: 18px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .introBand p,
+  .sectionHeading p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .medicalHero h2 {
+    font-size: 30px;
+  }
+
+  .medicalCard h3 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 560px) {
+  .siteNav,
+  .topbar,
+  .main,
+  .medicalShell {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .siteNav {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .siteLinks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .siteLinks button {
+    width: 100%;
+    text-align: left;
+    padding: 10px 0;
+  }
+
+  .heroSection {
+    min-height: 360px;
+    padding: 44px 14px;
+    background-position: 72% center;
+  }
+
+  .heroLead {
+    font-size: clamp(20px, 7vw, 28px);
+  }
+
+  .heroContent h1 {
+    margin-top: 8px;
+    font-size: clamp(34px, 14vw, 52px);
+    line-height: 1;
+  }
+
+  .heroContent h2 {
+    font-size: clamp(20px, 9vw, 32px);
+  }
+
+  .heroActions {
+    gap: 10px;
+  }
+
+  .heroActions .primaryBtn,
+  .heroActions .secondaryBtn,
+  .ctaStack .primaryBtn,
+  .ctaStack .secondaryBtn,
+  .medicalActions .primaryBtn {
+    width: 100%;
+  }
+
+  .chatIntroCard,
+  .card,
+  .chatBox,
+  .composer,
+  .signupCard,
+  .benefitPanel,
+  .medicalHero,
+  .medicalCard {
+    border-radius: 14px;
+  }
+
+  .chatBox {
+    padding: 12px;
+  }
+
+  .bubble {
+    padding: 12px 13px;
+    border-radius: 14px;
+  }
+
+  .chip {
+    font-size: 11px;
+  }
+
+  .topbar h1 {
+    font-size: 24px;
+  }
+
+  .topbar p {
+    font-size: 14px;
+  }
+
+  .logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  textarea {
+    min-height: 64px;
+  }
+
+  .medicalList {
+    padding-left: 18px;
   }
 }
 

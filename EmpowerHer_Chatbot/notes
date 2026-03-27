@@ -20,3 +20,7 @@ python -m eval.llm_judge_t5 - google/flan-t5-base
 python -m eval.llm_judge_mt0 - mt0-base
 python -m eval.llm_judge_llama - TinyLlama judge
 python -m eval.llm_judge_mistral - Mistral judge
+
+
+Copies changes from EmpowerHer_Chatbot to hf-space
+powershell -ExecutionPolicy Bypass -File "D:\FYP IMPLEMENTATION\deploy-hf-space.ps1" -Message "Update chatbot responses"

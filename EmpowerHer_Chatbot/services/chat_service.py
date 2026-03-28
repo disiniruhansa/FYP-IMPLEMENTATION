@@ -242,6 +242,20 @@ def choose_emotion_line(bucket: str) -> str:
     return random.choice(EMOTION_TEMPLATES.get(bucket, EMOTION_TEMPLATES["mixed"]))
 
 
+OUT_OF_SCOPE_REPLIES = [
+    "I am here mainly to help with menstrual health, period symptoms, moods, and calm support. If you want, please ask me something related to periods, menstrual health, or how you are feeling.",
+    "I can best help with periods, menstrual health questions, emotional support, and calming guidance. Please ask me something related to those topics if you want support.",
+    "I am a menstrual-health support chatbot, so I may not be the best place for unrelated chat. If you want, ask me about periods, symptoms, moods, or worries you are having.",
+    "I am here to support you with menstrual health topics. You can ask me about periods, cramps, mood changes, hygiene, or anything else related to menstrual wellbeing.",
+    "I may not be the right chatbot for unrelated conversation, but I can help with menstrual health concerns. If you want, ask me about period symptoms, cycle changes, or how you are feeling.",
+    "My main role is to help with menstrual health and emotional support during period-related concerns. Please ask me something about periods, symptoms, moods, or calm support.",
+    "I am designed to focus on menstrual health support. If you need help, you can ask me about cramps, late periods, bleeding, mood swings, hygiene, or period worries.",
+    "I am best at helping with period-related questions and emotional reassurance. If you want, tell me about a menstrual health concern or a feeling you are dealing with.",
+    "I am here for menstrual health guidance and supportive conversation. Please ask me something about your period, symptoms, cycle, or worries so I can help properly.",
+    "I mainly support users with menstrual health questions. You can ask me about period pain, discharge, late periods, mood changes, hygiene, or when to seek help.",
+]
+
+
 # -------------------------------
 # Intent detector
 # -------------------------------
@@ -367,6 +381,84 @@ def detect_topic(msg: str) -> str:
         return "hygiene"
 
     return "unknown"
+
+
+OUT_OF_SCOPE_PHRASES = [
+    "i love you",
+    "do you love me",
+    "marry me",
+    "what is your name",
+    "who are you",
+    "tell me a joke",
+    "sing a song",
+    "good morning",
+    "good night",
+    "hello",
+    "hi",
+    "hey",
+    "how are you",
+    "how are you doing",
+    "what are you doing",
+    "where do you live",
+    "are you real",
+    "are you human",
+    "can we be friends",
+    "be my friend",
+    "i miss you",
+    "i like you",
+    "you are beautiful",
+    "you are cute",
+    "you are amazing",
+    "can you dance",
+    "dance for me",
+    "can you sing",
+    "say something funny",
+    "make me laugh",
+    "tell me something funny",
+    "tell me a story",
+    "read me a story",
+    "what is the weather",
+    "what time is it",
+    "who made you",
+    "what can you do",
+    "are you single",
+    "do you have a boyfriend",
+    "do you have a girlfriend",
+    "can i kiss you",
+    "i want to kiss you",
+    "i want to marry you",
+    "will you marry me",
+    "do you know me",
+    "do you miss me",
+    "good afternoon",
+    "good evening",
+    "bye",
+    "bye bye",
+    "see you",
+    "thank you so much",
+    "love you",
+]
+
+
+EMOTIONAL_SUPPORT_HINTS = [
+    "sad", "angry", "scared", "worried", "anxious", "afraid", "stressed",
+    "panic", "overthinking", "lonely", "upset", "cry", "frustrated",
+]
+
+
+def is_out_of_scope_message(text: str, intent: str, topic: str) -> bool:
+    low = (text or "").strip().lower()
+    if not low:
+        return False
+    if any(phrase == low for phrase in OUT_OF_SCOPE_PHRASES):
+        return True
+    if topic != "unknown":
+        return False
+    if intent in ["info_question", "symptom", "calming"]:
+        return False
+    if any(hint in low for hint in EMOTIONAL_SUPPORT_HINTS):
+        return False
+    return intent in ["support", "affirmation"]
 
 
 CALMING_STEPS = [
@@ -750,6 +842,7 @@ class ChatService:
             topic = previous_topic
             if intent == "support":
                 intent = "info_question"
+        out_of_scope = is_out_of_scope_message(original_text, intent, topic)
         has_topic_template = topic in TOPIC_TEMPLATES
 
         # 3) KB retrieval (same for both versions)
@@ -779,6 +872,9 @@ class ChatService:
                 f"{calming}\n\n"
                 "If you want, tell me what is making you feel worried right now — I am listening."
             )
+
+        elif out_of_scope:
+            reply = random.choice(OUT_OF_SCOPE_REPLIES)
 
         elif follow_up and previous_topic and follow_up_reply:
             reply = f"{prefix}{follow_up_reply}"

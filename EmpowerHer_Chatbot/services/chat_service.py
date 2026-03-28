@@ -783,11 +783,15 @@ class ChatService:
         elif has_topic_template:
             reply = f"{prefix}{build_specific_topic_reply(text, topic)}"
 
-        elif kb_answer and should_answer_from_kb(intent, topic, kb_hits):
+        elif kb_answer and should_answer_from_kb(intent, topic, kb_hits) and not self.use_rag:
             reply = f"{prefix}{build_kb_reply(kb_answer)}"
 
         elif self.use_llm and self.responder is not None and intent in ["support", "affirmation"]:
-            llm_reply = self.responder.generate(text, labels or None)
+            llm_reply = self.responder.generate(
+                text,
+                labels or None,
+                retrieved_context=rag_context if self.use_rag else None,
+            )
             llm_reply = cleanup_reply(llm_reply, max_sentences=4)
             reply = llm_reply or (
                 f"{prefix}"
@@ -795,7 +799,23 @@ class ChatService:
             )
 
         elif self.use_llm and self.responder is not None and topic == "unknown":
-            llm_reply = self.responder.generate(text, labels or None)
+            llm_reply = self.responder.generate(
+                text,
+                labels or None,
+                retrieved_context=rag_context if self.use_rag else None,
+            )
+            llm_reply = cleanup_reply(llm_reply, max_sentences=4)
+            reply = llm_reply or (
+                f"{prefix}"
+                "You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about."
+            )
+
+        elif self.use_rag and self.use_llm and self.responder is not None and rag_context and intent in ["info_question", "symptom"]:
+            llm_reply = self.responder.generate(
+                text,
+                labels or None,
+                retrieved_context=rag_context,
+            )
             llm_reply = cleanup_reply(llm_reply, max_sentences=4)
             reply = llm_reply or (
                 f"{prefix}"

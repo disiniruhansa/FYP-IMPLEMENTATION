@@ -1,31 +1,34 @@
 import type { KeyboardEventHandler } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { User } from "firebase/auth";
+import { AuthPanel } from "./components/AuthPanel";
+import { isFirebaseConfigured } from "./lib/firebase";
+import {
+  signInWithGoogle,
+  signInWithEmail,
+  signOutUser,
+  signUpWithEmail,
+  subscribeToAuthChanges,
+} from "./services/auth";
+import {
+  clearConversationMessages,
+  createConversation,
+  deleteConversation,
+  listConversations,
+  loadConversationMessages,
+  replaceConversationMessages,
+} from "./services/chatHistory";
+import type {
+  ChatMessage,
+  ChatMeta,
+  ChatResponse,
+  ConversationSummary,
+} from "./types/chat";
 import "./App.css";
 import appLogo from "../images/Logo.png";
 
-type ChatMeta = {
-  intent?: string;
-  topic?: string;
-  emotions?: string[];
-  kb_sources?: string[];
-};
-
-type ChatMessage = {
-  role: "user" | "bot";
-  text: string;
-  meta?: ChatMeta;
-};
-
-type ChatResponse = {
-  reply?: string;
-  emotions?: string[];
-  raw_emotions?: unknown;
-  topic?: string;
-  intent?: string;
-  kb_sources?: string[];
-};
-
 type SectionKey = "home" | "about" | "features" | "why" | "support";
+type AuthMode = "signin" | "signup";
 
 const initialBotMessage: ChatMessage = {
   role: "bot",
@@ -37,7 +40,6 @@ function Bubble({ role, text, meta }: ChatMessage) {
     <div className={`row ${role}`}>
       <div className={`bubble ${role}`}>
         <div className="bubbleText">{text}</div>
-
         {role === "bot" && meta && (
           <div className="meta">
             <span className="chip">Intent: {meta.intent ?? "-"}</span>
@@ -61,6 +63,32 @@ function Bubble({ role, text, meta }: ChatMessage) {
   );
 }
 
+function hasUserConversation(history: ChatMessage[]) {
+  return history.some((message) => message.role === "user");
+}
+
+function createConversationId() {
+  return `conversation-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function buildSummary(conversationId: string, messages: ChatMessage[]): ConversationSummary {
+  const firstUser = messages.find((message) => message.role === "user");
+  const lastMessage = messages[messages.length - 1];
+  const titleSource = firstUser?.text || "New conversation";
+  const previewSource = lastMessage?.text || "";
+
+  return {
+    id: conversationId,
+    title:
+      titleSource.length > 48 ? `${titleSource.slice(0, 48).trim()}...` : titleSource,
+    preview:
+      previewSource.length > 80
+        ? `${previewSource.slice(0, 80).trim()}...`
+        : previewSource,
+    messageCount: messages.length,
+  };
+}
+
 export default function App() {
   const [booting, setBooting] = useState(true);
   const [showLanding, setShowLanding] = useState(true);
@@ -68,8 +96,20 @@ export default function App() {
   const [messages, setMessages] = useState<ChatMessage[]>([initialBotMessage]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [authBusy, setAuthBusy] = useState(false);
+  const [authReady, setAuthReady] = useState(!isFirebaseConfigured);
+  const [historyReady, setHistoryReady] = useState(!isFirebaseConfigured);
+  const [authMessage, setAuthMessage] = useState<string | null>(null);
+  const [conversationSummaries, setConversationSummaries] = useState<
+    ConversationSummary[]
+  >([]);
+  const [activeConversationId, setActiveConversationId] = useState<string | null>(
+    null
+  );
 
   const endRef = useRef<HTMLDivElement | null>(null);
+  const messagesRef = useRef<ChatMessage[]>([initialBotMessage]);
   const sectionRefs: Record<SectionKey, React.RefObject<HTMLDivElement | null>> =
     {
       home: useRef<HTMLDivElement | null>(null),
@@ -91,6 +131,7 @@ export default function App() {
   );
 
   useEffect(() => {
+    messagesRef.current = messages;
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
@@ -99,17 +140,231 @@ export default function App() {
     return () => window.clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (!isFirebaseConfigured) {
+      return undefined;
+    }
+
+    const unsubscribe = subscribeToAuthChanges(async (nextUser) => {
+      setUser(nextUser);
+      setAuthReady(true);
+      setHistoryReady(false);
+      setAuthMessage(null);
+
+      if (!nextUser) {
+        setConversationSummaries([]);
+        setActiveConversationId(null);
+        setMessages([initialBotMessage]);
+        setHistoryReady(true);
+        return;
+      }
+
+      try {
+        const summaries = await listConversations(nextUser.uid);
+
+        if (summaries.length > 0) {
+          setConversationSummaries(summaries);
+          setActiveConversationId(summaries[0].id);
+          const remoteMessages = await loadConversationMessages(
+            nextUser.uid,
+            summaries[0].id
+          );
+          setMessages(remoteMessages.length > 0 ? remoteMessages : [initialBotMessage]);
+        } else if (hasUserConversation(messagesRef.current)) {
+          const conversationId = createConversationId();
+          await createConversation(nextUser.uid, conversationId, messagesRef.current);
+          setConversationSummaries([buildSummary(conversationId, messagesRef.current)]);
+          setActiveConversationId(conversationId);
+        } else {
+          setConversationSummaries([]);
+          setActiveConversationId(null);
+          setMessages([initialBotMessage]);
+        }
+      } catch (error) {
+        console.error(error);
+        setAuthMessage(
+          "Authentication worked, but loading saved messages failed. Check Firestore setup and security rules."
+        );
+      } finally {
+        setHistoryReady(true);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
   const scrollToSection = (key: SectionKey) => {
-    sectionRefs[key].current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    sectionRefs[key].current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const upsertSummary = (summary: ConversationSummary) => {
+    setConversationSummaries((prev) => [
+      summary,
+      ...prev.filter((item) => item.id !== summary.id),
+    ]);
+  };
+
+  const persistConversationSnapshot = async (
+    conversationId: string,
+    nextMessages: ChatMessage[]
+  ) => {
+    if (!user) {
+      return;
+    }
+
+    try {
+      await replaceConversationMessages(user.uid, conversationId, nextMessages);
+      upsertSummary(buildSummary(conversationId, nextMessages));
+    } catch (error) {
+      console.error(error);
+      setAuthMessage(
+        "Signed in, but Firestore could not save this conversation. Check database rules and indexes."
+      );
+    }
+  };
+
+  const ensureActiveConversation = async (seedMessages: ChatMessage[]) => {
+    if (!user) {
+      return null;
+    }
+
+    if (activeConversationId) {
+      return activeConversationId;
+    }
+
+    const conversationId = createConversationId();
+
+    try {
+      await createConversation(user.uid, conversationId, seedMessages);
+      setActiveConversationId(conversationId);
+      upsertSummary(buildSummary(conversationId, seedMessages));
+      return conversationId;
+    } catch (error) {
+      console.error(error);
+      setAuthMessage(
+        "Could not create a new saved conversation. Check Firestore setup."
+      );
+      return null;
+    }
+  };
+
+  const startNewConversation = async () => {
+    setChatView("chat");
+    setAuthMessage(null);
+
+    if (!user) {
+      setMessages([initialBotMessage]);
+      return;
+    }
+
+    const conversationId = createConversationId();
+
+    try {
+      await createConversation(user.uid, conversationId, [initialBotMessage]);
+      setActiveConversationId(conversationId);
+      setMessages([initialBotMessage]);
+      upsertSummary(buildSummary(conversationId, [initialBotMessage]));
+    } catch (error) {
+      console.error(error);
+      setAuthMessage("Could not create a new saved conversation.");
+    }
+  };
+
+  const switchConversation = async (conversationId: string) => {
+    if (!user || conversationId === activeConversationId) {
+      return;
+    }
+
+    setHistoryReady(false);
+    setAuthMessage(null);
+
+    try {
+      const nextMessages = await loadConversationMessages(user.uid, conversationId);
+      setActiveConversationId(conversationId);
+      setMessages(nextMessages.length > 0 ? nextMessages : [initialBotMessage]);
+      setChatView("chat");
+    } catch (error) {
+      console.error(error);
+      setAuthMessage("Could not open that saved conversation.");
+    } finally {
+      setHistoryReady(true);
+    }
+  };
+
+  const clearChat = async () => {
+    setMessages([initialBotMessage]);
+    setChatView("chat");
+
+    if (!user || !activeConversationId) {
+      return;
+    }
+
+    try {
+      await clearConversationMessages(user.uid, activeConversationId, [
+        initialBotMessage,
+      ]);
+      upsertSummary(buildSummary(activeConversationId, [initialBotMessage]));
+      setAuthMessage("Saved conversation cleared.");
+    } catch (error) {
+      console.error(error);
+      setAuthMessage("Could not clear saved chat history from Firestore.");
+    }
+  };
+
+  const removeConversation = async () => {
+    if (!user || !activeConversationId) {
+      return;
+    }
+
+    const conversationId = activeConversationId;
+    const remainingSummaries = conversationSummaries.filter(
+      (summary) => summary.id !== conversationId
+    );
+
+    try {
+      await deleteConversation(user.uid, conversationId);
+      setConversationSummaries(remainingSummaries);
+
+      if (remainingSummaries.length > 0) {
+        const nextConversationId = remainingSummaries[0].id;
+        const nextMessages = await loadConversationMessages(
+          user.uid,
+          nextConversationId
+        );
+        setActiveConversationId(nextConversationId);
+        setMessages(nextMessages.length > 0 ? nextMessages : [initialBotMessage]);
+      } else {
+        setActiveConversationId(null);
+        setMessages([initialBotMessage]);
+      }
+
+      setAuthMessage("Conversation deleted.");
+    } catch (error) {
+      console.error(error);
+      setAuthMessage("Could not delete the selected conversation.");
+    }
   };
 
   const sendMessage = async (text?: string) => {
     const msg = (text ?? input).trim();
     if (!msg || loading) return;
 
-    setMessages((prev) => [...prev, { role: "user", text: msg }]);
+    const currentMessages = messagesRef.current;
+    const userMessage: ChatMessage = { role: "user", text: msg };
+    const optimisticMessages = [...currentMessages, userMessage];
+    const historyForRequest = currentMessages.slice(-6);
+
+    setMessages(optimisticMessages);
     setInput("");
     setLoading(true);
+
+    const conversationId = await ensureActiveConversation(currentMessages);
+    if (conversationId) {
+      await persistConversationSnapshot(conversationId, optimisticMessages);
+    }
 
     try {
       const res = await fetch("/chat", {
@@ -117,7 +372,7 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: msg,
-          history: messages.slice(-6),
+          history: historyForRequest,
         }),
       });
 
@@ -125,8 +380,7 @@ export default function App() {
 
       const data: ChatResponse = await res.json();
       const reply =
-        data.reply?.trim() ||
-        "Sorry, I could not generate a reply right now.";
+        data.reply?.trim() || "Sorry, I could not generate a reply right now.";
 
       const meta: ChatMeta = {
         intent: data.intent ?? undefined,
@@ -137,17 +391,85 @@ export default function App() {
           : undefined,
       };
 
-      setMessages((prev) => [...prev, { role: "bot", text: reply, meta }]);
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "bot",
-          text: "Oops, I could not connect to the backend. Is Flask running on http://127.0.0.1:5000 ?",
-        },
-      ]);
+      const botMessage: ChatMessage = { role: "bot", text: reply, meta };
+      const finalMessages = [...optimisticMessages, botMessage];
+      setMessages(finalMessages);
+
+      if (conversationId) {
+        await persistConversationSnapshot(conversationId, finalMessages);
+      }
+    } catch (error) {
+      console.error(error);
+      const fallbackBotMessage: ChatMessage = {
+        role: "bot",
+        text: "Oops, I could not connect to the backend. Is Flask running on http://127.0.0.1:5000 ?",
+      };
+      const fallbackMessages = [...optimisticMessages, fallbackBotMessage];
+      setMessages(fallbackMessages);
+
+      if (conversationId) {
+        await persistConversationSnapshot(conversationId, fallbackMessages);
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleEmailAuth = async (
+    mode: AuthMode,
+    email: string,
+    password: string
+  ) => {
+    setAuthBusy(true);
+    setAuthMessage(null);
+
+    try {
+      if (mode === "signup") {
+        await signUpWithEmail(email, password);
+        setAuthMessage("Account created. Your chat history will now be saved.");
+      } else {
+        await signInWithEmail(email, password);
+        setAuthMessage("Signed in. Saved chat history is available on this device.");
+      }
+    } catch (error) {
+      console.error(error);
+      setAuthMessage(
+        error instanceof Error ? error.message : "Authentication failed."
+      );
+    } finally {
+      setAuthBusy(false);
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    setAuthBusy(true);
+    setAuthMessage(null);
+
+    try {
+      await signInWithGoogle();
+      setAuthMessage("Signed in with Google.");
+    } catch (error) {
+      console.error(error);
+      setAuthMessage(
+        error instanceof Error ? error.message : "Google sign-in failed."
+      );
+    } finally {
+      setAuthBusy(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    setAuthBusy(true);
+    setAuthMessage(null);
+
+    try {
+      await signOutUser();
+      setAuthMessage("Signed out. Guest chats will stay local only.");
+    } catch (error) {
+      console.error(error);
+      setAuthMessage(error instanceof Error ? error.message : "Could not sign out.");
+    } finally {
+      setAuthBusy(false);
     }
   };
 
@@ -157,6 +479,14 @@ export default function App() {
       void sendMessage();
     }
   };
+
+  const statusText = !isFirebaseConfigured
+    ? "Firebase is not configured yet. Chat works in guest mode only."
+    : !authReady || !historyReady
+      ? "Checking account and saved conversation..."
+      : user
+        ? `Signed in as ${user.email ?? "Google user"}`
+        : "Guest mode. Sign in to save chat history.";
 
   if (booting) {
     return (
@@ -235,7 +565,7 @@ export default function App() {
 
             <div className="featureGrid">
               <article className="featureCard">
-                <div className="featureIcon">🔒</div>
+                <div className="featureIcon">Private</div>
                 <h3>Private and Safe</h3>
                 <p>
                   A judgment-free place where users can ask sensitive questions without worrying
@@ -243,7 +573,7 @@ export default function App() {
                 </p>
               </article>
               <article className="featureCard">
-                <div className="featureIcon">💜</div>
+                <div className="featureIcon">Care</div>
                 <h3>Emotionally Supportive</h3>
                 <p>
                   Responses are designed to acknowledge fear, stress, confusion, and other emotional
@@ -251,7 +581,7 @@ export default function App() {
                 </p>
               </article>
               <article className="featureCard">
-                <div className="featureIcon">📘</div>
+                <div className="featureIcon">Guide</div>
                 <h3>Educational</h3>
                 <p>
                   Reliable, age-appropriate menstrual health guidance using a curated local knowledge base.
@@ -303,22 +633,22 @@ export default function App() {
             </div>
             <div className="miniGrid">
               <article className="miniCard">
-                <div className="miniIcon">👩</div>
+                <div className="miniIcon">Young</div>
                 <h3>Adolescents</h3>
                 <p>Young women starting their menstrual health journey.</p>
               </article>
               <article className="miniCard">
-                <div className="miniIcon">🛡️</div>
+                <div className="miniIcon">Safe</div>
                 <h3>Privacy Seekers</h3>
                 <p>Users who prefer anonymous and supportive health conversations.</p>
               </article>
               <article className="miniCard">
-                <div className="miniIcon">📝</div>
+                <div className="miniIcon">Learn</div>
                 <h3>Learners</h3>
                 <p>Anyone who wants reliable menstrual health information in simple language.</p>
               </article>
               <article className="miniCard">
-                <div className="miniIcon">💬</div>
+                <div className="miniIcon">Talk</div>
                 <h3>Support Seekers</h3>
                 <p>Users who want emotional reassurance alongside health guidance.</p>
               </article>
@@ -401,7 +731,7 @@ export default function App() {
             </div>
           </div>
           <div className="copyrightBar">
-            <span>© 2026 EmpowerHer. A final year project dedicated to adolescent menstrual health support.</span>
+            <span>Copyright 2026 EmpowerHer. A final year project dedicated to adolescent menstrual health support.</span>
           </div>
         </footer>
       </div>
@@ -430,13 +760,7 @@ export default function App() {
           <button className="ghost" onClick={() => setShowLanding(true)}>
             Back to Home
           </button>
-          <button
-            className="ghost"
-            onClick={() => {
-              setMessages([initialBotMessage]);
-              setChatView("chat");
-            }}
-          >
+          <button className="ghost" onClick={() => void clearChat()}>
             Clear Chat
           </button>
         </div>
@@ -504,14 +828,14 @@ export default function App() {
                   <p>Obstetrics and Gynecology</p>
                   <p>Focus: Menstrual disorders, PCOS, fertility</p>
                   <p>Hospitals: Asiri Hospital, Nawaloka Hospital</p>
-                  <p>Why important: Well-known consultant for women’s reproductive health</p>
+                  <p>Why important: Well-known consultant for women's reproductive health</p>
                 </div>
                 <div>
                   <strong>2. Dr. Harsha Atapattu</strong>
                   <p>Consultant Obstetrician and Gynecologist</p>
                   <p>Focus: Hormonal issues, menstrual irregularities, adolescent gynecology</p>
                   <p>Hospitals: Lanka Hospitals</p>
-                  <p>Strength: Strong experience with teenage and young women’s health</p>
+                  <p>Strength: Strong experience with teenage and young women's health</p>
                 </div>
                 <div>
                   <strong>3. Dr. Rishya Manikavasagar</strong>
@@ -529,7 +853,7 @@ export default function App() {
                 </div>
                 <div>
                   <strong>5. Dr. Shiromi Maduwage</strong>
-                  <p>Women’s health and pregnancy care</p>
+                  <p>Women's health and pregnancy care</p>
                   <p>Focus: Menstrual health education, reproductive wellbeing</p>
                   <p>Hospitals: Castle Street Hospital for Women</p>
                   <p>Why important: Government sector expertise</p>
@@ -548,100 +872,165 @@ export default function App() {
           </section>
         </main>
       ) : (
-      <main className="main">
-        <section className="chatArea">
-          <div className="chatIntroCard">
-            <div className="chatIntroTop">
-              <div>
-                <h2>Get Support</h2>
-                <p>
-                  Ask a question, describe a symptom, or continue a conversation in a private space.
-                </p>
+        <main className="main">
+          <section className="chatArea">
+            <div className="chatIntroCard">
+              <div className="chatIntroTop">
+                <div>
+                  <h2>Get Support</h2>
+                  <p>
+                    Ask a question, describe a symptom, or continue a conversation in a private space.
+                  </p>
+                </div>
+                <div className="introBadge">
+                  {user ? "History syncing" : "Private and supportive"}
+                </div>
               </div>
-              <div className="introBadge">Private and supportive</div>
+              <div className="statusBar">{statusText}</div>
+              {authMessage && <div className="statusNote">{authMessage}</div>}
             </div>
-          </div>
 
-          <div className="chatBox">
-            {messages.map((m, i) => (
-              <Bubble
-                key={`${m.role}-${i}-${m.text.slice(0, 8)}`}
-                role={m.role}
-                text={m.text}
-                meta={m.meta}
-              />
-            ))}
+            <div className="chatBox">
+              {messages.map((m, i) => (
+                <Bubble
+                  key={`${m.role}-${i}-${m.text.slice(0, 8)}`}
+                  role={m.role}
+                  text={m.text}
+                  meta={m.meta}
+                />
+              ))}
 
-            {loading && (
-              <div className="row bot">
-                <div className="bubble bot">
-                  <div className="typing">
-                    <span />
-                    <span />
-                    <span />
+              {loading && (
+                <div className="row bot">
+                  <div className="bubble bot">
+                    <div className="typing">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
                   </div>
                 </div>
+              )}
+
+              <div ref={endRef} />
+            </div>
+
+            <div className="composer">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={onKeyDown}
+                placeholder="Type your question here..."
+                rows={2}
+                disabled={!historyReady}
+              />
+              <button
+                className="sendBtn"
+                disabled={loading || !input.trim() || !historyReady}
+                onClick={() => void sendMessage()}
+              >
+                Send
+              </button>
+            </div>
+          </section>
+
+          <aside className="sidePanel">
+            <AuthPanel
+              authBusy={authBusy}
+              authEnabled={isFirebaseConfigured}
+              authReady={authReady}
+              historyReady={historyReady}
+              user={user}
+              onEmailAuth={handleEmailAuth}
+              onGoogleAuth={handleGoogleAuth}
+              onSignOut={handleSignOut}
+            />
+
+            {user && (
+              <div className="card conversationCard">
+                <div className="conversationHeader">
+                  <h2>Saved Chats</h2>
+                  <button
+                    className="ghost conversationAction"
+                    onClick={() => void startNewConversation()}
+                    disabled={!historyReady || loading}
+                  >
+                    New
+                  </button>
+                </div>
+                <div className="conversationList">
+                  {conversationSummaries.length === 0 ? (
+                    <p className="muted">
+                      No saved chats yet. Start a new conversation and it will appear here.
+                    </p>
+                  ) : (
+                    conversationSummaries.map((summary) => (
+                      <button
+                        key={summary.id}
+                        className={
+                          summary.id === activeConversationId
+                            ? "conversationItem active"
+                            : "conversationItem"
+                        }
+                        onClick={() => void switchConversation(summary.id)}
+                        disabled={!historyReady || loading}
+                      >
+                        <strong>{summary.title}</strong>
+                        <span>{summary.preview || "No preview yet."}</span>
+                        <small>{summary.messageCount} messages</small>
+                      </button>
+                    ))
+                  )}
+                </div>
+                {activeConversationId && (
+                  <button
+                    className="ghost wide deleteConversationBtn"
+                    onClick={() => void removeConversation()}
+                    disabled={!historyReady || loading}
+                  >
+                    Delete Selected Chat
+                  </button>
+                )}
               </div>
             )}
 
-            <div ref={endRef} />
-          </div>
-
-          <div className="composer">
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={onKeyDown}
-              placeholder="Type your question here..."
-              rows={2}
-            />
-            <button
-              className="sendBtn"
-              disabled={loading || !input.trim()}
-              onClick={() => void sendMessage()}
-            >
-              Send
-            </button>
-          </div>
-        </section>
-
-        <aside className="sidePanel">
-          <div className="card">
-            <h2>Quick Prompts</h2>
-            <p className="muted">Tap one to start faster.</p>
-            <div className="suggestions">
-              {suggestions.map((s) => (
-                <button
-                  key={s}
-                  className="suggestionBtn"
-                  onClick={() => void sendMessage(s)}
-                >
-                  {s}
-                </button>
-              ))}
+            <div className="card">
+              <h2>Quick Prompts</h2>
+              <p className="muted">Tap one to start faster.</p>
+              <div className="suggestions">
+                {suggestions.map((s) => (
+                  <button
+                    key={s}
+                    className="suggestionBtn"
+                    onClick={() => void sendMessage(s)}
+                    disabled={!historyReady || loading}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="card">
-            <h2>Safety Note</h2>
-            <p className="muted">
-              EmpowerHer offers general support, not medical diagnosis. If symptoms are severe,
-              such as fainting, fever, or very heavy bleeding, please speak to a trusted adult or
-              healthcare provider.
-            </p>
-          </div>
+            <div className="card">
+              <h2>Safety Note</h2>
+              <p className="muted">
+                EmpowerHer offers general support, not medical diagnosis. If symptoms are severe,
+                such as fainting, fever, or very heavy bleeding, please speak to a trusted adult or
+                healthcare provider.
+              </p>
+            </div>
 
-          <div className="card compactInfo medicalShortcut">
-            <h2>Need Medical Info?</h2>
-            <p className="muted">
-              Read quick guidance about menstrual health, clinics, doctors, and hospital warning signs.
-            </p>
-            <button className="primaryBtn wide" onClick={() => setChatView("medical")}>
-              Medical Info
-            </button>
-          </div>
-        </aside>
-      </main>
+            <div className="card compactInfo medicalShortcut">
+              <h2>Need Medical Info?</h2>
+              <p className="muted">
+                Read quick guidance about menstrual health, clinics, doctors, and hospital warning signs.
+              </p>
+              <button className="primaryBtn wide" onClick={() => setChatView("medical")}>
+                Medical Info
+              </button>
+            </div>
+          </aside>
+        </main>
       )}
     </div>
   );

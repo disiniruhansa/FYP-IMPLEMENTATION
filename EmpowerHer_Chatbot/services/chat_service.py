@@ -87,6 +87,9 @@ FOLLOW_UP_HINTS = {
 
 FOLLOW_UP_SIGNAL_PATTERNS = [
     r"\b\d+\s*(day|days|week|weeks|month|months)\b",
+    r"\b\d+\s*(hour|hours)\b",
+    r"\bfor\s+\d+",
+    r"\bsince\b",
     r"\band\b",
     r"\bbut\b",
     r"\balso\b",
@@ -98,6 +101,47 @@ FOLLOW_UP_SIGNAL_PATTERNS = [
     r"\bfaint(ing|ed)?\b",
     r"\bbleeding\b",
     r"\bheavy\b",
+    r"\bit\b",
+    r"\bthey\b",
+    r"\bthat\b",
+    r"\bthis\b",
+    r"\btoo\b",
+    r"\bmore\b",
+    r"\bworse\b",
+    r"\bbetter\b",
+]
+
+
+NEW_TOPIC_PREFIXES = [
+    "my period",
+    "my cramps",
+    "my discharge",
+    "i have",
+    "i feel",
+    "i am",
+    "i'm",
+    "can i",
+    "is it",
+    "what if",
+    "why does",
+    "why is",
+    "how do",
+    "how can",
+]
+
+
+FOLLOW_UP_STARTERS = [
+    "for ",
+    "since ",
+    "it ",
+    "they ",
+    "that ",
+    "this ",
+    "also ",
+    "but ",
+    "and ",
+    "still ",
+    "only ",
 ]
 
 
@@ -105,13 +149,31 @@ def _looks_like_follow_up_fragment(text: str) -> bool:
     low = (text or "").strip().lower()
     if not low:
         return False
+    if any(low.startswith(prefix) for prefix in NEW_TOPIC_PREFIXES):
+        return False
     if "?" in low:
         return False
     if any(low.startswith(prefix) for prefix in ["what ", "why ", "how ", "can ", "is ", "should ", "when "]):
         return False
+    if any(low.startswith(prefix) for prefix in FOLLOW_UP_STARTERS):
+        return True
     if len(low.split()) <= 5:
         return True
     return any(re.search(pattern, low) for pattern in FOLLOW_UP_SIGNAL_PATTERNS)
+
+
+def _looks_like_contextual_follow_up(text: str, last_user_text: str = "") -> bool:
+    low = (text or "").strip().lower()
+    last_low = (last_user_text or "").strip().lower()
+    if not low:
+        return False
+    if not _looks_like_follow_up_fragment(low):
+        return False
+    if not last_low:
+        return True
+    if any(token in low for token in ["days", "weeks", "months", "hours", "still", "worse", "better", "also", "but"]):
+        return True
+    return len(low.split()) < len(last_low.split())
 
 
 def enrich_follow_up_message(user_message: str, history: Optional[List[Any]] = None) -> str:
@@ -128,7 +190,7 @@ def enrich_follow_up_message(user_message: str, history: Optional[List[Any]] = N
     if any(h in text.lower() for h in hints):
         return text
 
-    if not _looks_like_follow_up_fragment(text):
+    if not _looks_like_contextual_follow_up(text, last_user_text):
         return text
 
     if last_user_text:
@@ -146,7 +208,8 @@ def is_follow_up_message(user_message: str, history: Optional[List[Any]] = None)
     hints = FOLLOW_UP_HINTS.get(last_topic, [])
     if any(h in text.lower() for h in hints):
         return False
-    return _looks_like_follow_up_fragment(text)
+    _, last_user_text = get_recent_context(history)
+    return _looks_like_contextual_follow_up(text, last_user_text)
 
 
 def extract_duration_phrase(text: str) -> str:

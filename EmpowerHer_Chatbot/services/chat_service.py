@@ -479,6 +479,7 @@ def cleanup_reply(text: str, max_sentences: int = 4) -> str:
         if p in low:
             r = re.sub(r"(?i).*" + re.escape(p) + r".*?(\.|$)", "", r).strip()
             low = r.lower()
+    r = re.sub(r"\[Source\s+\d+:[^\]]+\]\s*", "", r, flags=re.IGNORECASE).strip()
     # Remove any remaining quotes that look like "EmpowerHer says ..."
     r = re.sub(r'(?i)^"?\s*empowerher\s+(says|said)\s*[:,]?\s*"?', "", r).strip()
     r = re.sub(r"\s+\n", "\n", r).strip()
@@ -658,12 +659,12 @@ def build_rag_context(hits) -> str:
         return ""
 
     context_parts = []
-    for idx, hit in enumerate(hits[:3], start=1):
+    for hit in hits[:3]:
         chunk = clean_kb_text(hit.chunk, max_sentences=4)
         if chunk:
-            context_parts.append(f"[Source {idx}: {hit.source}]\n{chunk}")
+            context_parts.append(chunk)
 
-    return "\n\n".join(context_parts).strip()
+    return " ".join(context_parts).strip()
 
 
 def should_answer_from_kb(intent: str, topic: str, hits) -> bool:
@@ -756,12 +757,14 @@ class ChatService:
         kb_sources = []
         kb_answer = ""
         rag_context = ""
+        generation_context = ""
 
         if self.use_kb and self.kb is not None:
             kb_hits = self.kb.search(text, top_k=3)
             kb_sources = [h.source for h in kb_hits]
             kb_answer = format_kb_answer(kb_hits)
             rag_context = build_rag_context(kb_hits)
+            generation_context = kb_answer if kb_answer else rag_context
 
         # Only add emotional prefacing for supportive or symptom-heavy cases.
         use_prefix = bool(emotion_line) and intent in ["support", "affirmation", "symptom", "calming"]
@@ -780,7 +783,11 @@ class ChatService:
         elif follow_up and previous_topic and follow_up_reply:
             reply = f"{prefix}{follow_up_reply}"
 
-        elif has_topic_template:
+        elif has_topic_template and not (
+            kb_answer
+            and should_answer_from_kb(intent, topic, kb_hits)
+            and intent in ["info_question", "symptom"]
+        ):
             reply = f"{prefix}{build_specific_topic_reply(text, topic)}"
 
         elif kb_answer and should_answer_from_kb(intent, topic, kb_hits) and not self.use_rag:
@@ -790,7 +797,7 @@ class ChatService:
             llm_reply = self.responder.generate(
                 text,
                 labels or None,
-                retrieved_context=rag_context if self.use_rag else None,
+                retrieved_context=generation_context if self.use_rag else None,
             )
             llm_reply = cleanup_reply(llm_reply, max_sentences=4)
             reply = llm_reply or (
@@ -802,7 +809,7 @@ class ChatService:
             llm_reply = self.responder.generate(
                 text,
                 labels or None,
-                retrieved_context=rag_context if self.use_rag else None,
+                retrieved_context=generation_context if self.use_rag else None,
             )
             llm_reply = cleanup_reply(llm_reply, max_sentences=4)
             reply = llm_reply or (
@@ -810,17 +817,14 @@ class ChatService:
                 "You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about."
             )
 
-        elif self.use_rag and self.use_llm and self.responder is not None and rag_context and intent in ["info_question", "symptom"]:
+        elif self.use_rag and self.use_llm and self.responder is not None and generation_context and intent in ["info_question", "symptom"]:
             llm_reply = self.responder.generate(
                 text,
                 labels or None,
-                retrieved_context=rag_context,
+                retrieved_context=generation_context,
             )
             llm_reply = cleanup_reply(llm_reply, max_sentences=4)
-            reply = llm_reply or (
-                f"{prefix}"
-                "You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about."
-            )
+            reply = llm_reply or f"{prefix}{build_kb_reply(kb_answer)}"
 
         elif intent in ["info_question", "symptom"]:
                 reply = (

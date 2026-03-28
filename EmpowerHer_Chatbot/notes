@@ -17,6 +17,7 @@ python -m eval.compare_rag_vs_nonrag - rag vs non-rag comparison
 
 python -m eval.llm_judge - flan-t5-large
 python -m eval.llm_judge_qwen - Qwen2.5-1.5B-Instruct
+python -m eval.llm_judge_smollm - SmolLM2-1.7B-Instruct
 python -m eval.llm_judge_mt0 - mt0-base
 python -m eval.llm_judge_llama - TinyLlama judge
 python -m eval.llm_judge_mistral - Mistral judge

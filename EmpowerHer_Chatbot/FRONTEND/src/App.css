@@ -571,6 +571,7 @@ img {
   gap: 12px;
   min-height: 0;
   height: 100%;
+  min-width: 0;
 }
 
 .chatIntroCard,
@@ -618,6 +619,7 @@ img {
 
 .statusBar,
 .statusNote,
+.escalationCard,
 .authHint,
 .authUserLabel {
   color: var(--muted);
@@ -634,6 +636,17 @@ img {
 
 .statusNote {
   background: rgba(255, 255, 255, 0.9);
+}
+
+.escalationCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(196, 62, 62, 0.08);
+  border: 1px solid rgba(196, 62, 62, 0.22);
+  color: #8e2d2d;
 }
 
 .chatBox {
@@ -679,6 +692,18 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.escalationBanner {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(196, 62, 62, 0.08);
+  border: 1px solid rgba(196, 62, 62, 0.22);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #8e2d2d;
 }
 
 .chip {
@@ -747,6 +772,12 @@ textarea:focus {
   height: 100%;
   overflow-y: auto;
   padding-right: 4px;
+}
+
+.sidePanel > .card,
+.sidePanel > .authCard,
+.sidePanel > .conversationCard {
+  min-width: 0;
 }
 
 .suggestions {
@@ -912,6 +943,65 @@ textarea:focus {
   gap: 10px;
 }
 
+.symptomForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.symptomField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.symptomField select,
+.symptomField input,
+.symptomField textarea {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  padding: 11px 12px;
+  outline: none;
+  background: white;
+}
+
+.symptomField select:focus,
+.symptomField input:focus,
+.symptomField textarea:focus {
+  border-color: rgba(132, 73, 169, 0.44);
+  box-shadow: 0 0 0 3px rgba(132, 73, 169, 0.12);
+}
+
+.symptomSplit {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.symptomChecks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+}
+
+.symptomChecks label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.symptomChecks input {
+  margin-top: 2px;
+}
+
 .typing {
   display: flex;
   gap: 6px;
@@ -1020,6 +1110,85 @@ textarea:focus {
   animation-delay: 0.3s;
 }
 
+@media (max-width: 1400px) {
+  .main {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 14px;
+    padding: 14px 18px;
+  }
+
+  .topbar {
+    padding: 14px 18px;
+  }
+
+  .topbar h1 {
+    font-size: 26px;
+  }
+
+  .topbar p {
+    font-size: 14px;
+  }
+
+  .chatIntroCard,
+  .card {
+    padding: 14px 16px;
+  }
+
+  .chatBox {
+    padding: 14px;
+  }
+
+  .bubble {
+    max-width: min(680px, 94%);
+  }
+}
+
+@media (max-width: 1200px) {
+  .app.chatPage {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .main {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 14px 16px 18px;
+    overflow: visible;
+  }
+
+  .chatArea,
+  .sidePanel {
+    height: auto;
+    min-height: auto;
+  }
+
+  .sidePanel {
+    overflow: visible;
+    padding-right: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .sidePanel .card,
+  .sidePanel .authCard,
+  .sidePanel .conversationCard {
+    height: 100%;
+  }
+
+  .chatBox {
+    min-height: 420px;
+    max-height: 56vh;
+  }
+
+  .composer {
+    position: sticky;
+    bottom: 12px;
+    z-index: 10;
+  }
+}
+
 @media (max-width: 980px) {
   .siteNav,
   .topbar {
@@ -1038,7 +1207,9 @@ textarea:focus {
   .supportGrid,
   .footerGrid,
   .main,
-  .medicalGrid {
+  .medicalGrid,
+  .symptomSplit,
+  .symptomChecks {
     grid-template-columns: 1fr;
   }
 
@@ -1092,6 +1263,8 @@ textarea:focus {
 
   .composer {
     flex-direction: column;
+    position: sticky;
+    bottom: 8px;
   }
 
   .sendBtn {
@@ -1145,6 +1318,33 @@ textarea:focus {
   .sectionHeading p {
     font-size: 16px;
     line-height: 1.6;
+  }
+
+  .main {
+    padding-bottom: 20px;
+  }
+
+  .chatIntroCard h2,
+  .card h2 {
+    font-size: 21px;
+  }
+
+  .sidePanel {
+    grid-template-columns: 1fr;
+  }
+
+  .chatBox {
+    min-height: 340px;
+    max-height: none;
+  }
+
+  .meta {
+    gap: 6px;
+  }
+
+  .chip {
+    font-size: 11px;
+    padding: 4px 8px;
   }
 
   .medicalHero h2 {
@@ -1229,13 +1429,18 @@ textarea:focus {
     padding: 12px;
   }
 
+  .chatIntroCard,
+  .card {
+    padding: 12px 13px;
+  }
+
   .bubble {
     padding: 12px 13px;
     border-radius: 14px;
   }
 
-  .chip {
-    font-size: 11px;
+  .meta {
+    display: none;
   }
 
   .topbar h1 {
@@ -1254,6 +1459,15 @@ textarea:focus {
 
   textarea {
     min-height: 64px;
+  }
+
+  .composer textarea,
+  .symptomField select,
+  .symptomField input,
+  .symptomField textarea,
+  .authField input,
+  textarea {
+    font-size: 16px;
   }
 
   .medicalList {

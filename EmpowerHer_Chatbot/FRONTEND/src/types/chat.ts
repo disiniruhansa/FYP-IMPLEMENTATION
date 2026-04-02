@@ -3,6 +3,8 @@ export type ChatMeta = {
   topic?: string;
   emotions?: string[];
   kb_sources?: string[];
+  escalation_level?: string;
+  escalation_reasons?: string[];
 };
 
 export type ChatMessage = {
@@ -18,6 +20,8 @@ export type ChatResponse = {
   topic?: string;
   intent?: string;
   kb_sources?: string[];
+  escalation_level?: string;
+  escalation_reasons?: string[];
 };
 
 export type ConversationSummary = {

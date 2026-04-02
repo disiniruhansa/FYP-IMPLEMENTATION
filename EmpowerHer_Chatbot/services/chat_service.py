@@ -18,6 +18,8 @@ class ChatResult:
     topic: str
     intent: str
     kb_sources: List[str]
+    escalation_level: str
+    escalation_reasons: List[str]
 
 
 def _history_text(item: Any) -> str:
@@ -567,6 +569,104 @@ DIAGNOSIS_PHRASES = [
     "it sounds like you have",
 ]
 
+SELF_HARM_PATTERNS = [
+    r"\bi need to die\b",
+    r"\bi want to die\b",
+    r"\bi wanna die\b",
+    r"\bwant to kill myself\b",
+    r"\bkill myself\b",
+    r"\bgoing to kill myself\b",
+    r"\bgoing to end my life\b",
+    r"\bend my life\b",
+    r"\bcommit suicide\b",
+    r"\bsuicide\b",
+    r"\bsuicidal\b",
+    r"\bdon't want to live\b",
+    r"\bdo not want to live\b",
+    r"\bdon't wanna live\b",
+    r"\bnot want to live\b",
+    r"\bhurt myself\b",
+    r"\bself harm\b",
+    r"\bself-harm\b",
+]
+
+RED_FLAG_PATTERNS = {
+    "severe pain": [
+        "severe pain", "very strong pain", "unbearable pain", "extreme pain",
+        "cannot stand", "can't stand", "cant stand", "can't sleep", "cant sleep",
+        "stops me from school", "miss school", "pain keeps waking",
+    ],
+    "fainting or severe dizziness": [
+        "faint", "fainted", "fainting", "passed out", "black out", "blacked out",
+        "severe dizziness", "very dizzy", "extremely dizzy", "lightheaded",
+    ],
+    "fever or feeling very unwell": [
+        "fever", "high fever", "very unwell", "extremely unwell", "weak",
+        "vomiting", "throwing up",
+    ],
+    "very heavy bleeding": [
+        "very heavy bleeding", "soaking", "soaking pads", "soak through",
+        "changing pads every hour", "pads every hour", "large clots", "big clots",
+    ],
+}
+
+
+def is_self_harm_risk(text: str) -> bool:
+    low = (text or "").strip().lower()
+    if not low:
+        return False
+    return any(re.search(pattern, low) for pattern in SELF_HARM_PATTERNS)
+
+
+def build_self_harm_reply() -> str:
+    return (
+        "I am really sorry you are feeling this overwhelmed. Your safety matters most right now. "
+        "Please tell a trusted adult or another person near you immediately and do not stay alone. "
+        "If you feel you might act on these thoughts, call local emergency services or go to the nearest hospital right now. "
+        "If you can, move away from anything you could use to hurt yourself and message or call someone you trust this moment."
+    )
+
+
+def extract_red_flag_reasons(text: str) -> List[str]:
+    low = (text or "").strip().lower()
+    if not low:
+        return []
+
+    reasons: List[str] = []
+    for label, patterns in RED_FLAG_PATTERNS.items():
+        if any(pattern in low for pattern in patterns):
+            reasons.append(label)
+    return reasons
+
+
+def classify_escalation(text: str) -> tuple[str, List[str]]:
+    if is_self_harm_risk(text):
+        return "critical", ["self-harm risk"]
+
+    reasons = extract_red_flag_reasons(text)
+    if reasons:
+        return "urgent", reasons
+
+    return "none", []
+
+
+def build_urgent_red_flag_reply(topic: str, reasons: List[str]) -> str:
+    reason_text = ", ".join(reasons)
+    topic_line = {
+        "pain_cramps": "Strong period pain that stops normal activities should not be handled only through chat.",
+        "heavy_bleeding": "Very heavy bleeding can become serious quickly and should not be ignored.",
+        "late_period": "A late period with red-flag symptoms needs in-person medical advice.",
+        "normal_discharge": "Discharge changes with red-flag symptoms should be checked in person.",
+        "odor_smell": "A strong smell with red-flag symptoms needs in-person care.",
+        "dizziness": "Dizziness or fainting during period-related symptoms needs urgent attention.",
+    }.get(topic, "These symptoms need urgent attention and should not be handled only through chat.")
+
+    return (
+        f"{topic_line} I noticed red flags such as {reason_text}. "
+        "Please tell a trusted adult now and arrange urgent assessment at a clinic or hospital today. "
+        "If you fainted, are soaking pads quickly, have fever with strong pain, or feel too weak to manage safely, go to the nearest hospital immediately."
+    )
+
 
 def apply_safety_constraints(user_text: str, bot_reply: str) -> str:
     """
@@ -588,14 +688,16 @@ def apply_safety_constraints(user_text: str, bot_reply: str) -> str:
             + "I cannot diagnose what is happening, but a doctor or clinic can help check safely."
         ).strip()
 
+    reasons = extract_red_flag_reasons(user_text)
+
     # Escalate dangerous symptoms
-    if any(s in u for s in DANGEROUS_SYMPTOMS) and not (
-        "trusted adult" in r.lower() and ("clinic" in r.lower() or "doctor" in r.lower())
+    if reasons and not (
+        "trusted adult" in r.lower() and ("clinic" in r.lower() or "doctor" in r.lower() or "hospital" in r.lower())
     ):
         r = (
             r
             + "\n\n"
-            + "If you have severe pain, fainting, fever, or very heavy bleeding, please tell a trusted adult and visit a clinic as soon as possible."
+            + "If you have severe pain, fainting, fever, or very heavy bleeding, please tell a trusted adult and get urgent help from a clinic or hospital."
         ).strip()
 
     return r
@@ -872,6 +974,7 @@ class ChatService:
         follow_up = is_follow_up_message(original_text, history=history)
         previous_topic, _ = get_recent_context(history)
         text = enrich_follow_up_message(original_text, history=history)
+        escalation_level, escalation_reasons = classify_escalation(original_text)
 
         if not text:
             return ChatResult(
@@ -881,21 +984,23 @@ class ChatService:
                 topic="unknown",
                 intent="support",
                 kb_sources=[],
+                escalation_level=escalation_level,
+                escalation_reasons=escalation_reasons,
             )
 
-        # 1) Emotions (ONLY if enabled)
-        raw_emotions = []
-        labels: List[str] = []
-        emotion_line = ""
+        if is_self_harm_risk(original_text):
+            return ChatResult(
+                reply=build_self_harm_reply(),
+                emotions=["crisis"],
+                raw_emotions=[],
+                topic="self_harm",
+                intent="crisis_support",
+                kb_sources=[],
+                escalation_level=escalation_level,
+                escalation_reasons=escalation_reasons,
+            )
 
-        if self.use_emotions and self.emotion_model is not None:
-            raw_emotions = self.emotion_model.predict_emotions(text, top_k=3)
-            labels = [r.get("label") for r in raw_emotions] if isinstance(raw_emotions, list) else []
-            labels = [l for l in labels if l]
-            bucket = emotion_bucket(labels)
-            emotion_line = choose_emotion_line(bucket)
-
-        # 2) Intent + topic
+        # 1) Intent + topic first so we can fast-path obvious menstrual questions
         intent = detect_intent(text)
         detected_topic = detect_topic(text)
         topic = detected_topic
@@ -908,14 +1013,72 @@ class ChatService:
         out_of_scope = is_out_of_scope_message(original_text, intent, topic)
         has_topic_template = topic in TOPIC_TEMPLATES
 
-        # 3) KB retrieval (same for both versions)
+        # 2) Fast path for common, known menstrual topics.
+        # These messages do not need model inference or KB retrieval to answer well.
+        if (
+            has_topic_template
+            and not out_of_scope
+            and not follow_up
+            and intent in ["info_question", "symptom"]
+            and not has_dangerous_symptoms(original_text)
+        ):
+            reply = build_specific_topic_reply(text, topic)
+            reply = apply_safety_constraints(original_text, reply)
+            reply = cleanup_reply(reply, max_sentences=4)
+            return ChatResult(
+                reply=reply.strip() if reply else "I am here with you. If you want, tell me a little more about what you are feeling.",
+                emotions=[],
+                raw_emotions=[],
+                topic=topic,
+                intent=intent,
+                kb_sources=[],
+                escalation_level=escalation_level,
+                escalation_reasons=escalation_reasons,
+            )
+
+        # 3) Emotions (ONLY if enabled and useful enough to justify model cost)
+        raw_emotions = []
+        labels: List[str] = []
+        emotion_line = ""
+
+        should_run_emotions = (
+            self.use_emotions
+            and self.emotion_model is not None
+            and (
+                intent in ["support", "affirmation", "calming"]
+                or topic == "unknown"
+                or has_dangerous_symptoms(original_text)
+                or follow_up
+            )
+        )
+
+        if should_run_emotions:
+            raw_emotions = self.emotion_model.predict_emotions(text, top_k=3)
+            labels = [r.get("label") for r in raw_emotions] if isinstance(raw_emotions, list) else []
+            labels = [l for l in labels if l]
+            bucket = emotion_bucket(labels)
+            emotion_line = choose_emotion_line(bucket)
+
+        # 4) KB retrieval (same for both versions)
         kb_hits = []
         kb_sources = []
         kb_answer = ""
         rag_context = ""
         generation_context = ""
 
-        if self.use_kb and self.kb is not None:
+        should_run_kb = (
+            self.use_kb
+            and self.kb is not None
+            and (
+                topic == "unknown"
+                or follow_up
+                or intent not in ["info_question", "symptom"]
+                or not has_topic_template
+                or has_dangerous_symptoms(original_text)
+            )
+        )
+
+        if should_run_kb:
             kb_hits = self.kb.search(text, top_k=3)
             kb_sources = [h.source for h in kb_hits]
             kb_answer = format_kb_answer(kb_hits)
@@ -927,7 +1090,7 @@ class ChatService:
         prefix = (emotion_line + "\n\n") if use_prefix else ""
         follow_up_reply = build_follow_up_reply(original_text, previous_topic, kb_answer)
 
-        # 4) Compose reply
+        # 5) Compose reply
         if intent == "calming":
             calming = random.choice(CALMING_STEPS)
             reply = (
@@ -938,6 +1101,9 @@ class ChatService:
 
         elif out_of_scope:
             reply = random.choice(OUT_OF_SCOPE_REPLIES)
+
+        elif escalation_level == "urgent":
+            reply = build_urgent_red_flag_reply(topic, escalation_reasons)
 
         elif follow_up and previous_topic and follow_up_reply:
             reply = f"{prefix}{follow_up_reply}"
@@ -1016,4 +1182,6 @@ class ChatService:
             topic=topic,
             intent=intent,
             kb_sources=kb_sources,
+            escalation_level=escalation_level,
+            escalation_reasons=escalation_reasons,
         )

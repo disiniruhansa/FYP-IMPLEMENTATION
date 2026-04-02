@@ -1,747 +1,173 @@
 user_message,reply,user_emotions,bot_emotions,user_bucket,bot_bucket,emotion_match,intent,topic
-How can I reduce cramps naturally?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,pain_cramps
-Is it normal to have brown spotting before my period?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it is: Spotting means light bleeding between periods. Brown discharge is often old blood leaving the body. What is normal: Light spotting or brown discharge can happen at the start or end of a period, or due to hormone changes. What it is: The first period usually happens between ages 9–15. Common signs before first period: White discharge, breast development, body hair growth, mood changes. How to prepare: Keep pads in your bag and talk to a trusted adult.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,spotting
-What helps with dizziness during periods?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,unknown
-Can I drink coffee when I have cramps?,"I am here with you. Let us take this one step at a time.
-
-What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,caring|neutral|approval,mixed,mixed,1,info_question,pain_cramps
-How often should I change my pad?,"Thank you for opening up — it is really brave to share how you feel.
-
-Why hygiene matters: Good hygiene helps prevent irritation, infection, and discomfort during periods. Pad changing: Many people change pads every 4–6 hours, depending on flow. Change sooner if the pad feels wet or uncomfortable. What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,gratitude|caring|approval,mixed,mixed,1,info_question,hygiene
-Is a late period normal for teens?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it means: A period can sometimes come earlier or later than expected. In teenagers, periods are often irregular during the first 1–3 years after the first period. Common reasons: Stress, school exams, lack of sleep, sudden weight changes, illness, heavy exercise, and normal hormone changes can delay a period. Why it happens: Stress, exams, changes in sleep, illness, travel, sudden weight changes, heavy sports, and normal hormone shifts can all make a period come later than expected. In the first 1–3 years after your first period, it is...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,late_period
-How do I clean a menstrual cup safely?,"It is okay to have mixed feelings. You are doing your best.
-
-Why hygiene matters: Good hygiene helps prevent irritation, infection, and discomfort during periods. Pad changing: Many people change pads every 4–6 hours, depending on flow. Change sooner if the pad feels wet or uncomfortable. What is normal: A mild, earthy smell during periods can happen because blood and tissue are leaving the body. Clear or white discharge with little or no smell between periods is also normal. Freshness tips: Change pads regularly, wash the vulva with water (no harsh soaps inside the vagina), and wear breathable cotton...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",confusion|curiosity|neutral,caring|approval|neutral,mixed,mixed,1,info_question,hygiene
-Can stress make my period late?,"Thank you for opening up — it is really brave to share how you feel.
-
-Why it happens: Stress, exams, changes in sleep, illness, travel, sudden weight changes, heavy sports, and normal hormone shifts can all make a period come later than expected. In the first 1–3 years after your first period, it is common to be irregular. What to watch: Track your cycle dates, sleep, and stress. What it means: A period can sometimes come earlier or later than expected. In teenagers, periods are often irregular during the first 1–3 years after the first period. Common reasons: Stress, school exams, lack of sleep, sudden weight...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,late_period
-Is it okay to exercise with cramps?,"I am here with you. Let us take this one step at a time.
-
-Is exercise allowed: Yes, light to moderate exercise is usually safe during periods. Possible benefits: Exercise can help reduce cramps and improve mood for some people. Listen to your body: If you feel very tired or have strong pain, it is okay to rest. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,caring|approval|neutral,mixed,mixed,1,info_question,pain_cramps
-What does a fishy smell mean during periods?,"It is okay to have mixed feelings. You are doing your best.
-
-What is normal: A mild, earthy smell during periods can happen because blood and tissue are leaving the body. Clear or white discharge with little or no smell between periods is also normal. Freshness tips: Change pads regularly, wash the vulva with water (no harsh soaps inside the vagina), and wear breathable cotton underwear. Why hygiene matters: Good hygiene helps prevent irritation, infection, and discomfort during periods. Pad changing: Many people change pads every 4–6 hours, depending on flow. Change sooner if the pad feels wet or...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,caring|approval|neutral,mixed,mixed,1,info_question,unknown
-How do I deal with heavy bleeding at school?,"I am here with you. Let us take this one step at a time.
-
-What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak. Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,caring|approval|neutral,mixed,mixed,1,info_question,heavy_bleeding
-Is back pain normal during periods?,"I am here with you. Let us take this one step at a time.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,caring|neutral|approval,mixed,mixed,1,info_question,pain_cramps
-Can I swim while on my period?,"Thank you for opening up — it is really brave to share how you feel.
-
-Is it safe: Yes, bathing during your period is safe and helps you feel clean and comfortable. Swimming: Some people choose to swim using appropriate menstrual products. Others prefer to avoid swimming during heavy flow. Is exercise allowed: Yes, light to moderate exercise is usually safe during periods. Possible benefits: Exercise can help reduce cramps and improve mood for some people. Listen to your body: If you feel very tired or have strong pain, it is okay to rest.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,gratitude|caring|approval,mixed,mixed,1,info_question,unknown
-What foods help with bloating?,"It is okay to have mixed feelings. You are doing your best.
-
-Ice cream and cold foods: Eating ice cream is usually safe during periods. Cold foods do not stop periods. What to notice: Some people feel cold foods make cramps worse. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,caring|neutral|approval,mixed,mixed,1,info_question,food_diet
-How do I track my cycle better?,"I am here with you. Let us take this one step at a time.
-
-Why it happens: Stress, exams, changes in sleep, illness, travel, sudden weight changes, heavy sports, and normal hormone shifts can all make a period come later than expected. In the first 1–3 years after your first period, it is common to be irregular. What to watch: Track your cycle dates, sleep, and stress. Why hygiene matters: Good hygiene helps prevent irritation, infection, and discomfort during periods. Pad changing: Many people change pads every 4–6 hours, depending on flow. Change sooner if the pad feels wet or uncomfortable.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,unknown
-Is light spotting after my period normal?,"I am here with you. Let us take this one step at a time.
-
-What it is: Spotting means light bleeding between periods. Brown discharge is often old blood leaving the body. What is normal: Light spotting or brown discharge can happen at the start or end of a period, or due to hormone changes. What is normal: A mild, earthy smell during periods can happen because blood and tissue are leaving the body. Clear or white discharge with little or no smell between periods is also normal. Freshness tips: Change pads regularly, wash the vulva with water (no harsh soaps inside the vagina), and wear breathable...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,spotting
-Can dehydration make cramps worse?,"I am here with you. Let us take this one step at a time.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,pain_cramps
-How to sleep better with period pain?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|caring,gratitude|caring|approval,mixed,mixed,1,info_question,pain_cramps
-Is it normal to feel angry before my period?,"I am here with you. Let us take this one step at a time.
-
-What it is: Hormone changes before periods can affect mood, causing sadness, anger, or irritation. What is normal: Feeling more emotional before a period is common. What may help: Rest, calming music, talking to someone you trust, and light activity. What it is: The first period usually happens between ages 9–15. Common signs before first period: White discharge, breast development, body hair growth, mood changes. How to prepare: Keep pads in your bag and talk to a trusted adult.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,mood_swings
-When should I see a doctor about cramps?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,pain_cramps
-Can I use a hot water bottle for cramps?,"Thank you for opening up — it is really brave to share how you feel.
-
-Ice cream and cold foods: Eating ice cream is usually safe during periods. Cold foods do not stop periods. What to notice: Some people feel cold foods make cramps worse. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,gratitude|caring|approval,mixed,mixed,1,info_question,pain_cramps
-What should I do if I bleed through at night?,"I am here with you. Let us take this one step at a time.
-
-What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak. Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",confusion|curiosity|neutral,caring|approval|neutral,mixed,mixed,1,info_question,unknown
-How do I handle cramps during exams?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,pain_cramps
-Is mild nausea normal during periods?,"Thank you for opening up — it is really brave to share how you feel.
-
-What is normal: A mild, earthy smell during periods can happen because blood and tissue are leaving the body. Clear or white discharge with little or no smell between periods is also normal. Freshness tips: Change pads regularly, wash the vulva with water (no harsh soaps inside the vagina), and wear breathable cotton underwear. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,unknown
-Can hormones cause mood swings before bleeding?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it is: Hormone changes before periods can affect mood, causing sadness, anger, or irritation. What is normal: Feeling more emotional before a period is common. What may help: Rest, calming music, talking to someone you trust, and light activity. Why it happens: Stress, exams, changes in sleep, illness, travel, sudden weight changes, heavy sports, and normal hormone shifts can all make a period come later than expected. In the first 1–3 years after your first period, it is common to be irregular. What to watch: Track your cycle dates,...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,mood_swings
-How do I talk to my mom about period pain?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,pain_cramps
-Is it okay to take pain relief for cramps?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|caring|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,pain_cramps
-What is normal cycle length for teens?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it means: A period can sometimes come earlier or later than expected. In teenagers, periods are often irregular during the first 1–3 years after the first period. Common reasons: Stress, school exams, lack of sleep, sudden weight changes, illness, heavy exercise, and normal hormone changes can delay a period. What it is: The first period usually happens between ages 9–15. Common signs before first period: White discharge, breast development, body hair growth, mood changes. How to prepare: Keep pads in your bag and talk to a trusted adult.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,gratitude|caring|approval,mixed,mixed,1,info_question,unknown
-Why do I feel tired on my period?,"I am here with you. Let us take this one step at a time.
-
-Why it happens: Stress, exams, changes in sleep, illness, travel, sudden weight changes, heavy sports, and normal hormone shifts can all make a period come later than expected. In the first 1–3 years after your first period, it is common to be irregular. What to watch: Track your cycle dates, sleep, and stress. What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots,...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,unknown
-How to manage period odors safely?,"Thank you for opening up — it is really brave to share how you feel.
-
-What is normal: A mild, earthy smell during periods can happen because blood and tissue are leaving the body. Clear or white discharge with little or no smell between periods is also normal. Freshness tips: Change pads regularly, wash the vulva with water (no harsh soaps inside the vagina), and wear breathable cotton underwear. Why hygiene matters: Good hygiene helps prevent irritation, infection, and discomfort during periods. Pad changing: Many people change pads every 4–6 hours, depending on flow. Change sooner if the pad feels wet or...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,unknown
-Can I shower while on my period?,"It is okay to have mixed feelings. You are doing your best.
-
-Is it safe: Yes, bathing during your period is safe and helps you feel clean and comfortable. Swimming: Some people choose to swim using appropriate menstrual products. Others prefer to avoid swimming during heavy flow. What is normal: A mild, earthy smell during periods can happen because blood and tissue are leaving the body. Clear or white discharge with little or no smell between periods is also normal. Freshness tips: Change pads regularly, wash the vulva with water (no harsh soaps inside the vagina), and wear breathable cotton underwear.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,caring|approval|neutral,mixed,mixed,1,info_question,unknown
-Is it normal to have small clots?,"I am here with you. Let us take this one step at a time.
-
-What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak. Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,caring|approval|neutral,mixed,mixed,1,info_question,heavy_bleeding
-How do I handle cramps in PE class?,"Thank you for opening up — it is really brave to share how you feel.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,gratitude|caring|approval,mixed,mixed,1,info_question,pain_cramps
-Can skipping meals affect my period?,"I am here with you. Let us take this one step at a time.
-
-What it means: A period can sometimes come earlier or later than expected. In teenagers, periods are often irregular during the first 1–3 years after the first period. Common reasons: Stress, school exams, lack of sleep, sudden weight changes, illness, heavy exercise, and normal hormone changes can delay a period. Ice cream and cold foods: Eating ice cream is usually safe during periods. Cold foods do not stop periods. What to notice: Some people feel cold foods make cramps worse.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,caring|neutral|approval,mixed,mixed,1,info_question,unknown
-What should I do if I feel faint during my period?,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support. What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.
-
-If you have severe pain, fainting, fever, or very heavy bleeding, please tell a trusted adult and visit a clinic as soon as possible.",curiosity|confusion|sadness,caring|approval|neutral,sad,mixed,0,info_question,unknown
-Is it normal to bleed longer than seven days?,"It is okay to have mixed feelings. You are doing your best.
-
-What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak. What it is: Spotting means light bleeding between periods. Brown discharge is often old blood leaving the body. What is normal: Light spotting or brown discharge can happen at the start or end of a period, or due to hormone changes.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,unknown
-How do I calm anxiety about leaking?,"That sounds really scary right now, and your feelings are completely valid.
-
-Why hygiene matters: Good hygiene helps prevent irritation, infection, and discomfort during periods. Pad changing: Many people change pads every 4–6 hours, depending on flow. Change sooner if the pad feels wet or uncomfortable.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|nervousness,caring|approval|fear,anxious,anxious,1,info_question,unknown
-Can I wear a tampon overnight?,"Thank you for opening up — it is really brave to share how you feel.
-
-Is it safe: Yes, bathing during your period is safe and helps you feel clean and comfortable. Swimming: Some people choose to swim using appropriate menstrual products. Others prefer to avoid swimming during heavy flow. Is exercise allowed: Yes, light to moderate exercise is usually safe during periods. Possible benefits: Exercise can help reduce cramps and improve mood for some people. Listen to your body: If you feel very tired or have strong pain, it is okay to rest.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,gratitude|caring|approval,mixed,mixed,1,info_question,hygiene
-What helps with breast soreness before period?,"I am here with you. Let us take this one step at a time.
-
-Ice cream and cold foods: Eating ice cream is usually safe during periods. Cold foods do not stop periods. What to notice: Some people feel cold foods make cramps worse. What it is: The first period usually happens between ages 9–15. Common signs before first period: White discharge, breast development, body hair growth, mood changes. How to prepare: Keep pads in your bag and talk to a trusted adult.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|neutral|confusion,caring|neutral|approval,mixed,mixed,1,info_question,unknown
-Is it normal to have diarrhea during my period?,"I am here with you. Let us take this one step at a time.
-
-What is normal: A mild, earthy smell during periods can happen because blood and tissue are leaving the body. Clear or white discharge with little or no smell between periods is also normal. Freshness tips: Change pads regularly, wash the vulva with water (no harsh soaps inside the vagina), and wear breathable cotton underwear. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,unknown
-I am worried my period is late again.,"It is okay to feel anxious — you are not alone in this.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",nervousness|fear|caring,caring|curiosity|approval,anxious,mixed,0,support,late_period
-My cramps make me nervous about school tomorrow.,"That sounds really scary right now, and your feelings are completely valid.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",nervousness|fear|sadness,caring|approval|neutral,anxious,mixed,0,symptom,pain_cramps
-I am anxious because the bleeding is heavier than usual.,"That sounds really scary right now, and your feelings are completely valid.
-
-What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak. Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",nervousness|fear|sadness,caring|approval|fear,anxious,anxious,1,symptom,unknown
-I feel panic when I think about my period starting in class.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-Let us do a quick breathing step: breathe in for 4 seconds, hold for 2, and breathe out for 6. Repeat 3 times.
-
-If you want, tell me what is making you feel worried right now — I am listening.",fear|nervousness|neutral,caring|neutral|nervousness,anxious,anxious,1,calming,unknown
-I am scared the smell means something is wrong.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-What is normal: A mild, earthy smell during periods can happen because blood and tissue are leaving the body. Clear or white discharge with little or no smell between periods is also normal. Freshness tips: Change pads regularly, wash the vulva with water (no harsh soaps inside the vagina), and wear breathable cotton underwear. What it is: Discharge is a fluid that helps keep the vagina clean and healthy. What is normal: Clear or white discharge with little or no smell is normal. It may change during the cycle.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",fear|nervousness|neutral,caring|approval|neutral,anxious,mixed,0,symptom,unknown
-I am worried about fainting during sports.,"It is okay to feel anxious — you are not alone in this.
-
-Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support. Is exercise allowed: Yes, light to moderate exercise is usually safe during periods. Possible benefits: Exercise can help reduce cramps and improve mood for some people. Listen to your body: If you feel very tired or have strong pain, it is okay to rest.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.
-
-If you have severe pain, fainting, fever, or very heavy bleeding, please tell a trusted adult and visit a clinic as soon as possible.",nervousness|fear|caring,caring|approval|neutral,anxious,mixed,0,symptom,unknown
-My heart races when the pain comes back.,"That sounds really scary right now, and your feelings are completely valid.
-
-I can help! Just to answer accurately: can you tell me a bit more (how long it has been, your age, and any pain, heavy bleeding, fever, or dizziness)?
-
-If you feel very unwell or scared, please reach out to a trusted adult or a clinic.",sadness|fear|nervousness,approval|caring|fear,anxious,anxious,1,symptom,pain_cramps
-I am nervous to tell my mom about the spotting.,"It is okay to feel anxious — you are not alone in this.
-
-What it is: Spotting means light bleeding between periods. Brown discharge is often old blood leaving the body. What is normal: Light spotting or brown discharge can happen at the start or end of a period, or due to hormone changes. What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",nervousness|fear|caring,caring|neutral|approval,anxious,mixed,0,symptom,spotting
+How can I reduce cramps naturally?,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",curiosity|confusion|neutral,caring|sadness|neutral,mixed,sad,0,info_question,pain_cramps
+Is it normal to have brown spotting before my period?,"Light spotting can happen for different reasons and can be normal for some girls. If the bleeding becomes heavy, lasts many days, or comes with strong pain or fever, please reach out to a trusted adult or a clinic.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,spotting
+What helps with dizziness during periods?,"Feeling dizzy can be scary. Try to sit or lie down, drink water, and eat something light if you can. If you faint, have very heavy bleeding, or feel very weak, please tell a trusted adult and seek medical help.",curiosity|confusion|neutral,caring|fear|nervousness,mixed,anxious,0,info_question,dizziness
+Can I drink coffee when I have cramps?,"Some people find caffeine can make cramps or anxiety feel stronger. If you notice more pain after coffee or soda, try cutting back and see how your body feels. Warm water or herbal tea can be a gentler choice.",curiosity|neutral|confusion,caring|neutral|approval,mixed,mixed,1,info_question,caffeine
+How often should I change my pad?,"It helps to change pads regularly so you stay clean and comfortable. If you are bleeding heavily, you may need to change more often. If you are soaking pads very quickly or feel dizzy, please tell a trusted adult.",curiosity|neutral|confusion,caring|neutral|approval,mixed,mixed,1,info_question,pads
+Is a late period normal for teens?,"It can feel worrying when your period is late, and you are not alone in that. Stress, changes in routine, weight changes, and hormones can all shift timing. How long has it been late, and are you having pain, heavy bleeding, dizziness, or fever?",curiosity|confusion|neutral,caring|curiosity|nervousness,mixed,anxious,0,info_question,late_period
+How do I clean a menstrual cup safely?,"Menstrual cups can be safe when cleaned well. Wash your hands, rinse with clean water, and follow the cup instructions for cleaning. If you have pain or irritation, take a break and talk to a trusted adult or a clinic.",confusion|curiosity|neutral,caring|approval|neutral,mixed,mixed,1,info_question,menstrual_cup
+Can stress make my period late?,"It can feel worrying when your period is late, and you are not alone in that. Stress, changes in routine, weight changes, and hormones can all shift timing. How long has it been late, and are you having pain, heavy bleeding, dizziness, or fever?",curiosity|confusion|neutral,caring|curiosity|nervousness,mixed,anxious,0,info_question,late_period
+Is it okay to exercise with cramps?,"Light exercise can be okay during your period if you feel up to it. Gentle stretching, walking, or slow movement can sometimes ease cramps. If pain is strong or you feel dizzy, rest and tell a trusted adult.",curiosity|neutral|confusion,caring|neutral|approval,mixed,mixed,1,info_question,exercise
+What does a fishy smell mean during periods?,"A mild smell can be normal, but a strong or fishy smell can feel worrying. Try gentle hygiene and change pads or tampons regularly. If the smell is strong, continues, or comes with itching or pain, please talk to a trusted adult or a clinic.",curiosity|confusion|neutral,caring|approval|neutral,mixed,mixed,1,info_question,odor_smell
+How do I deal with heavy bleeding at school?,"Heavy bleeding can feel scary, and it is okay to ask for help. If you are soaking pads very quickly, passing large clots, or feel dizzy or weak, please talk to a trusted adult or go to a clinic.",curiosity|confusion|neutral,caring|fear|approval,mixed,anxious,0,info_question,heavy_bleeding
+Is back pain normal during periods?,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",curiosity|neutral|confusion,caring|sadness|neutral,mixed,sad,0,info_question,pain_cramps
+Can I swim while on my period?,"Yes, bathing during your period is safe and can help you feel clean and comfortable. Some girls also swim during their period using suitable menstrual products, while others prefer not to during heavy flow. If you feel pain, dizziness, or strong discomfort, please stop and tell a trusted adult.",curiosity|neutral|confusion,caring|approval|neutral,mixed,mixed,1,info_question,bathing_swimming
+What foods help with bloating?,"Food and drink can sometimes affect how you feel during your period. Water, warm drinks, and balanced meals can help you feel steadier. If you want, tell me what you have been eating and how your body feels.",curiosity|neutral|confusion,caring|curiosity|neutral,mixed,mixed,1,info_question,food_diet
+How do I track my cycle better?,"Tracking your cycle can help you feel more in control. You can mark the first day of your period each month on a calendar or app. If your cycles are very irregular or you are worried, a doctor or nurse can help.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,cycle_tracking
+Is light spotting after my period normal?,"Light spotting can happen for different reasons and can be normal for some girls. If the bleeding becomes heavy, lasts many days, or comes with strong pain or fever, please reach out to a trusted adult or a clinic.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,spotting
+Can dehydration make cramps worse?,"Food and drink can sometimes affect how you feel during your period. Water, warm drinks, and balanced meals can help you feel steadier. If you want, tell me what you have been eating and how your body feels.",curiosity|confusion|neutral,caring|curiosity|neutral,mixed,mixed,1,info_question,food_diet
+How to sleep better with period pain?,"Sleep can be harder during cramps. Gentle heat, a comfortable position, and slow breathing can help you relax. If pain keeps waking you up often, please talk to a trusted adult or a doctor.",curiosity|confusion|caring,caring|neutral|approval,mixed,mixed,1,info_question,sleep
+Is it normal to feel angry before my period?,"Mood changes before a period are common, and your feelings are valid. It may help to rest, write your feelings down, or talk to someone you trust. If these mood changes feel too strong or last a long time, a doctor or counsellor can help.",curiosity|confusion|neutral,caring|approval|neutral,mixed,mixed,1,info_question,mood_swings
+When should I see a doctor about cramps?,"It can be hard to know when to see a doctor, and it is okay to ask. Please seek help if you have very strong pain, fainting, fever, very heavy bleeding, or pain that stops you from normal activities. If you are unsure, a nurse or doctor can help you decide what is safest.",curiosity|confusion|neutral,caring|approval|neutral,mixed,mixed,1,info_question,doctor_when
+Can I use a hot water bottle for cramps?,"Food and drink can sometimes affect how you feel during your period. Water, warm drinks, and balanced meals can help you feel steadier. If you want, tell me what you have been eating and how your body feels.",curiosity|neutral|confusion,caring|curiosity|neutral,mixed,mixed,1,info_question,food_diet
+What should I do if I bleed through at night?,"Sleep can be harder during cramps. Gentle heat, a comfortable position, and slow breathing can help you relax. If pain keeps waking you up often, please talk to a trusted adult or a doctor.",confusion|curiosity|neutral,caring|neutral|approval,mixed,mixed,1,info_question,sleep
+How do I handle cramps during exams?,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",curiosity|confusion|neutral,caring|sadness|neutral,mixed,sad,0,info_question,pain_cramps
+Is mild nausea normal during periods?,"Some girls feel nausea or changes in their stomach during periods, and it can be uncomfortable. Small meals, warm drinks, and rest can sometimes help. If you have severe vomiting, diarrhea, or feel very unwell, please talk to a trusted adult or a clinic.",curiosity|confusion|neutral,caring|neutral|sadness,mixed,sad,0,info_question,stomach
+Can hormones cause mood swings before bleeding?,"Mood changes before a period are common, and your feelings are valid. It may help to rest, write your feelings down, or talk to someone you trust. If these mood changes feel too strong or last a long time, a doctor or counsellor can help.",curiosity|confusion|neutral,caring|approval|neutral,mixed,mixed,1,info_question,mood_swings
+How do I talk to my mom about period pain?,"It is really meaningful to feel supported by your family. You deserve that kind of care and kindness. If you want to share more about how you are feeling, I am here to listen.",curiosity|confusion|neutral,caring|admiration|approval,mixed,mixed,1,info_question,family_support
+Is it okay to take pain relief for cramps?,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",curiosity|caring|neutral,caring|sadness|neutral,mixed,sad,0,info_question,pain_cramps
+What is normal cycle length for teens?,"Tracking your cycle can help you feel more in control. You can mark the first day of your period each month on a calendar or app. If your cycles are very irregular or you are worried, a doctor or nurse can help.",curiosity|neutral|confusion,caring|neutral|approval,mixed,mixed,1,info_question,cycle_tracking
+Why do I feel tired on my period?,I'm afraid it's going to come later than expected.,curiosity|confusion|neutral,fear|nervousness|neutral,mixed,anxious,0,info_question,unknown
+How to manage period odors safely?,"A mild smell can be normal, but a strong or fishy smell can feel worrying. Try gentle hygiene and change pads or tampons regularly. If the smell is strong, continues, or comes with itching or pain, please talk to a trusted adult or a clinic.",curiosity|confusion|neutral,caring|approval|neutral,mixed,mixed,1,info_question,odor_smell
+Can I shower while on my period?,"It is good to keep the area clean and dry using gentle, unscented products. Change pads or tampons regularly, and wash hands before and after. If you have itching, pain, or a strong smell that does not go away, please ask a trusted adult or a clinic for help.",curiosity|neutral|confusion,caring|approval|neutral,mixed,mixed,1,info_question,hygiene
+Is it normal to have small clots?,"Heavy bleeding can feel scary, and it is okay to ask for help. If you are soaking pads very quickly, passing large clots, or feel dizzy or weak, please talk to a trusted adult or go to a clinic.",curiosity|confusion|neutral,caring|fear|approval,mixed,anxious,0,info_question,heavy_bleeding
+How do I handle cramps in PE class?,"Light exercise can be okay during your period if you feel up to it. Gentle stretching, walking, or slow movement can sometimes ease cramps. If pain is strong or you feel dizzy, rest and tell a trusted adult.",curiosity|confusion|neutral,caring|neutral|approval,mixed,mixed,1,info_question,exercise
+Can skipping meals affect my period?,"I'm scared because my period is late.""",curiosity|neutral|confusion,fear|nervousness|neutral,mixed,anxious,0,info_question,unknown
+What should I do if I feel faint during my period?,"Dizziness or fainting during period-related symptoms needs urgent attention. I noticed red flags such as fainting or severe dizziness. Please tell a trusted adult now and arrange urgent assessment at a clinic or hospital today. If you fainted, are soaking pads quickly, have fever with strong pain, or feel too weak to manage safely, go to the nearest hospital immediately.",curiosity|confusion|sadness,caring|neutral|approval,sad,mixed,0,info_question,dizziness
+Is it normal to bleed longer than seven days?,"If the message is unrelated to menstrual health, periods, symptoms, moods, or calming support, please use the context below only if it is relevant to the user's message.",curiosity|confusion|neutral,neutral|approval|realization,mixed,mixed,1,info_question,unknown
+How do I calm anxiety about leaking?,"Leaking is stressful, and you are not alone in that. You can use a longer pad at night, change before bed, and keep a spare pad with you. If bleeding is very heavy or you soak through quickly, please tell a trusted adult.",curiosity|confusion|nervousness,caring|neutral|approval,anxious,mixed,0,info_question,leaking
+Can I wear a tampon overnight?,"It is okay to use a tampon if you feel ready, and many girls do. Change it regularly and follow the instructions in the box. If you feel pain, remove it and ask a trusted adult or a clinic for help.",curiosity|neutral|confusion,caring|approval|neutral,mixed,mixed,1,info_question,tampon
+What helps with breast soreness before period?,"Breast soreness before a period can be common and usually settles after bleeding starts. A supportive bra and gentle rest can help. If the pain is sharp, one-sided, or very strong, please talk to a trusted adult or a clinic.",curiosity|neutral|confusion,caring|neutral|approval,mixed,mixed,1,info_question,breast_soreness
+Is it normal to have diarrhea during my period?,"Some girls feel nausea or changes in their stomach during periods, and it can be uncomfortable. Small meals, warm drinks, and rest can sometimes help. If you have severe vomiting, diarrhea, or feel very unwell, please talk to a trusted adult or a clinic.",curiosity|confusion|neutral,caring|neutral|sadness,mixed,sad,0,info_question,stomach
+I am worried my period is late again.,"It can feel worrying when your period is late, and you are not alone in that. Stress, changes in routine, weight changes, and hormones can all shift timing. How long has it been late, and are you having pain, heavy bleeding, dizziness, or fever?",nervousness|fear|caring,caring|curiosity|nervousness,anxious,anxious,1,info_question,late_period
+My cramps make me nervous about school tomorrow.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",nervousness|fear|sadness,caring|sadness|neutral,anxious,sad,0,symptom,pain_cramps
+I am anxious because the bleeding is heavier than usual.,"Do not describe yourself, the chatbot, the app, T-shirts, privacy policy, or your goals.",nervousness|fear|sadness,neutral|disapproval|annoyance,anxious,angry,0,symptom,unknown
+I feel panic when I think about my period starting in class.,"That sounds really scary right now, and your feelings are completely valid.
+Put one hand on your chest and gently relax your shoulders. Tell yourself: ""This feeling will pass. I am safe right now.""
+If you want, tell me what is making you feel worried right now — I am listening.",fear|nervousness|neutral,caring|approval|nervousness,anxious,anxious,1,calming,unknown
+I am scared the smell means something is wrong.,"A mild smell can be normal, but a strong or fishy smell can feel worrying. Try gentle hygiene and change pads or tampons regularly. If the smell is strong, continues, or comes with itching or pain, please talk to a trusted adult or a clinic.",fear|nervousness|neutral,caring|approval|neutral,anxious,mixed,0,symptom,odor_smell
+I am worried about fainting during sports.,"These symptoms need urgent attention and should not be handled only through chat. I noticed red flags such as fainting or severe dizziness. Please tell a trusted adult now and arrange urgent assessment at a clinic or hospital today. If you fainted, are soaking pads quickly, have fever with strong pain, or feel too weak to manage safely, go to the nearest hospital immediately.",nervousness|fear|caring,caring|neutral|approval,anxious,mixed,0,symptom,exercise
+My heart races when the pain comes back.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",sadness|fear|nervousness,caring|sadness|neutral,anxious,sad,0,symptom,pain_cramps
+I am nervous to tell my mom about the spotting.,"It is really meaningful to feel supported by your family. You deserve that kind of care and kindness. If you want to share more about how you are feeling, I am here to listen.",nervousness|fear|caring,caring|admiration|approval,anxious,mixed,0,symptom,family_support
 I feel shaky when I see small clots.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|nervousness|fear,caring|neutral|curiosity,anxious,mixed,0,support,heavy_bleeding
-I am afraid I will leak through my pad.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",fear|nervousness|neutral,caring|neutral|curiosity,anxious,mixed,0,support,hygiene
-I am anxious because I missed my period last month.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",nervousness|sadness|fear,caring|neutral|curiosity,anxious,mixed,0,support,unknown
-I cannot stop worrying about the discharge color.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-What it is: Discharge is a fluid that helps keep the vagina clean and healthy. What is normal: Clear or white discharge with little or no smell is normal. It may change during the cycle. What it is: Spotting means light bleeding between periods. Brown discharge is often old blood leaving the body. What is normal: Light spotting or brown discharge can happen at the start or end of a period, or due to hormone changes.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",nervousness|fear|caring,caring|neutral|approval,anxious,mixed,0,symptom,unknown
-I am nervous about taking a bus while cramping.,"It is okay to feel anxious — you are not alone in this.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",nervousness|fear|sadness,caring|neutral|approval,anxious,mixed,0,symptom,pain_cramps
-I am scared because I woke up dizzy on my period.,"It is okay to feel anxious — you are not alone in this.
-
-What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak. Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",fear|nervousness|neutral,caring|approval|neutral,anxious,mixed,0,symptom,unknown
+Feeling dizzy can be scary. Try to sit or lie down, drink water, and eat something light if you can. If you faint, have very heavy bleeding, or feel very weak, please tell a trusted adult and seek medical help.",sadness|nervousness|fear,caring|fear|nervousness,anxious,anxious,1,support,dizziness
+I am afraid I will leak through my pad.,"It is okay to feel anxious — you are not alone in this.
+It helps to change pads regularly so you stay clean and comfortable. If you are bleeding heavily, you may need to change more often. If you are soaking pads very quickly or feel dizzy, please tell a trusted adult.",fear|nervousness|neutral,caring|approval|neutral,anxious,mixed,0,support,pads
+I am anxious because I missed my period last month.,"It can feel worrying when your period is late, and you are not alone in that. Stress, changes in routine, weight changes, and hormones can all shift timing. How long has it been late, and are you having pain, heavy bleeding, dizziness, or fever?",nervousness|sadness|fear,caring|curiosity|nervousness,anxious,anxious,1,info_question,late_period
+I cannot stop worrying about the discharge color.,"Clear or white discharge with little or no smell can be normal and helps keep the vagina clean and healthy. Please seek help if the discharge is green or yellow, smells strong, or comes with itching, burning, or pain. Gentle washing with water and avoiding harsh soaps can help protect the area.",nervousness|fear|caring,caring|neutral|approval,anxious,mixed,0,symptom,normal_discharge
+I am nervous about taking a bus while cramping.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",nervousness|fear|sadness,caring|sadness|neutral,anxious,sad,0,symptom,pain_cramps
+I am scared because I woke up dizzy on my period.,"Feeling dizzy can be scary. Try to sit or lie down, drink water, and eat something light if you can. If you faint, have very heavy bleeding, or feel very weak, please tell a trusted adult and seek medical help.",fear|nervousness|neutral,caring|fear|nervousness,anxious,anxious,1,symptom,dizziness
 I feel uneasy about going to the clinic alone.,"It is okay to feel anxious — you are not alone in this.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",nervousness|fear|sadness,caring|curiosity|approval,anxious,mixed,0,support,unknown
-I am worried the cramps mean something serious.,"It is okay to feel anxious — you are not alone in this.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",nervousness|fear|caring,caring|neutral|approval,anxious,mixed,0,symptom,pain_cramps
-I feel tense every time the pain starts.,"It is okay to feel anxious — you are not alone in this.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. Why it happens: Stress, exams, changes in sleep, illness, travel, sudden weight changes, heavy sports, and normal hormone shifts can all make a period come later than expected. In the first 1–3 years after your first period, it is common to be irregular. What to watch: Track your cycle dates, sleep, and...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",nervousness|sadness|neutral,caring|neutral|approval,anxious,mixed,0,symptom,pain_cramps
-I am anxious my friends will notice the smell.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-What is normal: A mild, earthy smell during periods can happen because blood and tissue are leaving the body. Clear or white discharge with little or no smell between periods is also normal. Freshness tips: Change pads regularly, wash the vulva with water (no harsh soaps inside the vagina), and wear breathable cotton underwear. What it is: Discharge is a fluid that helps keep the vagina clean and healthy. What is normal: Clear or white discharge with little or no smell is normal. It may change during the cycle.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",nervousness|fear|excitement,caring|approval|neutral,anxious,mixed,0,symptom,unknown
-I am scared the cramps will not stop.,"It is okay to feel anxious — you are not alone in this.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",fear|nervousness|neutral,caring|neutral|approval,anxious,mixed,0,symptom,pain_cramps
-I worry I will faint in class.,"That sounds really scary right now, and your feelings are completely valid.
-
-Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.
-
-If you have severe pain, fainting, fever, or very heavy bleeding, please tell a trusted adult and visit a clinic as soon as possible.",nervousness|fear|sadness,caring|approval|fear,anxious,anxious,1,symptom,unknown
-I feel restless waiting for my period to come.,"Thank you for opening up — it is really brave to share how you feel.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",neutral|desire|excitement,gratitude|caring|curiosity,mixed,mixed,1,support,unknown
-I am anxious because my cycle is irregular.,"That sounds really scary right now, and your feelings are completely valid.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",nervousness|fear|sadness,approval|caring|fear,anxious,anxious,1,support,unknown
-I fear I might have an infection.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",fear|nervousness|neutral,caring|neutral|curiosity,anxious,mixed,0,support,unknown
-I am nervous to try a tampon.,"That sounds really scary right now, and your feelings are completely valid.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",nervousness|fear|neutral,approval|caring|fear,anxious,anxious,1,support,hygiene
-I am scared because my back hurts a lot.,"It is okay to feel anxious — you are not alone in this.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",fear|nervousness|sadness,caring|curiosity|approval,anxious,mixed,0,support,pain_cramps
-I am worried the bleeding might soak through at night.,"It is okay to feel anxious — you are not alone in this.
-
-What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak. Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",nervousness|fear|caring,caring|approval|neutral,anxious,mixed,0,symptom,unknown
+It can be hard to know when to see a doctor, and it is okay to ask. Please seek help if you have very strong pain, fainting, fever, very heavy bleeding, or pain that stops you from normal activities. If you are unsure, a nurse or doctor can help you decide what is safest.",nervousness|fear|sadness,caring|approval|nervousness,anxious,anxious,1,support,doctor_when
+I am worried the cramps mean something serious.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",nervousness|fear|caring,caring|sadness|neutral,anxious,sad,0,symptom,pain_cramps
+I feel tense every time the pain starts.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",nervousness|sadness|neutral,caring|sadness|neutral,anxious,sad,0,symptom,pain_cramps
+I am anxious my friends will notice the smell.,"A mild smell can be normal, but a strong or fishy smell can feel worrying. Try gentle hygiene and change pads or tampons regularly. If the smell is strong, continues, or comes with itching or pain, please talk to a trusted adult or a clinic.",nervousness|fear|excitement,caring|approval|neutral,anxious,mixed,0,symptom,odor_smell
+I am scared the cramps will not stop.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",fear|nervousness|neutral,caring|sadness|neutral,anxious,sad,0,symptom,pain_cramps
+I worry I will faint in class.,"Dizziness or fainting during period-related symptoms needs urgent attention. I noticed red flags such as fainting or severe dizziness. Please tell a trusted adult now and arrange urgent assessment at a clinic or hospital today. If you fainted, are soaking pads quickly, have fever with strong pain, or feel too weak to manage safely, go to the nearest hospital immediately.",nervousness|fear|sadness,caring|neutral|approval,anxious,mixed,0,symptom,dizziness
+I feel restless waiting for my period to come.,"I am here to support you with menstrual health topics. You can ask me about periods, cramps, mood changes, hygiene, or anything else related to menstrual wellbeing.",neutral|desire|excitement,caring|approval|neutral,mixed,mixed,1,support,unknown
+I am anxious because my cycle is irregular.,"It is okay to feel anxious — you are not alone in this.
+Tracking your cycle can help you feel more in control. You can mark the first day of your period each month on a calendar or app. If your cycles are very irregular or you are worried, a doctor or nurse can help.",nervousness|fear|sadness,caring|approval|neutral,anxious,mixed,0,support,cycle_tracking
+I fear I might have an infection.,"I am designed to focus on menstrual health support. If you need help, you can ask me about cramps, late periods, bleeding, mood swings, hygiene, or period worries.",fear|nervousness|neutral,caring|neutral|approval,anxious,mixed,0,support,unknown
+I am nervous to try a tampon.,"It is okay to feel anxious — you are not alone in this.
+It is okay to use a tampon if you feel ready, and many girls do. Change it regularly and follow the instructions in the box. If you feel pain, remove it and ask a trusted adult or a clinic for help.",nervousness|fear|neutral,caring|approval|neutral,anxious,mixed,0,support,tampon
+I am scared because my back hurts a lot.,"I can hear how worried you are, and it makes complete sense to feel that way.
+Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",fear|nervousness|sadness,caring|sadness|approval,anxious,sad,0,support,pain_cramps
+I am worried the bleeding might soak through at night.,"Sleep can be harder during cramps. Gentle heat, a comfortable position, and slow breathing can help you relax. If pain keeps waking you up often, please talk to a trusted adult or a doctor.",nervousness|fear|caring,caring|neutral|approval,anxious,mixed,0,symptom,sleep
 I feel sad and low during my period.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|grief,remorse|sadness|caring,sad,sad,1,support,mood_swings
-My mood drops and I want to cry.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|neutral,gratitude|curiosity|caring,sad,mixed,0,support,mood_swings
-I feel lonely dealing with cramps by myself.,"Thank you for sharing this. Your feelings matter.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",sadness|disappointment|neutral,gratitude|caring|approval,sad,mixed,0,symptom,pain_cramps
-I am discouraged because the pain keeps coming back.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",disappointment|sadness|neutral,caring|neutral|approval,sad,mixed,0,symptom,pain_cramps
-I feel down when I miss activities because of cramps.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",sadness|disappointment|neutral,caring|neutral|approval,sad,mixed,0,symptom,pain_cramps
-I feel heavy-hearted when I see blood again.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|neutral,gratitude|curiosity|caring,sad,mixed,0,support,unknown
-I am upset that my period makes me stay home.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",disappointment|sadness|annoyance,caring|curiosity|neutral,sad,mixed,0,support,unknown
-I feel gloomy and tired all day.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|neutral,gratitude|curiosity|caring,sad,mixed,0,support,unknown
-I feel hopeless when the cramps wake me up.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",disappointment|sadness|neutral,caring|remorse|sadness,sad,sad,1,symptom,pain_cramps
-I am disappointed that I missed practice.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",disappointment|sadness|annoyance,caring|curiosity|neutral,sad,mixed,0,support,unknown
-I feel blue and just want to sleep.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",desire|sadness|neutral,gratitude|curiosity|caring,sad,mixed,0,support,unknown
+Mood changes before a period are common, and your feelings are valid. It may help to rest, write your feelings down, or talk to someone you trust. If these mood changes feel too strong or last a long time, a doctor or counsellor can help.",sadness|disappointment|grief,caring|remorse|approval,sad,sad,1,support,mood_swings
+My mood drops and I want to cry.,"Thank you for sharing this. Your feelings matter. Mood changes before a period are common, and your feelings are valid. It may help to rest, write your feelings down, or talk to someone you trust.",sadness|disappointment|neutral,gratitude|approval|caring,sad,mixed,0,support,mood_swings
+I feel lonely dealing with cramps by myself.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",sadness|disappointment|neutral,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
+I am discouraged because the pain keeps coming back.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",disappointment|sadness|neutral,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
+I feel down when I miss activities because of cramps.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",sadness|disappointment|neutral,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
+I feel heavy-hearted when I see blood again.,"I am here to support you with menstrual health topics. You can ask me about periods, cramps, mood changes, hygiene, or anything else related to menstrual wellbeing.",sadness|disappointment|neutral,caring|approval|neutral,sad,mixed,0,support,unknown
+I am upset that my period makes me stay home.,"Do not describe yourself, the chatbot, the app, T-shirts, privacy policy, or your goals.",disappointment|sadness|annoyance,neutral|disapproval|annoyance,sad,angry,0,support,unknown
+I feel gloomy and tired all day.,"I am designed to focus on menstrual health support. If you need help, you can ask me about cramps, late periods, bleeding, mood swings, hygiene, or period worries.",sadness|disappointment|neutral,caring|neutral|approval,sad,mixed,0,support,unknown
+I feel hopeless when the cramps wake me up.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",disappointment|sadness|neutral,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
+I am disappointed that I missed practice.,Thank you for sharing this. Your feelings matter. Tracking your cycle can help you feel more in control. You can mark the first day of your period each month on a calendar or app.,disappointment|sadness|annoyance,gratitude|approval|neutral,sad,mixed,0,support,cycle_tracking
+I feel blue and just want to sleep.,"Thank you for sharing this. Your feelings matter. Sleep can be harder during cramps. Gentle heat, a comfortable position, and slow breathing can help you relax.",desire|sadness|neutral,gratitude|approval|caring,sad,mixed,0,support,sleep
 I feel miserable because my stomach hurts.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|neutral,remorse|sadness|caring,sad,sad,1,support,pain_cramps
-I feel weepy for no reason before my period.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|neutral,caring|curiosity|neutral,sad,mixed,0,support,unknown
-I am sad that I have to cancel plans again.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|neutral,remorse|sadness|caring,sad,sad,1,support,mood_swings
-I feel drained and unmotivated.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",disappointment|sadness|annoyance,caring|curiosity|neutral,sad,mixed,0,support,unknown
-I am heartbroken that I cannot focus in class.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|neutral,gratitude|curiosity|caring,sad,mixed,0,support,unknown
-I feel tearful thinking about the pain returning.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",sadness|disappointment|neutral,caring|approval|neutral,sad,mixed,0,symptom,pain_cramps
-I am down because my clothes got stained.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|neutral,remorse|sadness|caring,sad,sad,1,support,unknown
-I feel sorrowful and isolated.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|remorse,gratitude|curiosity|caring,sad,mixed,0,support,late_period
-I feel low energy and want to curl up.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|neutral|disappointment,caring|curiosity|neutral,sad,mixed,0,support,unknown
+Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",sadness|disappointment|neutral,sadness|caring|remorse,sad,sad,1,support,pain_cramps
+I feel weepy for no reason before my period.,"My main role is to help with menstrual health and emotional support during period-related concerns. Please ask me something about periods, symptoms, moods, or calm support.",sadness|disappointment|neutral,caring|neutral|approval,sad,mixed,0,support,unknown
+I am sad that I have to cancel plans again.,"Thank you for sharing this. Your feelings matter. Mood changes before a period are common, and your feelings are valid. It may help to rest, write your feelings down, or talk to someone you trust.",sadness|disappointment|neutral,gratitude|approval|caring,sad,mixed,0,support,mood_swings
+I feel drained and unmotivated.,"I am a menstrual-health support chatbot, so I may not be the best place for unrelated chat. If you want, ask me about periods, symptoms, moods, or worries you are having.",disappointment|sadness|annoyance,neutral|caring|confusion,sad,mixed,0,support,unknown
+I am heartbroken that I cannot focus in class.,"My main role is to help with menstrual health and emotional support during period-related concerns. Please ask me something about periods, symptoms, moods, or calm support.",sadness|disappointment|neutral,caring|neutral|approval,sad,mixed,0,support,unknown
+I feel tearful thinking about the pain returning.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",sadness|disappointment|neutral,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
+I am down because my clothes got stained.,"It is okay to feel low sometimes, especially when your body feels confusing.
+Leaking is stressful, and you are not alone in that. You can use a longer pad at night, change before bed, and keep a spare pad with you. If bleeding is very heavy or you soak through quickly, please tell a trusted adult.",sadness|disappointment|neutral,caring|approval|neutral,sad,mixed,0,support,leaking
+I feel sorrowful and isolated.,"It is okay to feel low sometimes, especially when your body feels confusing.
+It can feel worrying when your period is late, and you are not alone in that. Stress, changes in routine, weight changes, and hormones can all shift timing. How long has it been late, and are you having pain, heavy bleeding, dizziness, or fever?",sadness|disappointment|remorse,caring|curiosity|nervousness,sad,anxious,0,support,late_period
+I feel low energy and want to curl up.,"I am here to support you with menstrual health topics. You can ask me about periods, cramps, mood changes, hygiene, or anything else related to menstrual wellbeing.",sadness|neutral|disappointment,caring|approval|neutral,sad,mixed,0,support,unknown
 I am sad that my mom is busy when I need support.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|grief,remorse|sadness|caring,sad,sad,1,support,mood_swings
-I feel depressed when I see heavy bleeding.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak. Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",sadness|disappointment|neutral,caring|approval|neutral,sad,mixed,0,symptom,heavy_bleeding
-I feel gloomy about having cramps every month.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",sadness|disappointment|nervousness,caring|neutral|approval,anxious,mixed,0,symptom,pain_cramps
-I am upset that nothing seems to help.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",disappointment|sadness|annoyance,remorse|sadness|caring,sad,sad,1,support,unknown
+It is really meaningful to feel supported by your family. You deserve that kind of care and kindness. If you want to share more about how you are feeling, I am here to listen.",sadness|disappointment|grief,caring|remorse|sadness,sad,sad,1,support,family_support
+I feel depressed when I see heavy bleeding.,"Heavy bleeding can feel scary, and it is okay to ask for help. If you are soaking pads very quickly, passing large clots, or feel dizzy or weak, please talk to a trusted adult or go to a clinic.",sadness|disappointment|neutral,caring|fear|approval,sad,anxious,0,symptom,heavy_bleeding
+I feel gloomy about having cramps every month.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",sadness|disappointment|nervousness,caring|sadness|neutral,anxious,sad,0,symptom,pain_cramps
+I am upset that nothing seems to help.,"""It's completely understandable to feel worried when your period is late than you expected. Periods can sometimes be a bit early or late because of stress, changes in routine, or hormones. Try to notice if there are any other worrying symptoms, and if you feel very unsure, it's a good idea to talk with a trusted adult or a doctor. If the pain is very strong, lasts many days, or stops you from doing normal things, you can talk to a parent, school nurse, or doctor",disappointment|sadness|annoyance,caring|approval|neutral,sad,mixed,0,support,unknown
 I feel melancholy during PMS days.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|neutral,caring|curiosity|neutral,sad,mixed,0,support,mood_swings
-I feel empty and just want quiet time.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",desire|sadness|disappointment,remorse|sadness|caring,sad,sad,1,support,unknown
-I am angry that cramps ruin my day.,"It is understandable to feel angry or frustrated — your feelings matter.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",anger|annoyance|neutral,caring|neutral|approval,angry,mixed,0,symptom,pain_cramps
-I feel irritated by the constant pain.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",sadness|annoyance|disappointment,caring|neutral|approval,sad,mixed,0,symptom,pain_cramps
-I am frustrated that my period is so unpredictable.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|disappointment,gratitude|curiosity|caring,sad,mixed,0,support,unknown
-I feel mad when people tell me it is normal pain.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Hormone changes before periods can affect mood, causing sadness, anger, or irritation. What is normal: Feeling more emotional before a period is common. What may help: Rest, calming music, talking to someone you trust, and light activity.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",anger|annoyance|sadness,caring|approval|neutral,sad,mixed,0,symptom,pain_cramps
-I am annoyed I have to skip sports again.,"That irritation makes sense, especially if you are in pain or stressed.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|neutral,caring|curiosity|neutral,angry,mixed,0,support,unknown
-I feel rage when cramps hit in class.,"It is understandable to feel angry or frustrated — your feelings matter.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",anger|neutral|annoyance,caring|neutral|approval,angry,mixed,0,symptom,pain_cramps
-I am upset that no one takes my pain seriously.,"Thank you for sharing this. Your feelings matter.
-
-I can help! Just to answer accurately: can you tell me a bit more (how long it has been, your age, and any pain, heavy bleeding, fever, or dizziness)?
-
-If you feel very unwell or scared, please reach out to a trusted adult or a clinic.",disappointment|sadness|annoyance,gratitude|curiosity|caring,sad,mixed,0,symptom,pain_cramps
-I am irritated by the smell during my period.,"Thank you for sharing this. Your feelings matter.
-
-What is normal: A mild, earthy smell during periods can happen because blood and tissue are leaving the body. Clear or white discharge with little or no smell between periods is also normal. Freshness tips: Change pads regularly, wash the vulva with water (no harsh soaps inside the vagina), and wear breathable cotton underwear. Why hygiene matters: Good hygiene helps prevent irritation, infection, and discomfort during periods. Pad changing: Many people change pads every 4–6 hours, depending on flow. Change sooner if the pad feels wet or...
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",annoyance|disappointment|disgust,gratitude|caring|approval,sad,mixed,0,symptom,unknown
+Mood changes before a period are common, and your feelings are valid. It may help to rest, write your feelings down, or talk to someone you trust. If these mood changes feel too strong or last a long time, a doctor or counsellor can help.",sadness|disappointment|neutral,approval|caring|neutral,sad,mixed,0,support,mood_swings
+I feel empty and just want quiet time.,"I am best at helping with period-related questions and emotional reassurance. If you want, tell me about a menstrual health concern or a feeling you are dealing with.",desire|sadness|disappointment,caring|approval|curiosity,sad,mixed,0,support,unknown
+I am angry that cramps ruin my day.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",anger|annoyance|neutral,caring|sadness|neutral,angry,sad,0,symptom,pain_cramps
+I feel irritated by the constant pain.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",sadness|annoyance|disappointment,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
+I am frustrated that my period is so unpredictable.,"A period can sometimes come earlier or later than expected. In teenagers, periods are often irregular during the first 1–3 years after the first period. Common reasons: Stress, school exams, lack of sleep, sudden weight changes, heavy sports, and normal hormone shifts can all make a period come later than anticipated.",annoyance|anger|disappointment,neutral|realization|confusion,sad,mixed,0,support,unknown
+I feel mad when people tell me it is normal pain.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",anger|annoyance|sadness,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
+I am annoyed I have to skip sports again.,"It is understandable to feel angry or frustrated — your feelings matter.
+Light exercise can be okay during your period if you feel up to it. Gentle stretching, walking, or slow movement can sometimes ease cramps. If pain is strong or you feel dizzy, rest and tell a trusted adult.",annoyance|anger|neutral,caring|approval|neutral,angry,mixed,0,support,exercise
+I feel rage when cramps hit in class.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",anger|neutral|annoyance,caring|sadness|neutral,angry,sad,0,symptom,pain_cramps
+I am upset that no one takes my pain seriously.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",disappointment|sadness|annoyance,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
+I am irritated by the smell during my period.,"A mild smell can be normal, but a strong or fishy smell can feel worrying. Try gentle hygiene and change pads or tampons regularly. If the smell is strong, continues, or comes with itching or pain, please talk to a trusted adult or a clinic.",annoyance|disappointment|disgust,caring|approval|neutral,sad,mixed,0,symptom,odor_smell
 I feel anger when my pad leaks.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",anger|sadness|annoyance,remorse|sadness|caring,sad,sad,1,support,hygiene
-I am mad that medicines do not always work.,"That irritation makes sense, especially if you are in pain or stressed.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|neutral,caring|curiosity|neutral,angry,mixed,0,support,unknown
-I am annoyed that my back hurts this much.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|disappointment,gratitude|curiosity|caring,sad,mixed,0,support,pain_cramps
-I am frustrated by the mood swings.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|disappointment,caring|curiosity|neutral,sad,mixed,0,support,mood_swings
-I feel furious about the heavy bleeding.,"You are not too much — this can be a tough time for many girls.
-
-What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak. Seek help if you have: Very heavy bleeding Severe pain Fainting or dizziness Fever Strong bad-smelling discharge Periods missing for many months Feeling unsafe or very distressed Talking to a doctor or clinic is safe and confidential. You deserve care and support.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",anger|annoyance|neutral,caring|neutral|approval,angry,mixed,0,symptom,heavy_bleeding
-I am irritated that I cannot sleep because of cramps.,"Thank you for sharing this. Your feelings matter.
-
-What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",annoyance|disappointment|sadness,gratitude|caring|approval,sad,mixed,0,symptom,pain_cramps
-I am annoyed that I have to change pads so often.,"You are not too much — this can be a tough time for many girls.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|neutral,caring|neutral|curiosity,angry,mixed,0,support,hygiene
-I am resentful that my period starts on big days.,"It is understandable to feel angry or frustrated — your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|neutral,caring|curiosity|approval,angry,mixed,0,support,unknown
-I feel cross when my stomach cramps so hard.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",sadness|neutral|disappointment,caring|remorse|sadness,sad,sad,1,symptom,pain_cramps
+It helps to change pads regularly so you stay clean and comfortable. If you are bleeding heavily, you may need to change more often. If you are soaking pads very quickly or feel dizzy, please tell a trusted adult.",anger|sadness|annoyance,caring|remorse|sadness,sad,sad,1,support,pads
+I am mad that medicines do not always work.,"I am best at helping with period-related questions and emotional reassurance. If you want, tell me about a menstrual health concern or a feeling you are dealing with.",annoyance|anger|neutral,caring|approval|curiosity,angry,mixed,0,support,unknown
+I am annoyed that my back hurts this much.,"Thank you for sharing this. Your feelings matter. Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little.",annoyance|anger|disappointment,gratitude|sadness|caring,sad,sad,1,support,pain_cramps
+I am frustrated by the mood swings.,"Thank you for sharing this. Your feelings matter. Mood changes before a period are common, and your feelings are valid. It may help to rest, write your feelings down, or talk to someone you trust.",annoyance|anger|disappointment,gratitude|approval|caring,sad,mixed,0,support,mood_swings
+I feel furious about the heavy bleeding.,"Heavy bleeding can feel scary, and it is okay to ask for help. If you are soaking pads very quickly, passing large clots, or feel dizzy or weak, please talk to a trusted adult or go to a clinic.",anger|annoyance|neutral,caring|fear|approval,angry,anxious,0,symptom,heavy_bleeding
+I am irritated that I cannot sleep because of cramps.,"Sleep can be harder during cramps. Gentle heat, a comfortable position, and slow breathing can help you relax. If pain keeps waking you up often, please talk to a trusted adult or a doctor.",annoyance|disappointment|sadness,caring|neutral|approval,sad,mixed,0,symptom,sleep
+I am annoyed that I have to change pads so often.,"It is understandable to feel angry or frustrated — your feelings matter.
+It helps to change pads regularly so you stay clean and comfortable. If you are bleeding heavily, you may need to change more often. If you are soaking pads very quickly or feel dizzy, please tell a trusted adult.",annoyance|anger|neutral,caring|approval|neutral,angry,mixed,0,support,pads
+I am resentful that my period starts on big days.,"I am designed to focus on menstrual health support. If you need help, you can ask me about cramps, late periods, bleeding, mood swings, hygiene, or period worries.",annoyance|anger|neutral,caring|neutral|approval,angry,mixed,0,support,unknown
+I feel cross when my stomach cramps so hard.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",sadness|neutral|disappointment,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
 I am annoyed by the dizziness that comes with it.,"That irritation makes sense, especially if you are in pain or stressed.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|neutral,caring|curiosity|neutral,angry,mixed,0,support,unknown
-I feel upset when I stain clothes at school.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|annoyance,remorse|sadness|caring,sad,sad,1,support,unknown
-I am mad at my body for hurting.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|anger|annoyance,gratitude|curiosity|caring,sad,mixed,0,support,pain_cramps
-I am irritated that cramps ruin my focus.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",annoyance|anger|disappointment,caring|neutral|approval,sad,mixed,0,symptom,pain_cramps
-I am frustrated that I cannot predict the timing.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|disappointment,remorse|sadness|caring,sad,sad,1,support,unknown
-I feel angry about the constant bloating.,"That irritation makes sense, especially if you are in pain or stressed.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",anger|annoyance|neutral,caring|curiosity|neutral,angry,mixed,0,support,mood_swings
-I am mad that the pain keeps coming back.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",anger|annoyance|sadness,caring|neutral|approval,sad,mixed,0,symptom,pain_cramps
+Feeling dizzy can be scary. Try to sit or lie down, drink water, and eat something light if you can. If you faint, have very heavy bleeding, or feel very weak, please tell a trusted adult and seek medical help.",annoyance|anger|neutral,caring|fear|nervousness,angry,anxious,0,support,dizziness
+I feel upset when I stain clothes at school.,"Thank you for sharing this. Your feelings matter. Leaking is stressful, and you are not alone in that. You can use a longer pad at night, change before bed, and keep a spare pad with you.",sadness|disappointment|annoyance,gratitude|caring|approval,sad,mixed,0,support,leaking
+I am mad at my body for hurting.,"I am really sorry you are feeling this way — that sounds heavy on you.
+Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",sadness|anger|annoyance,sadness|caring|remorse,sad,sad,1,support,pain_cramps
+I am irritated that cramps ruin my focus.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",annoyance|anger|disappointment,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
+I am frustrated that I cannot predict the timing.,"""It's completely understandable to feel worried when your period is late than you expected. Periods can sometimes be a bit early or late because of stress, changes in routine, or hormones. Try to notice if there are any other worrying symptoms, and if you feel very unsure, it's a good idea to talk with a trusted adult or a doctor. If the pain is very strong, lasts many days, or stops you from doing normal things, you can talk to a parent, school nurse, or doctor",annoyance|anger|disappointment,caring|approval|neutral,sad,mixed,0,support,unknown
+I feel angry about the constant bloating.,"It is understandable to feel angry or frustrated — your feelings matter.
+Food and drink can sometimes affect how you feel during your period. Water, warm drinks, and balanced meals can help you feel steadier. If you want, tell me what you have been eating and how your body feels.",anger|annoyance|neutral,caring|neutral|approval,angry,mixed,0,support,food_diet
+I am mad that the pain keeps coming back.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",anger|annoyance|sadness,caring|sadness|neutral,sad,sad,1,symptom,pain_cramps
 I am annoyed that I have to carry pads everywhere.,"That irritation makes sense, especially if you are in pain or stressed.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|neutral,caring|curiosity|neutral,angry,mixed,0,support,hygiene
-I feel heated because my mood is out of control.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|disappointment|sadness,gratitude|curiosity|caring,sad,mixed,0,support,mood_swings
-I feel mixed emotions about my late period.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",neutral|confusion|nervousness,caring|neutral|curiosity,anxious,mixed,0,support,late_period
-I am unsure if I am worried or just tired.,"That sounds really scary right now, and your feelings are completely valid.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",confusion|nervousness|curiosity,approval|caring|fear,anxious,anxious,1,support,unknown
+It helps to change pads regularly so you stay clean and comfortable. If you are bleeding heavily, you may need to change more often. If you are soaking pads very quickly or feel dizzy, please tell a trusted adult.",annoyance|anger|neutral,caring|approval|neutral,angry,mixed,0,support,pads
+I feel heated because my mood is out of control.,"I am really sorry you are feeling this way — that sounds heavy on you.
+Food and drink can sometimes affect how you feel during your period. Water, warm drinks, and balanced meals can help you feel steadier. If you want, tell me what you have been eating and how your body feels.",annoyance|disappointment|sadness,remorse|caring|sadness,sad,sad,1,support,food_diet
+I feel mixed emotions about my late period.,"It can feel worrying when your period is late, and you are not alone in that. Stress, changes in routine, weight changes, and hormones can all shift timing. How long has it been late, and are you having pain, heavy bleeding, dizziness, or fever?",neutral|confusion|nervousness,caring|curiosity|nervousness,anxious,anxious,1,info_question,late_period
+I am unsure if I am worried or just tired.,Talk to a doctor or clinic is safe and confidential. You deserve care and support. What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days.,confusion|nervousness|curiosity,caring|approval|neutral,anxious,mixed,0,support,unknown
 I feel both sad and relieved when my period starts.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|joy|disappointment,caring|curiosity|neutral,sad,mixed,0,support,mood_swings
-I am confused whether this pain is normal.,"It is okay to have mixed feelings. You are doing your best.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Discharge is a fluid that helps keep the vagina clean and healthy. What is normal: Clear or white discharge with little or no smell is normal. It may change during the cycle.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",confusion|curiosity|neutral,caring|approval|neutral,mixed,mixed,1,symptom,pain_cramps
-I feel anxious and hopeful at the same time.,"That sounds really scary right now, and your feelings are completely valid.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",nervousness|fear|caring,approval|caring|fear,anxious,anxious,1,support,unknown
-I am both scared and curious about using a cup.,"That sounds really scary right now, and your feelings are completely valid.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",curiosity|fear|confusion,approval|caring|fear,anxious,anxious,1,support,hygiene
-I feel uneasy but also proud for handling this.,"Thank you for opening up — it is really brave to share how you feel.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",pride|admiration|approval,gratitude|caring|curiosity,mixed,mixed,1,support,unknown
-I am conflicted about telling my friend how I feel.,"I am here with you. Let us take this one step at a time.
-
-I can help! Just to answer accurately: can you tell me a bit more (how long it has been, your age, and any pain, heavy bleeding, fever, or dizziness)?
-
-If you feel very unwell or scared, please reach out to a trusted adult or a clinic.",confusion|neutral|approval,caring|neutral|curiosity,mixed,mixed,1,info_question,unknown
+Mood changes before a period are common, and your feelings are valid. It may help to rest, write your feelings down, or talk to someone you trust. If these mood changes feel too strong or last a long time, a doctor or counsellor can help.",sadness|joy|disappointment,approval|caring|neutral,sad,mixed,0,support,mood_swings
+I am confused whether this pain is normal.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",confusion|curiosity|neutral,caring|sadness|neutral,mixed,sad,0,symptom,pain_cramps
+I feel anxious and hopeful at the same time.,"""It's completely understandable to feel worried when your period is late than you expected. Periods can sometimes be a bit early or late because of stress, changes in routine, or hormones. Try to notice if there are any other worrying symptoms, and if you feel very unsure, it's a good idea to talk with a trusted adult or a doctor. If the pain is very strong, lasts many days, or stops you from doing normal things, you can talk to a parent, school nurse, or doctor",nervousness|fear|caring,caring|approval|neutral,anxious,mixed,0,support,unknown
+I am both scared and curious about using a cup.,"It is okay to feel anxious — you are not alone in this.
+Menstrual cups can be safe when cleaned well. Wash your hands, rinse with clean water, and follow the cup instructions for cleaning. If you have pain or irritation, take a break and talk to a trusted adult or a clinic.",curiosity|fear|confusion,caring|approval|neutral,anxious,mixed,0,support,menstrual_cup
+I feel uneasy but also proud for handling this.,"I can best help with periods, menstrual health questions, emotional support, and calming guidance. Please ask me something related to those topics if you want support.",pride|admiration|approval,caring|approval|neutral,mixed,mixed,1,support,unknown
+I am conflicted about telling my friend how I feel.,"""It's completely understandable to feel worried when your period is late than you expected. Periods can sometimes be a bit early or late because of stress, changes in routine, or hormones. Try to notice if there are any other worrying symptoms, and if you feel very unsure, it's a good idea to talk with a trusted adult or a doctor. If the pain is very strong, lasts many days, or stops you from doing normal things, you can talk to a parent, school nurse, or doctor",confusion|neutral|approval,caring|approval|neutral,mixed,mixed,1,info_question,unknown
 I feel nervous yet calm when I breathe slowly.,"It is okay to feel anxious — you are not alone in this.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",nervousness|caring|fear,caring|curiosity|approval,anxious,mixed,0,support,food_diet
-I feel uncertain about the spotting I see.,"I am here with you. Let us take this one step at a time.
-
-What it is: Spotting means light bleeding between periods. Brown discharge is often old blood leaving the body. What is normal: Light spotting or brown discharge can happen at the start or end of a period, or due to hormone changes. What it means: Some girls have heavier periods than others. Heavy bleeding means soaking through pads very quickly or bleeding for many days. Signs of heavy bleeding: Needing to change pads every 1–2 hours, passing large blood clots, feeling very tired, dizzy, or weak.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",confusion|neutral|curiosity,caring|neutral|approval,mixed,mixed,1,symptom,spotting
-I am both annoyed and grateful for support.,"That irritation makes sense, especially if you are in pain or stressed.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|anger|gratitude,caring|curiosity|neutral,angry,mixed,0,support,unknown
-I feel a mix of fear and determination during cramps.,"That sounds really scary right now, and your feelings are completely valid.
-
-What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period. What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",fear|nervousness|neutral,caring|approval|neutral,anxious,mixed,0,symptom,pain_cramps
-I am torn between resting and going to class.,"I am really sorry you are feeling this way — that sounds heavy on you.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",neutral|sadness|disappointment,remorse|sadness|caring,sad,sad,1,support,unknown
-I feel both shy and relieved to ask my mom for help.,"I can hear how worried you are, and it makes complete sense to feel that way.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",joy|nervousness|relief,caring|neutral|curiosity,anxious,mixed,0,support,unknown
-I am unsure whether to see a doctor now.,"I am here with you. Let us take this one step at a time.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",confusion|neutral|curiosity,caring|neutral|curiosity,mixed,mixed,1,support,unknown
+Food and drink can sometimes affect how you feel during your period. Water, warm drinks, and balanced meals can help you feel steadier. If you want, tell me what you have been eating and how your body feels.",nervousness|caring|fear,caring|approval|neutral,anxious,mixed,0,support,food_diet
+I feel uncertain about the spotting I see.,"Light spotting can happen for different reasons and can be normal for some girls. If the bleeding becomes heavy, lasts many days, or comes with strong pain or fever, please reach out to a trusted adult or a clinic.",confusion|neutral|curiosity,caring|neutral|approval,mixed,mixed,1,symptom,spotting
+I am both annoyed and grateful for support.,"I am designed to focus on menstrual health support. If you need help, you can ask me about cramps, late periods, bleeding, mood swings, hygiene, or period worries.",annoyance|anger|gratitude,caring|neutral|approval,angry,mixed,0,support,unknown
+I feel a mix of fear and determination during cramps.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",fear|nervousness|neutral,caring|sadness|neutral,anxious,sad,0,symptom,pain_cramps
+I am torn between resting and going to class.,"I am a menstrual-health support chatbot, so I may not be the best place for unrelated chat. If you want, ask me about periods, symptoms, moods, or worries you are having.",neutral|sadness|disappointment,neutral|caring|confusion,sad,mixed,0,support,unknown
+I feel both shy and relieved to ask my mom for help.,"That sounds really scary right now, and your feelings are completely valid.
+It is really meaningful to feel supported by your family. You deserve that kind of care and kindness. If you want to share more about how you are feeling, I am here to listen.",joy|nervousness|relief,approval|caring|admiration,anxious,mixed,0,support,family_support
+I am unsure whether to see a doctor now.,"It is okay to have mixed feelings. You are doing your best. It can be hard to know when to see a doctor, and it is okay to ask. Please seek help if you have very strong pain, fainting, fever, very heavy bleeding, or pain that stops you from normal activities.",confusion|neutral|curiosity,caring|approval|neutral,mixed,mixed,1,support,doctor_when
 I feel nervous but also empowered to track my cycle.,"It is okay to feel anxious — you are not alone in this.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",nervousness|approval|fear,caring|curiosity|approval,anxious,mixed,0,support,unknown
-I am feeling a mix of anger and sadness today.,"Thank you for sharing this. Your feelings matter.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",sadness|disappointment|anger,gratitude|curiosity|caring,sad,mixed,0,support,mood_swings
-I feel both hopeful and worried about the pain easing.,"That sounds really scary right now, and your feelings are completely valid.
-
-What it is: Period cramps happen when the uterus tightens to push out the lining. They can show up in the lower belly or lower back. Self-care steps: Sip warm water or ginger tea, use a warm pad on your belly or back, stretch gently, and try light walks to loosen muscles. What it is: Period cramps happen when the uterus tightens to release menstrual blood. Many girls feel cramps in the lower belly or back. What is normal: Mild to moderate cramps are common, especially on the first one or two days of a period.
-
-If you have severe pain, fainting, fever, very heavy bleeding, or you feel unsafe, please talk to a trusted adult or visit a clinic.
-
-I cannot diagnose what is happening, but a doctor or clinic can help check safely.",caring|nervousness|optimism,caring|approval|neutral,anxious,mixed,0,symptom,pain_cramps
-I am conflicted about trying a heating pad at school.,"Thank you for opening up — it is really brave to share how you feel.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",confusion|neutral|approval,gratitude|caring|curiosity,mixed,mixed,1,support,hygiene
-I feel both tense and comforted by talking here.,"It is okay to have mixed feelings. You are doing your best.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",approval|joy|neutral,caring|approval|curiosity,mixed,mixed,1,support,unknown
-I am unsure if my mood swings are normal.,"Thank you for opening up — it is really brave to share how you feel.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",confusion|neutral|approval,gratitude|caring|curiosity,mixed,mixed,1,support,mood_swings
-I feel a blend of tiredness and courage.,"It is okay to have mixed feelings. You are doing your best.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",neutral|approval|realization,caring|approval|curiosity,mixed,mixed,1,support,unknown
-I am both anxious and ready to learn about periods.,"That sounds really scary right now, and your feelings are completely valid.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",nervousness|excitement|neutral,approval|caring|fear,anxious,anxious,1,support,unknown
-I feel uncertain but want clear answers.,"I am here with you. Let us take this one step at a time.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",confusion|curiosity|neutral,caring|neutral|curiosity,mixed,mixed,1,support,unknown
-I am mixed between being scared and staying calm.,"That sounds really scary right now, and your feelings are completely valid.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",fear|nervousness|neutral,approval|caring|fear,anxious,anxious,1,support,unknown
-I feel both irritated and understanding of my body.,"It is okay to feel low sometimes, especially when your body feels confusing.
-
-You do not have to handle this alone. If you want, tell me what is happening in your body or what you are worried about.",annoyance|disappointment|anger,caring|curiosity|neutral,sad,mixed,0,support,unknown
+Tracking your cycle can help you feel more in control. You can mark the first day of your period each month on a calendar or app. If your cycles are very irregular or you are worried, a doctor or nurse can help.",nervousness|approval|fear,caring|approval|neutral,anxious,mixed,0,support,cycle_tracking
+I am feeling a mix of anger and sadness today.,"I am really sorry you are feeling this way — that sounds heavy on you.
+Mood changes before a period are common, and your feelings are valid. It may help to rest, write your feelings down, or talk to someone you trust. If these mood changes feel too strong or last a long time, a doctor or counsellor can help.",sadness|disappointment|anger,caring|remorse|approval,sad,sad,1,support,mood_swings
+I feel both hopeful and worried about the pain easing.,"Cramps can be really painful, and it makes sense that you feel upset. Gentle heat, rest, and drinking water can sometimes help a little. If pain is very strong, lasts many days, or stops you from normal activities, please talk to a trusted adult or a doctor.",caring|nervousness|optimism,caring|sadness|neutral,anxious,sad,0,symptom,pain_cramps
+I am conflicted about trying a heating pad at school.,"I am here with you. Let us take this one step at a time. It helps to change pads regularly so you stay clean and comfortable. If you are bleeding heavily, you may need to change more often.",confusion|neutral|approval,caring|neutral|approval,mixed,mixed,1,support,pads
+I feel both tense and comforted by talking here.,"I am here mainly to help with menstrual health, period symptoms, moods, and calm support. If you want, please ask me something related to periods, menstrual health, or how you are feeling.",approval|joy|neutral,caring|neutral|approval,mixed,mixed,1,support,unknown
+I am unsure if my mood swings are normal.,"I am here with you. Let us take this one step at a time. Mood changes before a period are common, and your feelings are valid. It may help to rest, write your feelings down, or talk to someone you trust.",confusion|neutral|approval,caring|approval|neutral,mixed,mixed,1,support,mood_swings
+I feel a blend of tiredness and courage.,"I can best help with periods, menstrual health questions, emotional support, and calming guidance. Please ask me something related to those topics if you want support.",neutral|approval|realization,caring|approval|neutral,mixed,mixed,1,support,unknown
+I am both anxious and ready to learn about periods.,Ignore parts of the context that do not clearly help with the user's message.,nervousness|excitement|neutral,neutral|disapproval|annoyance,anxious,angry,0,support,unknown
+I feel uncertain but want clear answers.,"I may not be the right chatbot for unrelated conversation, but I can help with menstrual health concerns. If you want, ask me about period symptoms, cycle changes, or how you are feeling.",confusion|curiosity|neutral,caring|neutral|approval,mixed,mixed,1,support,unknown
+I am mixed between being scared and staying calm.,"""It's completely understandable to feel worried when your period is late than you expected. Periods can sometimes be a bit early or late because of stress, changes in routine, or hormones. Try to notice if there are any other worrying symptoms, and if you feel very unsure, it's a good idea to talk with a trusted adult or a doctor. If the pain is very strong, lasts many days, or stops you from doing normal things, you can talk to a parent, school nurse, or doctor",fear|nervousness|neutral,caring|approval|neutral,anxious,mixed,0,support,unknown
+I feel both irritated and understanding of my body.,"I can best help with periods, menstrual health questions, emotional support, and calming guidance. Please ask me something related to those topics if you want support.",annoyance|disappointment|anger,caring|approval|neutral,sad,mixed,0,support,unknown

@@ -11,12 +11,12 @@ import {
   subscribeToAuthChanges,
 } from "./services/auth";
 import {
+  appendMessageToConversation,
   clearConversationMessages,
   createConversation,
   deleteConversation,
   listConversations,
   loadConversationMessages,
-  replaceConversationMessages,
 } from "./services/chatHistory";
 import type {
   ChatMessage,
@@ -29,6 +29,50 @@ import appLogo from "../images/Logo.png";
 
 type SectionKey = "home" | "about" | "features" | "why" | "support";
 type AuthMode = "signin" | "signup";
+type SymptomType =
+  | "pain_cramps"
+  | "late_period"
+  | "heavy_bleeding"
+  | "normal_discharge"
+  | "mood_swings";
+
+type SymptomCheckerState = {
+  symptomType: SymptomType;
+  duration: string;
+  severity: "mild" | "moderate" | "severe";
+  affectsSchoolOrSleep: boolean;
+  fever: boolean;
+  faintingOrDizziness: boolean;
+  veryHeavyBleeding: boolean;
+  itchingOrBurning: boolean;
+  strongSmell: boolean;
+  unusualColor: boolean;
+  overthinkingOrPanic: boolean;
+  notes: string;
+};
+
+const symptomTypeLabels: Record<SymptomType, string> = {
+  pain_cramps: "Cramps or period pain",
+  late_period: "Late or missed period",
+  heavy_bleeding: "Heavy bleeding",
+  normal_discharge: "Discharge or smell changes",
+  mood_swings: "Mood changes",
+};
+
+const initialSymptomCheckerState: SymptomCheckerState = {
+  symptomType: "pain_cramps",
+  duration: "",
+  severity: "moderate",
+  affectsSchoolOrSleep: false,
+  fever: false,
+  faintingOrDizziness: false,
+  veryHeavyBleeding: false,
+  itchingOrBurning: false,
+  strongSmell: false,
+  unusualColor: false,
+  overthinkingOrPanic: false,
+  notes: "",
+};
 
 const initialBotMessage: ChatMessage = {
   role: "bot",
@@ -36,10 +80,22 @@ const initialBotMessage: ChatMessage = {
 };
 
 function Bubble({ role, text, meta }: ChatMessage) {
+  const isUrgent = meta?.escalation_level === "urgent" || meta?.escalation_level === "critical";
+
   return (
     <div className={`row ${role}`}>
       <div className={`bubble ${role}`}>
         <div className="bubbleText">{text}</div>
+        {role === "bot" && isUrgent && (
+          <div className="escalationBanner">
+            <strong>
+              {meta?.escalation_level === "critical" ? "Urgent safety action needed" : "Red-flag symptoms detected"}
+            </strong>
+            <span>
+              Tell a trusted adult and seek in-person care instead of relying only on chat.
+            </span>
+          </div>
+        )}
         {role === "bot" && meta && (
           <div className="meta">
             <span className="chip">Intent: {meta.intent ?? "-"}</span>
@@ -56,6 +112,15 @@ function Bubble({ role, text, meta }: ChatMessage) {
                 ? meta.kb_sources.join(", ")
                 : "-"}
             </span>
+            <span className="chip">
+              Escalation: {meta.escalation_level ?? "-"}
+            </span>
+            <span className="chip">
+              Flags:{" "}
+              {meta.escalation_reasons && meta.escalation_reasons.length
+                ? meta.escalation_reasons.join(", ")
+                : "-"}
+            </span>
           </div>
         )}
       </div>
@@ -69,6 +134,45 @@ function hasUserConversation(history: ChatMessage[]) {
 
 function createConversationId() {
   return `conversation-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function buildSymptomCheckerPrompt(form: SymptomCheckerState) {
+  const details: string[] = [];
+  details.push(`Main issue: ${symptomTypeLabels[form.symptomType]}.`);
+  details.push(`Severity: ${form.severity}.`);
+
+  if (form.duration.trim()) {
+    details.push(`Duration: ${form.duration.trim()}.`);
+  }
+  if (form.affectsSchoolOrSleep) {
+    details.push("It affects school, sleep, or normal activities.");
+  }
+  if (form.fever) {
+    details.push("I also have fever or feel very unwell.");
+  }
+  if (form.faintingOrDizziness) {
+    details.push("I feel dizzy, faint, or nearly faint.");
+  }
+  if (form.veryHeavyBleeding) {
+    details.push("Bleeding is very heavy or I am soaking pads quickly.");
+  }
+  if (form.itchingOrBurning) {
+    details.push("There is itching or burning.");
+  }
+  if (form.strongSmell) {
+    details.push("There is a strong or unusual smell.");
+  }
+  if (form.unusualColor) {
+    details.push("The discharge color is unusual, such as yellow or green.");
+  }
+  if (form.overthinkingOrPanic) {
+    details.push("I feel panicky, overwhelmed, or I cannot calm down.");
+  }
+  if (form.notes.trim()) {
+    details.push(`Extra details: ${form.notes.trim()}.`);
+  }
+
+  return `Symptom checker summary: ${details.join(" ")} Please tell me what this could mean, what I can do safely at home, and whether I should tell a trusted adult or go to a clinic.`;
 }
 
 function buildSummary(conversationId: string, messages: ChatMessage[]): ConversationSummary {
@@ -101,6 +205,9 @@ export default function App() {
   const [authReady, setAuthReady] = useState(!isFirebaseConfigured);
   const [historyReady, setHistoryReady] = useState(!isFirebaseConfigured);
   const [authMessage, setAuthMessage] = useState<string | null>(null);
+  const [symptomChecker, setSymptomChecker] = useState<SymptomCheckerState>(
+    initialSymptomCheckerState
+  );
   const [conversationSummaries, setConversationSummaries] = useState<
     ConversationSummary[]
   >([]);
@@ -110,6 +217,7 @@ export default function App() {
 
   const endRef = useRef<HTMLDivElement | null>(null);
   const messagesRef = useRef<ChatMessage[]>([initialBotMessage]);
+  const saveQueueRef = useRef<Map<string, Promise<void>>>(new Map());
   const sectionRefs: Record<SectionKey, React.RefObject<HTMLDivElement | null>> =
     {
       home: useRef<HTMLDivElement | null>(null),
@@ -129,6 +237,9 @@ export default function App() {
     ],
     []
   );
+  const latestBotMeta = [...messages]
+    .reverse()
+    .find((message) => message.role === "bot" && message.meta)?.meta;
 
   useEffect(() => {
     messagesRef.current = messages;
@@ -207,23 +318,38 @@ export default function App() {
     ]);
   };
 
-  const persistConversationSnapshot = async (
+  const persistConversationMessage = (
     conversationId: string,
+    message: ChatMessage,
     nextMessages: ChatMessage[]
   ) => {
     if (!user) {
-      return;
+      return Promise.resolve();
     }
 
-    try {
-      await replaceConversationMessages(user.uid, conversationId, nextMessages);
-      upsertSummary(buildSummary(conversationId, nextMessages));
-    } catch (error) {
-      console.error(error);
-      setAuthMessage(
-        "Signed in, but Firestore could not save this conversation. Check database rules and indexes."
-      );
-    }
+    const summary = buildSummary(conversationId, nextMessages);
+    upsertSummary(summary);
+
+    const previousTask = saveQueueRef.current.get(conversationId) ?? Promise.resolve();
+    const nextTask = previousTask
+      .catch(() => undefined)
+      .then(async () => {
+        await appendMessageToConversation(
+          user.uid,
+          conversationId,
+          message,
+          nextMessages
+        );
+      })
+      .catch((error) => {
+        console.error(error);
+        setAuthMessage(
+          "Signed in, but Firestore could not save this conversation. Check database rules and indexes."
+        );
+      });
+
+    saveQueueRef.current.set(conversationId, nextTask);
+    return nextTask;
   };
 
   const ensureActiveConversation = async (seedMessages: ChatMessage[]) => {
@@ -267,6 +393,7 @@ export default function App() {
       setActiveConversationId(conversationId);
       setMessages([initialBotMessage]);
       upsertSummary(buildSummary(conversationId, [initialBotMessage]));
+      saveQueueRef.current.set(conversationId, Promise.resolve());
     } catch (error) {
       console.error(error);
       setAuthMessage("Could not create a new saved conversation.");
@@ -280,6 +407,7 @@ export default function App() {
 
     setHistoryReady(false);
     setAuthMessage(null);
+    setMessages([initialBotMessage]);
 
     try {
       const nextMessages = await loadConversationMessages(user.uid, conversationId);
@@ -320,32 +448,52 @@ export default function App() {
     }
 
     const conversationId = activeConversationId;
+    const previousMessages = messagesRef.current;
+    const previousSummaries = conversationSummaries;
     const remainingSummaries = conversationSummaries.filter(
       (summary) => summary.id !== conversationId
     );
+    const nextConversationId =
+      remainingSummaries.length > 0 ? remainingSummaries[0].id : null;
+
+    setHistoryReady(false);
+    setMessages([initialBotMessage]);
+    setConversationSummaries(remainingSummaries);
+    setActiveConversationId(nextConversationId);
 
     try {
       await deleteConversation(user.uid, conversationId);
-      setConversationSummaries(remainingSummaries);
+      saveQueueRef.current.delete(conversationId);
 
-      if (remainingSummaries.length > 0) {
-        const nextConversationId = remainingSummaries[0].id;
+      if (nextConversationId) {
         const nextMessages = await loadConversationMessages(
           user.uid,
           nextConversationId
         );
-        setActiveConversationId(nextConversationId);
         setMessages(nextMessages.length > 0 ? nextMessages : [initialBotMessage]);
-      } else {
-        setActiveConversationId(null);
-        setMessages([initialBotMessage]);
       }
 
       setAuthMessage("Conversation deleted.");
     } catch (error) {
       console.error(error);
       setAuthMessage("Could not delete the selected conversation.");
+      setConversationSummaries(previousSummaries);
+      setActiveConversationId(conversationId);
+      setMessages(previousMessages);
+    } finally {
+      setHistoryReady(true);
     }
+  };
+
+  const updateSymptomChecker = <K extends keyof SymptomCheckerState>(
+    key: K,
+    value: SymptomCheckerState[K]
+  ) => {
+    setSymptomChecker((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const submitSymptomChecker = async () => {
+    await sendMessage(buildSymptomCheckerPrompt(symptomChecker));
   };
 
   const sendMessage = async (text?: string) => {
@@ -363,7 +511,11 @@ export default function App() {
 
     const conversationId = await ensureActiveConversation(currentMessages);
     if (conversationId) {
-      await persistConversationSnapshot(conversationId, optimisticMessages);
+      void persistConversationMessage(
+        conversationId,
+        userMessage,
+        optimisticMessages
+      );
     }
 
     try {
@@ -389,6 +541,10 @@ export default function App() {
         kb_sources: Array.isArray(data.kb_sources)
           ? data.kb_sources
           : undefined,
+        escalation_level: data.escalation_level ?? undefined,
+        escalation_reasons: Array.isArray(data.escalation_reasons)
+          ? data.escalation_reasons
+          : undefined,
       };
 
       const botMessage: ChatMessage = { role: "bot", text: reply, meta };
@@ -396,7 +552,11 @@ export default function App() {
       setMessages(finalMessages);
 
       if (conversationId) {
-        await persistConversationSnapshot(conversationId, finalMessages);
+        void persistConversationMessage(
+          conversationId,
+          botMessage,
+          finalMessages
+        );
       }
     } catch (error) {
       console.error(error);
@@ -408,7 +568,11 @@ export default function App() {
       setMessages(fallbackMessages);
 
       if (conversationId) {
-        await persistConversationSnapshot(conversationId, fallbackMessages);
+        void persistConversationMessage(
+          conversationId,
+          fallbackBotMessage,
+          fallbackMessages
+        );
       }
     } finally {
       setLoading(false);
@@ -565,7 +729,7 @@ export default function App() {
 
             <div className="featureGrid">
               <article className="featureCard">
-                <div className="featureIcon">Private</div>
+                <div className="featureIcon">🔒</div>
                 <h3>Private and Safe</h3>
                 <p>
                   A judgment-free place where users can ask sensitive questions without worrying
@@ -573,7 +737,7 @@ export default function App() {
                 </p>
               </article>
               <article className="featureCard">
-                <div className="featureIcon">Care</div>
+                <div className="featureIcon">💞</div>
                 <h3>Emotionally Supportive</h3>
                 <p>
                   Responses are designed to acknowledge fear, stress, confusion, and other emotional
@@ -581,7 +745,7 @@ export default function App() {
                 </p>
               </article>
               <article className="featureCard">
-                <div className="featureIcon">Guide</div>
+                <div className="featureIcon">📘</div>
                 <h3>Educational</h3>
                 <p>
                   Reliable, age-appropriate menstrual health guidance using a curated local knowledge base.
@@ -633,22 +797,22 @@ export default function App() {
             </div>
             <div className="miniGrid">
               <article className="miniCard">
-                <div className="miniIcon">Young</div>
+                <div className="miniIcon">👩</div>
                 <h3>Adolescents</h3>
                 <p>Young women starting their menstrual health journey.</p>
               </article>
               <article className="miniCard">
-                <div className="miniIcon">Safe</div>
+                <div className="miniIcon">🛡️</div>
                 <h3>Privacy Seekers</h3>
                 <p>Users who prefer anonymous and supportive health conversations.</p>
               </article>
               <article className="miniCard">
-                <div className="miniIcon">Learn</div>
+                <div className="miniIcon">📝</div>
                 <h3>Learners</h3>
                 <p>Anyone who wants reliable menstrual health information in simple language.</p>
               </article>
               <article className="miniCard">
-                <div className="miniIcon">Talk</div>
+                <div className="miniIcon">💬</div>
                 <h3>Support Seekers</h3>
                 <p>Users who want emotional reassurance alongside health guidance.</p>
               </article>
@@ -888,6 +1052,22 @@ export default function App() {
               </div>
               <div className="statusBar">{statusText}</div>
               {authMessage && <div className="statusNote">{authMessage}</div>}
+              {latestBotMeta?.escalation_level &&
+                latestBotMeta.escalation_level !== "none" && (
+                  <div className="escalationCard">
+                    <strong>
+                      {latestBotMeta.escalation_level === "critical"
+                        ? "Immediate safety support needed"
+                        : "Urgent medical follow-up recommended"}
+                    </strong>
+                    <span>
+                      {latestBotMeta.escalation_reasons?.length
+                        ? `Detected: ${latestBotMeta.escalation_reasons.join(", ")}.`
+                        : "This conversation includes red-flag symptoms."}{" "}
+                      Please tell a trusted adult and seek clinic or hospital care if symptoms are severe.
+                    </span>
+                  </div>
+                )}
             </div>
 
             <div className="chatBox">
@@ -995,6 +1175,92 @@ export default function App() {
             )}
 
             <div className="card">
+              <h2>Symptom Checker</h2>
+              <p className="muted">
+                Use the guided form if you want a more structured answer than free-text chat.
+              </p>
+              <div className="symptomForm">
+                <label className="symptomField">
+                  <span>Main symptom</span>
+                  <select
+                    value={symptomChecker.symptomType}
+                    onChange={(e) =>
+                      updateSymptomChecker("symptomType", e.target.value as SymptomType)
+                    }
+                    disabled={!historyReady || loading}
+                  >
+                    {Object.entries(symptomTypeLabels).map(([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <div className="symptomSplit">
+                  <label className="symptomField">
+                    <span>Severity</span>
+                    <select
+                      value={symptomChecker.severity}
+                      onChange={(e) =>
+                        updateSymptomChecker(
+                          "severity",
+                          e.target.value as SymptomCheckerState["severity"]
+                        )
+                      }
+                      disabled={!historyReady || loading}
+                    >
+                      <option value="mild">Mild</option>
+                      <option value="moderate">Moderate</option>
+                      <option value="severe">Severe</option>
+                    </select>
+                  </label>
+
+                  <label className="symptomField">
+                    <span>Duration</span>
+                    <input
+                      type="text"
+                      value={symptomChecker.duration}
+                      onChange={(e) => updateSymptomChecker("duration", e.target.value)}
+                      placeholder="e.g. 2 days, 1 week"
+                      disabled={!historyReady || loading}
+                    />
+                  </label>
+                </div>
+
+                <div className="symptomChecks">
+                  <label><input type="checkbox" checked={symptomChecker.affectsSchoolOrSleep} onChange={(e) => updateSymptomChecker("affectsSchoolOrSleep", e.target.checked)} disabled={!historyReady || loading} />Affects school or sleep</label>
+                  <label><input type="checkbox" checked={symptomChecker.fever} onChange={(e) => updateSymptomChecker("fever", e.target.checked)} disabled={!historyReady || loading} />Fever or very unwell</label>
+                  <label><input type="checkbox" checked={symptomChecker.faintingOrDizziness} onChange={(e) => updateSymptomChecker("faintingOrDizziness", e.target.checked)} disabled={!historyReady || loading} />Fainting or dizziness</label>
+                  <label><input type="checkbox" checked={symptomChecker.veryHeavyBleeding} onChange={(e) => updateSymptomChecker("veryHeavyBleeding", e.target.checked)} disabled={!historyReady || loading} />Very heavy bleeding</label>
+                  <label><input type="checkbox" checked={symptomChecker.itchingOrBurning} onChange={(e) => updateSymptomChecker("itchingOrBurning", e.target.checked)} disabled={!historyReady || loading} />Itching or burning</label>
+                  <label><input type="checkbox" checked={symptomChecker.strongSmell} onChange={(e) => updateSymptomChecker("strongSmell", e.target.checked)} disabled={!historyReady || loading} />Strong smell</label>
+                  <label><input type="checkbox" checked={symptomChecker.unusualColor} onChange={(e) => updateSymptomChecker("unusualColor", e.target.checked)} disabled={!historyReady || loading} />Yellow or green discharge</label>
+                  <label><input type="checkbox" checked={symptomChecker.overthinkingOrPanic} onChange={(e) => updateSymptomChecker("overthinkingOrPanic", e.target.checked)} disabled={!historyReady || loading} />Panicky or overwhelmed</label>
+                </div>
+
+                <label className="symptomField">
+                  <span>Extra notes</span>
+                  <textarea
+                    value={symptomChecker.notes}
+                    onChange={(e) => updateSymptomChecker("notes", e.target.value)}
+                    placeholder="Anything else important?"
+                    rows={3}
+                    disabled={!historyReady || loading}
+                  />
+                </label>
+
+                <button
+                  className="primaryBtn wide"
+                  onClick={() => void submitSymptomChecker()}
+                  disabled={!historyReady || loading}
+                >
+                  Check Symptoms
+                </button>
+              </div>
+            </div>
+
+            <div className="card">
               <h2>Quick Prompts</h2>
               <p className="muted">Tap one to start faster.</p>
               <div className="suggestions">
@@ -1012,11 +1278,11 @@ export default function App() {
             </div>
 
             <div className="card">
-              <h2>Safety Note</h2>
+              <h2>Red-Flag Escalation</h2>
               <p className="muted">
-                EmpowerHer offers general support, not medical diagnosis. If symptoms are severe,
-                such as fainting, fever, or very heavy bleeding, please speak to a trusted adult or
-                healthcare provider.
+                If there is severe pain, fainting, fever, soaking pads quickly, chest pain, or you
+                feel unsafe, do not rely only on chat. Tell a trusted adult and go to a clinic or
+                hospital.
               </p>
             </div>
 

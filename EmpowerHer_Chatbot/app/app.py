@@ -51,6 +51,8 @@ def chat():
         "topic": result.topic,
         "intent": result.intent,
         "kb_sources": result.kb_sources,
+        "escalation_level": result.escalation_level,
+        "escalation_reasons": result.escalation_reasons,
     })
 
 

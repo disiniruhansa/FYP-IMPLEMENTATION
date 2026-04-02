@@ -169,18 +169,22 @@ export async function createConversation(
 export async function appendMessageToConversation(
   uid: string,
   conversationId: string,
-  message: ChatMessage
+  message: ChatMessage,
+  nextMessages?: ChatMessage[]
 ) {
-  const currentMessages = await loadConversationMessages(uid, conversationId);
-  const nextMessages = [...currentMessages, message];
-
   await addDoc(messagesCollection(uid, conversationId), {
     ...serializeMessage(message),
     clientCreatedAt: Date.now(),
     createdAt: serverTimestamp(),
   });
 
-  await writeConversationMetadata(uid, conversationId, nextMessages);
+  if (nextMessages) {
+    await writeConversationMetadata(uid, conversationId, nextMessages);
+    return;
+  }
+
+  const currentMessages = await loadConversationMessages(uid, conversationId);
+  await writeConversationMetadata(uid, conversationId, currentMessages);
 }
 
 export async function loadConversationMessages(

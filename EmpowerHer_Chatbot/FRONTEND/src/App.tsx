@@ -1,31 +1,78 @@
 import type { KeyboardEventHandler } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { User } from "firebase/auth";
+import { AuthPanel } from "./components/AuthPanel";
+import { isFirebaseConfigured } from "./lib/firebase";
+import {
+  signInWithGoogle,
+  signInWithEmail,
+  signOutUser,
+  signUpWithEmail,
+  subscribeToAuthChanges,
+} from "./services/auth";
+import {
+  appendMessageToConversation,
+  clearConversationMessages,
+  createConversation,
+  deleteConversation,
+  listConversations,
+  loadConversationMessages,
+} from "./services/chatHistory";
+import type {
+  ChatMessage,
+  ChatMeta,
+  ChatResponse,
+  ConversationSummary,
+} from "./types/chat";
 import "./App.css";
 import appLogo from "../images/Logo.png";
 
-type ChatMeta = {
-  intent?: string;
-  topic?: string;
-  emotions?: string[];
-  kb_sources?: string[];
-};
-
-type ChatMessage = {
-  role: "user" | "bot";
-  text: string;
-  meta?: ChatMeta;
-};
-
-type ChatResponse = {
-  reply?: string;
-  emotions?: string[];
-  raw_emotions?: unknown;
-  topic?: string;
-  intent?: string;
-  kb_sources?: string[];
-};
-
 type SectionKey = "home" | "about" | "features" | "why" | "support";
+type AuthMode = "signin" | "signup";
+type SymptomType =
+  | "pain_cramps"
+  | "late_period"
+  | "heavy_bleeding"
+  | "normal_discharge"
+  | "mood_swings";
+
+type SymptomCheckerState = {
+  symptomType: SymptomType;
+  duration: string;
+  severity: "mild" | "moderate" | "severe";
+  affectsSchoolOrSleep: boolean;
+  fever: boolean;
+  faintingOrDizziness: boolean;
+  veryHeavyBleeding: boolean;
+  itchingOrBurning: boolean;
+  strongSmell: boolean;
+  unusualColor: boolean;
+  overthinkingOrPanic: boolean;
+  notes: string;
+};
+
+const symptomTypeLabels: Record<SymptomType, string> = {
+  pain_cramps: "Cramps or period pain",
+  late_period: "Late or missed period",
+  heavy_bleeding: "Heavy bleeding",
+  normal_discharge: "Discharge or smell changes",
+  mood_swings: "Mood changes",
+};
+
+const initialSymptomCheckerState: SymptomCheckerState = {
+  symptomType: "pain_cramps",
+  duration: "",
+  severity: "moderate",
+  affectsSchoolOrSleep: false,
+  fever: false,
+  faintingOrDizziness: false,
+  veryHeavyBleeding: false,
+  itchingOrBurning: false,
+  strongSmell: false,
+  unusualColor: false,
+  overthinkingOrPanic: false,
+  notes: "",
+};
 
 const initialBotMessage: ChatMessage = {
   role: "bot",
@@ -33,11 +80,22 @@ const initialBotMessage: ChatMessage = {
 };
 
 function Bubble({ role, text, meta }: ChatMessage) {
+  const isUrgent = meta?.escalation_level === "urgent" || meta?.escalation_level === "critical";
+
   return (
     <div className={`row ${role}`}>
       <div className={`bubble ${role}`}>
         <div className="bubbleText">{text}</div>
-
+        {role === "bot" && isUrgent && (
+          <div className="escalationBanner">
+            <strong>
+              {meta?.escalation_level === "critical" ? "Urgent safety action needed" : "Red-flag symptoms detected"}
+            </strong>
+            <span>
+              Tell a trusted adult and seek in-person care instead of relying only on chat.
+            </span>
+          </div>
+        )}
         {role === "bot" && meta && (
           <div className="meta">
             <span className="chip">Intent: {meta.intent ?? "-"}</span>
@@ -54,11 +112,85 @@ function Bubble({ role, text, meta }: ChatMessage) {
                 ? meta.kb_sources.join(", ")
                 : "-"}
             </span>
+            <span className="chip">
+              Escalation: {meta.escalation_level ?? "-"}
+            </span>
+            <span className="chip">
+              Flags:{" "}
+              {meta.escalation_reasons && meta.escalation_reasons.length
+                ? meta.escalation_reasons.join(", ")
+                : "-"}
+            </span>
           </div>
         )}
       </div>
     </div>
   );
+}
+
+function hasUserConversation(history: ChatMessage[]) {
+  return history.some((message) => message.role === "user");
+}
+
+function createConversationId() {
+  return `conversation-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function buildSymptomCheckerPrompt(form: SymptomCheckerState) {
+  const details: string[] = [];
+  details.push(`Main issue: ${symptomTypeLabels[form.symptomType]}.`);
+  details.push(`Severity: ${form.severity}.`);
+
+  if (form.duration.trim()) {
+    details.push(`Duration: ${form.duration.trim()}.`);
+  }
+  if (form.affectsSchoolOrSleep) {
+    details.push("It affects school, sleep, or normal activities.");
+  }
+  if (form.fever) {
+    details.push("I also have fever or feel very unwell.");
+  }
+  if (form.faintingOrDizziness) {
+    details.push("I feel dizzy, faint, or nearly faint.");
+  }
+  if (form.veryHeavyBleeding) {
+    details.push("Bleeding is very heavy or I am soaking pads quickly.");
+  }
+  if (form.itchingOrBurning) {
+    details.push("There is itching or burning.");
+  }
+  if (form.strongSmell) {
+    details.push("There is a strong or unusual smell.");
+  }
+  if (form.unusualColor) {
+    details.push("The discharge color is unusual, such as yellow or green.");
+  }
+  if (form.overthinkingOrPanic) {
+    details.push("I feel panicky, overwhelmed, or I cannot calm down.");
+  }
+  if (form.notes.trim()) {
+    details.push(`Extra details: ${form.notes.trim()}.`);
+  }
+
+  return `Symptom checker summary: ${details.join(" ")} Please tell me what this could mean, what I can do safely at home, and whether I should tell a trusted adult or go to a clinic.`;
+}
+
+function buildSummary(conversationId: string, messages: ChatMessage[]): ConversationSummary {
+  const firstUser = messages.find((message) => message.role === "user");
+  const lastMessage = messages[messages.length - 1];
+  const titleSource = firstUser?.text || "New conversation";
+  const previewSource = lastMessage?.text || "";
+
+  return {
+    id: conversationId,
+    title:
+      titleSource.length > 48 ? `${titleSource.slice(0, 48).trim()}...` : titleSource,
+    preview:
+      previewSource.length > 80
+        ? `${previewSource.slice(0, 80).trim()}...`
+        : previewSource,
+    messageCount: messages.length,
+  };
 }
 
 export default function App() {
@@ -68,8 +200,24 @@ export default function App() {
   const [messages, setMessages] = useState<ChatMessage[]>([initialBotMessage]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [authBusy, setAuthBusy] = useState(false);
+  const [authReady, setAuthReady] = useState(!isFirebaseConfigured);
+  const [historyReady, setHistoryReady] = useState(!isFirebaseConfigured);
+  const [authMessage, setAuthMessage] = useState<string | null>(null);
+  const [symptomChecker, setSymptomChecker] = useState<SymptomCheckerState>(
+    initialSymptomCheckerState
+  );
+  const [conversationSummaries, setConversationSummaries] = useState<
+    ConversationSummary[]
+  >([]);
+  const [activeConversationId, setActiveConversationId] = useState<string | null>(
+    null
+  );
 
   const endRef = useRef<HTMLDivElement | null>(null);
+  const messagesRef = useRef<ChatMessage[]>([initialBotMessage]);
+  const saveQueueRef = useRef<Map<string, Promise<void>>>(new Map());
   const sectionRefs: Record<SectionKey, React.RefObject<HTMLDivElement | null>> =
     {
       home: useRef<HTMLDivElement | null>(null),
@@ -89,8 +237,12 @@ export default function App() {
     ],
     []
   );
+  const latestBotMeta = [...messages]
+    .reverse()
+    .find((message) => message.role === "bot" && message.meta)?.meta;
 
   useEffect(() => {
+    messagesRef.current = messages;
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
@@ -99,17 +251,272 @@ export default function App() {
     return () => window.clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (!isFirebaseConfigured) {
+      return undefined;
+    }
+
+    const unsubscribe = subscribeToAuthChanges(async (nextUser) => {
+      setUser(nextUser);
+      setAuthReady(true);
+      setHistoryReady(false);
+      setAuthMessage(null);
+
+      if (!nextUser) {
+        setConversationSummaries([]);
+        setActiveConversationId(null);
+        setMessages([initialBotMessage]);
+        setHistoryReady(true);
+        return;
+      }
+
+      try {
+        const summaries = await listConversations(nextUser.uid);
+
+        if (summaries.length > 0) {
+          setConversationSummaries(summaries);
+          setActiveConversationId(summaries[0].id);
+          const remoteMessages = await loadConversationMessages(
+            nextUser.uid,
+            summaries[0].id
+          );
+          setMessages(remoteMessages.length > 0 ? remoteMessages : [initialBotMessage]);
+        } else if (hasUserConversation(messagesRef.current)) {
+          const conversationId = createConversationId();
+          await createConversation(nextUser.uid, conversationId, messagesRef.current);
+          setConversationSummaries([buildSummary(conversationId, messagesRef.current)]);
+          setActiveConversationId(conversationId);
+        } else {
+          setConversationSummaries([]);
+          setActiveConversationId(null);
+          setMessages([initialBotMessage]);
+        }
+      } catch (error) {
+        console.error(error);
+        setAuthMessage(
+          "Authentication worked, but loading saved messages failed. Check Firestore setup and security rules."
+        );
+      } finally {
+        setHistoryReady(true);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
   const scrollToSection = (key: SectionKey) => {
-    sectionRefs[key].current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    sectionRefs[key].current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const upsertSummary = (summary: ConversationSummary) => {
+    setConversationSummaries((prev) => [
+      summary,
+      ...prev.filter((item) => item.id !== summary.id),
+    ]);
+  };
+
+  const persistConversationMessage = (
+    conversationId: string,
+    message: ChatMessage,
+    nextMessages: ChatMessage[]
+  ) => {
+    if (!user) {
+      return Promise.resolve();
+    }
+
+    const summary = buildSummary(conversationId, nextMessages);
+    upsertSummary(summary);
+
+    const previousTask = saveQueueRef.current.get(conversationId) ?? Promise.resolve();
+    const nextTask = previousTask
+      .catch(() => undefined)
+      .then(async () => {
+        await appendMessageToConversation(
+          user.uid,
+          conversationId,
+          message,
+          nextMessages
+        );
+      })
+      .catch((error) => {
+        console.error(error);
+        setAuthMessage(
+          "Signed in, but Firestore could not save this conversation. Check database rules and indexes."
+        );
+      });
+
+    saveQueueRef.current.set(conversationId, nextTask);
+    return nextTask;
+  };
+
+  const ensureActiveConversation = async (seedMessages: ChatMessage[]) => {
+    if (!user) {
+      return null;
+    }
+
+    if (activeConversationId) {
+      return activeConversationId;
+    }
+
+    const conversationId = createConversationId();
+
+    try {
+      await createConversation(user.uid, conversationId, seedMessages);
+      setActiveConversationId(conversationId);
+      upsertSummary(buildSummary(conversationId, seedMessages));
+      return conversationId;
+    } catch (error) {
+      console.error(error);
+      setAuthMessage(
+        "Could not create a new saved conversation. Check Firestore setup."
+      );
+      return null;
+    }
+  };
+
+  const startNewConversation = async () => {
+    setChatView("chat");
+    setAuthMessage(null);
+
+    if (!user) {
+      setMessages([initialBotMessage]);
+      return;
+    }
+
+    const conversationId = createConversationId();
+
+    try {
+      await createConversation(user.uid, conversationId, [initialBotMessage]);
+      setActiveConversationId(conversationId);
+      setMessages([initialBotMessage]);
+      upsertSummary(buildSummary(conversationId, [initialBotMessage]));
+      saveQueueRef.current.set(conversationId, Promise.resolve());
+    } catch (error) {
+      console.error(error);
+      setAuthMessage("Could not create a new saved conversation.");
+    }
+  };
+
+  const switchConversation = async (conversationId: string) => {
+    if (!user || conversationId === activeConversationId) {
+      return;
+    }
+
+    setHistoryReady(false);
+    setAuthMessage(null);
+    setMessages([initialBotMessage]);
+
+    try {
+      const nextMessages = await loadConversationMessages(user.uid, conversationId);
+      setActiveConversationId(conversationId);
+      setMessages(nextMessages.length > 0 ? nextMessages : [initialBotMessage]);
+      setChatView("chat");
+    } catch (error) {
+      console.error(error);
+      setAuthMessage("Could not open that saved conversation.");
+    } finally {
+      setHistoryReady(true);
+    }
+  };
+
+  const clearChat = async () => {
+    setMessages([initialBotMessage]);
+    setChatView("chat");
+
+    if (!user || !activeConversationId) {
+      return;
+    }
+
+    try {
+      await clearConversationMessages(user.uid, activeConversationId, [
+        initialBotMessage,
+      ]);
+      upsertSummary(buildSummary(activeConversationId, [initialBotMessage]));
+      setAuthMessage("Saved conversation cleared.");
+    } catch (error) {
+      console.error(error);
+      setAuthMessage("Could not clear saved chat history from Firestore.");
+    }
+  };
+
+  const removeConversation = async () => {
+    if (!user || !activeConversationId) {
+      return;
+    }
+
+    const conversationId = activeConversationId;
+    const previousMessages = messagesRef.current;
+    const previousSummaries = conversationSummaries;
+    const remainingSummaries = conversationSummaries.filter(
+      (summary) => summary.id !== conversationId
+    );
+    const nextConversationId =
+      remainingSummaries.length > 0 ? remainingSummaries[0].id : null;
+
+    setHistoryReady(false);
+    setMessages([initialBotMessage]);
+    setConversationSummaries(remainingSummaries);
+    setActiveConversationId(nextConversationId);
+
+    try {
+      await deleteConversation(user.uid, conversationId);
+      saveQueueRef.current.delete(conversationId);
+
+      if (nextConversationId) {
+        const nextMessages = await loadConversationMessages(
+          user.uid,
+          nextConversationId
+        );
+        setMessages(nextMessages.length > 0 ? nextMessages : [initialBotMessage]);
+      }
+
+      setAuthMessage("Conversation deleted.");
+    } catch (error) {
+      console.error(error);
+      setAuthMessage("Could not delete the selected conversation.");
+      setConversationSummaries(previousSummaries);
+      setActiveConversationId(conversationId);
+      setMessages(previousMessages);
+    } finally {
+      setHistoryReady(true);
+    }
+  };
+
+  const updateSymptomChecker = <K extends keyof SymptomCheckerState>(
+    key: K,
+    value: SymptomCheckerState[K]
+  ) => {
+    setSymptomChecker((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const submitSymptomChecker = async () => {
+    await sendMessage(buildSymptomCheckerPrompt(symptomChecker));
   };
 
   const sendMessage = async (text?: string) => {
     const msg = (text ?? input).trim();
     if (!msg || loading) return;
 
-    setMessages((prev) => [...prev, { role: "user", text: msg }]);
+    const currentMessages = messagesRef.current;
+    const userMessage: ChatMessage = { role: "user", text: msg };
+    const optimisticMessages = [...currentMessages, userMessage];
+    const historyForRequest = currentMessages.slice(-6);
+
+    setMessages(optimisticMessages);
     setInput("");
     setLoading(true);
+
+    const conversationId = await ensureActiveConversation(currentMessages);
+    if (conversationId) {
+      void persistConversationMessage(
+        conversationId,
+        userMessage,
+        optimisticMessages
+      );
+    }
 
     try {
       const res = await fetch("/chat", {
@@ -117,7 +524,7 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: msg,
-          history: messages.slice(-6),
+          history: historyForRequest,
         }),
       });
 
@@ -125,8 +532,7 @@ export default function App() {
 
       const data: ChatResponse = await res.json();
       const reply =
-        data.reply?.trim() ||
-        "Sorry, I could not generate a reply right now.";
+        data.reply?.trim() || "Sorry, I could not generate a reply right now.";
 
       const meta: ChatMeta = {
         intent: data.intent ?? undefined,
@@ -135,19 +541,99 @@ export default function App() {
         kb_sources: Array.isArray(data.kb_sources)
           ? data.kb_sources
           : undefined,
+        escalation_level: data.escalation_level ?? undefined,
+        escalation_reasons: Array.isArray(data.escalation_reasons)
+          ? data.escalation_reasons
+          : undefined,
       };
 
-      setMessages((prev) => [...prev, { role: "bot", text: reply, meta }]);
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "bot",
-          text: "Oops, I could not connect to the backend. Is Flask running on http://127.0.0.1:5000 ?",
-        },
-      ]);
+      const botMessage: ChatMessage = { role: "bot", text: reply, meta };
+      const finalMessages = [...optimisticMessages, botMessage];
+      setMessages(finalMessages);
+
+      if (conversationId) {
+        void persistConversationMessage(
+          conversationId,
+          botMessage,
+          finalMessages
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      const fallbackBotMessage: ChatMessage = {
+        role: "bot",
+        text: "Oops, I could not connect to the backend. Is Flask running on http://127.0.0.1:5000 ?",
+      };
+      const fallbackMessages = [...optimisticMessages, fallbackBotMessage];
+      setMessages(fallbackMessages);
+
+      if (conversationId) {
+        void persistConversationMessage(
+          conversationId,
+          fallbackBotMessage,
+          fallbackMessages
+        );
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleEmailAuth = async (
+    mode: AuthMode,
+    email: string,
+    password: string
+  ) => {
+    setAuthBusy(true);
+    setAuthMessage(null);
+
+    try {
+      if (mode === "signup") {
+        await signUpWithEmail(email, password);
+        setAuthMessage("Account created. Your chat history will now be saved.");
+      } else {
+        await signInWithEmail(email, password);
+        setAuthMessage("Signed in. Saved chat history is available on this device.");
+      }
+    } catch (error) {
+      console.error(error);
+      setAuthMessage(
+        error instanceof Error ? error.message : "Authentication failed."
+      );
+    } finally {
+      setAuthBusy(false);
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    setAuthBusy(true);
+    setAuthMessage(null);
+
+    try {
+      await signInWithGoogle();
+      setAuthMessage("Signed in with Google.");
+    } catch (error) {
+      console.error(error);
+      setAuthMessage(
+        error instanceof Error ? error.message : "Google sign-in failed."
+      );
+    } finally {
+      setAuthBusy(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    setAuthBusy(true);
+    setAuthMessage(null);
+
+    try {
+      await signOutUser();
+      setAuthMessage("Signed out. Guest chats will stay local only.");
+    } catch (error) {
+      console.error(error);
+      setAuthMessage(error instanceof Error ? error.message : "Could not sign out.");
+    } finally {
+      setAuthBusy(false);
     }
   };
 
@@ -157,6 +643,14 @@ export default function App() {
       void sendMessage();
     }
   };
+
+  const statusText = !isFirebaseConfigured
+    ? "Firebase is not configured yet. Chat works in guest mode only."
+    : !authReady || !historyReady
+      ? "Checking account and saved conversation..."
+      : user
+        ? `Signed in as ${user.email ?? "Google user"}`
+        : "Guest mode. Sign in to save chat history.";
 
   if (booting) {
     return (
@@ -243,7 +737,7 @@ export default function App() {
                 </p>
               </article>
               <article className="featureCard">
-                <div className="featureIcon">💜</div>
+                <div className="featureIcon">💞</div>
                 <h3>Emotionally Supportive</h3>
                 <p>
                   Responses are designed to acknowledge fear, stress, confusion, and other emotional
@@ -401,7 +895,7 @@ export default function App() {
             </div>
           </div>
           <div className="copyrightBar">
-            <span>© 2026 EmpowerHer. A final year project dedicated to adolescent menstrual health support.</span>
+            <span>Copyright 2026 EmpowerHer. A final year project dedicated to adolescent menstrual health support.</span>
           </div>
         </footer>
       </div>
@@ -430,13 +924,7 @@ export default function App() {
           <button className="ghost" onClick={() => setShowLanding(true)}>
             Back to Home
           </button>
-          <button
-            className="ghost"
-            onClick={() => {
-              setMessages([initialBotMessage]);
-              setChatView("chat");
-            }}
-          >
+          <button className="ghost" onClick={() => void clearChat()}>
             Clear Chat
           </button>
         </div>
@@ -504,14 +992,14 @@ export default function App() {
                   <p>Obstetrics and Gynecology</p>
                   <p>Focus: Menstrual disorders, PCOS, fertility</p>
                   <p>Hospitals: Asiri Hospital, Nawaloka Hospital</p>
-                  <p>Why important: Well-known consultant for women’s reproductive health</p>
+                  <p>Why important: Well-known consultant for women's reproductive health</p>
                 </div>
                 <div>
                   <strong>2. Dr. Harsha Atapattu</strong>
                   <p>Consultant Obstetrician and Gynecologist</p>
                   <p>Focus: Hormonal issues, menstrual irregularities, adolescent gynecology</p>
                   <p>Hospitals: Lanka Hospitals</p>
-                  <p>Strength: Strong experience with teenage and young women’s health</p>
+                  <p>Strength: Strong experience with teenage and young women's health</p>
                 </div>
                 <div>
                   <strong>3. Dr. Rishya Manikavasagar</strong>
@@ -529,7 +1017,7 @@ export default function App() {
                 </div>
                 <div>
                   <strong>5. Dr. Shiromi Maduwage</strong>
-                  <p>Women’s health and pregnancy care</p>
+                  <p>Women's health and pregnancy care</p>
                   <p>Focus: Menstrual health education, reproductive wellbeing</p>
                   <p>Hospitals: Castle Street Hospital for Women</p>
                   <p>Why important: Government sector expertise</p>
@@ -548,100 +1036,267 @@ export default function App() {
           </section>
         </main>
       ) : (
-      <main className="main">
-        <section className="chatArea">
-          <div className="chatIntroCard">
-            <div className="chatIntroTop">
-              <div>
-                <h2>Get Support</h2>
-                <p>
-                  Ask a question, describe a symptom, or continue a conversation in a private space.
-                </p>
+        <main className="main">
+          <section className="chatArea">
+            <div className="chatIntroCard">
+              <div className="chatIntroTop">
+                <div>
+                  <h2>Get Support</h2>
+                  <p>
+                    Ask a question, describe a symptom, or continue a conversation in a private space.
+                  </p>
+                </div>
+                <div className="introBadge">
+                  {user ? "History syncing" : "Private and supportive"}
+                </div>
               </div>
-              <div className="introBadge">Private and supportive</div>
+              <div className="statusBar">{statusText}</div>
+              {authMessage && <div className="statusNote">{authMessage}</div>}
+              {latestBotMeta?.escalation_level &&
+                latestBotMeta.escalation_level !== "none" && (
+                  <div className="escalationCard">
+                    <strong>
+                      {latestBotMeta.escalation_level === "critical"
+                        ? "Immediate safety support needed"
+                        : "Urgent medical follow-up recommended"}
+                    </strong>
+                    <span>
+                      {latestBotMeta.escalation_reasons?.length
+                        ? `Detected: ${latestBotMeta.escalation_reasons.join(", ")}.`
+                        : "This conversation includes red-flag symptoms."}{" "}
+                      Please tell a trusted adult and seek clinic or hospital care if symptoms are severe.
+                    </span>
+                  </div>
+                )}
             </div>
-          </div>
 
-          <div className="chatBox">
-            {messages.map((m, i) => (
-              <Bubble
-                key={`${m.role}-${i}-${m.text.slice(0, 8)}`}
-                role={m.role}
-                text={m.text}
-                meta={m.meta}
-              />
-            ))}
+            <div className="chatBox">
+              {messages.map((m, i) => (
+                <Bubble
+                  key={`${m.role}-${i}-${m.text.slice(0, 8)}`}
+                  role={m.role}
+                  text={m.text}
+                  meta={m.meta}
+                />
+              ))}
 
-            {loading && (
-              <div className="row bot">
-                <div className="bubble bot">
-                  <div className="typing">
-                    <span />
-                    <span />
-                    <span />
+              {loading && (
+                <div className="row bot">
+                  <div className="bubble bot">
+                    <div className="typing">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
                   </div>
                 </div>
+              )}
+
+              <div ref={endRef} />
+            </div>
+
+            <div className="composer">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={onKeyDown}
+                placeholder="Type your question here..."
+                rows={2}
+                disabled={!historyReady}
+              />
+              <button
+                className="sendBtn"
+                disabled={loading || !input.trim() || !historyReady}
+                onClick={() => void sendMessage()}
+              >
+                Send
+              </button>
+            </div>
+          </section>
+
+          <aside className="sidePanel">
+            <AuthPanel
+              authBusy={authBusy}
+              authEnabled={isFirebaseConfigured}
+              authReady={authReady}
+              historyReady={historyReady}
+              user={user}
+              onEmailAuth={handleEmailAuth}
+              onGoogleAuth={handleGoogleAuth}
+              onSignOut={handleSignOut}
+            />
+
+            {user && (
+              <div className="card conversationCard">
+                <div className="conversationHeader">
+                  <h2>Saved Chats</h2>
+                  <button
+                    className="ghost conversationAction"
+                    onClick={() => void startNewConversation()}
+                    disabled={!historyReady || loading}
+                  >
+                    New
+                  </button>
+                </div>
+                <div className="conversationList">
+                  {conversationSummaries.length === 0 ? (
+                    <p className="muted">
+                      No saved chats yet. Start a new conversation and it will appear here.
+                    </p>
+                  ) : (
+                    conversationSummaries.map((summary) => (
+                      <button
+                        key={summary.id}
+                        className={
+                          summary.id === activeConversationId
+                            ? "conversationItem active"
+                            : "conversationItem"
+                        }
+                        onClick={() => void switchConversation(summary.id)}
+                        disabled={!historyReady || loading}
+                      >
+                        <strong>{summary.title}</strong>
+                        <span>{summary.preview || "No preview yet."}</span>
+                        <small>{summary.messageCount} messages</small>
+                      </button>
+                    ))
+                  )}
+                </div>
+                {activeConversationId && (
+                  <button
+                    className="ghost wide deleteConversationBtn"
+                    onClick={() => void removeConversation()}
+                    disabled={!historyReady || loading}
+                  >
+                    Delete Selected Chat
+                  </button>
+                )}
               </div>
             )}
 
-            <div ref={endRef} />
-          </div>
+            <div className="card">
+              <h2>Symptom Checker</h2>
+              <p className="muted">
+                Use the guided form if you want a more structured answer than free-text chat.
+              </p>
+              <div className="symptomForm">
+                <label className="symptomField">
+                  <span>Main symptom</span>
+                  <select
+                    value={symptomChecker.symptomType}
+                    onChange={(e) =>
+                      updateSymptomChecker("symptomType", e.target.value as SymptomType)
+                    }
+                    disabled={!historyReady || loading}
+                  >
+                    {Object.entries(symptomTypeLabels).map(([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
 
-          <div className="composer">
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={onKeyDown}
-              placeholder="Type your question here..."
-              rows={2}
-            />
-            <button
-              className="sendBtn"
-              disabled={loading || !input.trim()}
-              onClick={() => void sendMessage()}
-            >
-              Send
-            </button>
-          </div>
-        </section>
+                <div className="symptomSplit">
+                  <label className="symptomField">
+                    <span>Severity</span>
+                    <select
+                      value={symptomChecker.severity}
+                      onChange={(e) =>
+                        updateSymptomChecker(
+                          "severity",
+                          e.target.value as SymptomCheckerState["severity"]
+                        )
+                      }
+                      disabled={!historyReady || loading}
+                    >
+                      <option value="mild">Mild</option>
+                      <option value="moderate">Moderate</option>
+                      <option value="severe">Severe</option>
+                    </select>
+                  </label>
 
-        <aside className="sidePanel">
-          <div className="card">
-            <h2>Quick Prompts</h2>
-            <p className="muted">Tap one to start faster.</p>
-            <div className="suggestions">
-              {suggestions.map((s) => (
+                  <label className="symptomField">
+                    <span>Duration</span>
+                    <input
+                      type="text"
+                      value={symptomChecker.duration}
+                      onChange={(e) => updateSymptomChecker("duration", e.target.value)}
+                      placeholder="e.g. 2 days, 1 week"
+                      disabled={!historyReady || loading}
+                    />
+                  </label>
+                </div>
+
+                <div className="symptomChecks">
+                  <label><input type="checkbox" checked={symptomChecker.affectsSchoolOrSleep} onChange={(e) => updateSymptomChecker("affectsSchoolOrSleep", e.target.checked)} disabled={!historyReady || loading} />Affects school or sleep</label>
+                  <label><input type="checkbox" checked={symptomChecker.fever} onChange={(e) => updateSymptomChecker("fever", e.target.checked)} disabled={!historyReady || loading} />Fever or very unwell</label>
+                  <label><input type="checkbox" checked={symptomChecker.faintingOrDizziness} onChange={(e) => updateSymptomChecker("faintingOrDizziness", e.target.checked)} disabled={!historyReady || loading} />Fainting or dizziness</label>
+                  <label><input type="checkbox" checked={symptomChecker.veryHeavyBleeding} onChange={(e) => updateSymptomChecker("veryHeavyBleeding", e.target.checked)} disabled={!historyReady || loading} />Very heavy bleeding</label>
+                  <label><input type="checkbox" checked={symptomChecker.itchingOrBurning} onChange={(e) => updateSymptomChecker("itchingOrBurning", e.target.checked)} disabled={!historyReady || loading} />Itching or burning</label>
+                  <label><input type="checkbox" checked={symptomChecker.strongSmell} onChange={(e) => updateSymptomChecker("strongSmell", e.target.checked)} disabled={!historyReady || loading} />Strong smell</label>
+                  <label><input type="checkbox" checked={symptomChecker.unusualColor} onChange={(e) => updateSymptomChecker("unusualColor", e.target.checked)} disabled={!historyReady || loading} />Yellow or green discharge</label>
+                  <label><input type="checkbox" checked={symptomChecker.overthinkingOrPanic} onChange={(e) => updateSymptomChecker("overthinkingOrPanic", e.target.checked)} disabled={!historyReady || loading} />Panicky or overwhelmed</label>
+                </div>
+
+                <label className="symptomField">
+                  <span>Extra notes</span>
+                  <textarea
+                    value={symptomChecker.notes}
+                    onChange={(e) => updateSymptomChecker("notes", e.target.value)}
+                    placeholder="Anything else important?"
+                    rows={3}
+                    disabled={!historyReady || loading}
+                  />
+                </label>
+
                 <button
-                  key={s}
-                  className="suggestionBtn"
-                  onClick={() => void sendMessage(s)}
+                  className="primaryBtn wide"
+                  onClick={() => void submitSymptomChecker()}
+                  disabled={!historyReady || loading}
                 >
-                  {s}
+                  Check Symptoms
                 </button>
-              ))}
+              </div>
             </div>
-          </div>
 
-          <div className="card">
-            <h2>Safety Note</h2>
-            <p className="muted">
-              EmpowerHer offers general support, not medical diagnosis. If symptoms are severe,
-              such as fainting, fever, or very heavy bleeding, please speak to a trusted adult or
-              healthcare provider.
-            </p>
-          </div>
+            <div className="card">
+              <h2>Quick Prompts</h2>
+              <p className="muted">Tap one to start faster.</p>
+              <div className="suggestions">
+                {suggestions.map((s) => (
+                  <button
+                    key={s}
+                    className="suggestionBtn"
+                    onClick={() => void sendMessage(s)}
+                    disabled={!historyReady || loading}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          <div className="card compactInfo medicalShortcut">
-            <h2>Need Medical Info?</h2>
-            <p className="muted">
-              Read quick guidance about menstrual health, clinics, doctors, and hospital warning signs.
-            </p>
-            <button className="primaryBtn wide" onClick={() => setChatView("medical")}>
-              Medical Info
-            </button>
-          </div>
-        </aside>
-      </main>
+            <div className="card">
+              <h2>Red-Flag Escalation</h2>
+              <p className="muted">
+                If there is severe pain, fainting, fever, soaking pads quickly, chest pain, or you
+                feel unsafe, do not rely only on chat. Tell a trusted adult and go to a clinic or
+                hospital.
+              </p>
+            </div>
+
+            <div className="card compactInfo medicalShortcut">
+              <h2>Need Medical Info?</h2>
+              <p className="muted">
+                Read quick guidance about menstrual health, clinics, doctors, and hospital warning signs.
+              </p>
+              <button className="primaryBtn wide" onClick={() => setChatView("medical")}>
+                Medical Info
+              </button>
+            </div>
+          </aside>
+        </main>
       )}
     </div>
   );

@@ -7,7 +7,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { auth } from "../lib/firebase";
+import { auth } from "./firebase.ts";
 
 function requireAuth() {
   if (!auth) {

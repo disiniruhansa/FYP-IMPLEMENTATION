@@ -99,14 +99,31 @@ class KnowledgeBaseRetriever:
             )
 
         texts: List[Tuple[str, str]] = []
+        skipped_files: List[Tuple[str, str]] = []
         for fp in sorted(self.docs_dir.glob("*.txt")):
-            text = fp.read_text(encoding="utf-8", errors="ignore")
+            try:
+                text = fp.read_text(encoding="utf-8", errors="ignore")
+            except OSError as exc:
+                skipped_files.append((fp.name, str(exc)))
+                continue
+
             text = clean_kb_text(self._clean(text), max_sentences=9999)
             if text.strip():
                 texts.append((text, fp.name))
 
         if not texts:
+            if skipped_files:
+                skipped_summary = "; ".join(
+                    f"{name}: {reason}" for name, reason in skipped_files
+                )
+                raise ValueError(
+                    f"No readable .txt documents found in {self.docs_dir}. Skipped files: {skipped_summary}"
+                )
             raise ValueError(f"No .txt documents found in {self.docs_dir}.")
+
+        if skipped_files:
+            skipped_names = ", ".join(name for name, _ in skipped_files)
+            print(f"[KB] Skipped unreadable files: {skipped_names}")
 
         return texts
 

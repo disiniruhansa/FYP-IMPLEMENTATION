@@ -1,5 +1,5 @@
 # app/app.py
-
+import os
 from pathlib import Path
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
@@ -58,4 +58,7 @@ def chat():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    debug_enabled = os.getenv("FLASK_DEBUG", "1").strip().lower() in {"1", "true", "yes", "on"}
+    # The chatbot loads multiple large models at startup. Flask's debug reloader
+    # starts the app twice, which is slow and can crash on lower-memory machines.
+    app.run(debug=debug_enabled, use_reloader=False)
